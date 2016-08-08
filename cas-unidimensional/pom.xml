@@ -9,4 +9,12 @@
 	<artifactId>cas-unidimensional</artifactId>
 	<name>cas-unidimensional</name>
 	<description>Unidimensional implementation</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ghjansen</groupId>
+			<artifactId>cas-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

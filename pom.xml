@@ -27,5 +27,7 @@
 		<module>cas-core</module>
 		<module>cas-unidimensional</module>
 		<module>cas-ui-desktop</module>
+		<module>cas-docs</module>
+		<module>cas-control</module>
 	</modules>
 </project>
