@@ -59,7 +59,7 @@ public abstract class Universe {
 	 */
 	protected void update(){
 		//this.space.nextIteration()
-		this.time.addOneUnit();
+		//this.time.increase();
 		
 	}
 
