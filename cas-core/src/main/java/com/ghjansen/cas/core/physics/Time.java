@@ -18,13 +18,11 @@
 
 package com.ghjansen.cas.core.physics;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeClass;
 import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
 import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
 
@@ -46,30 +44,26 @@ public abstract class Time {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	public Time(final int limit, Class<?> clazz, int... limits) throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
-			InvalidRelativeTimeClass, InvalidRelativeTimeLimit, InvalidAbsoluteTimeLimit {
+	public Time(final int limit, int... limits) throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit{
 		initializeLimit(limit);
-		initializeRelativeTime(clazz, limits);
+		initializeRelativeTime(limits);
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	private void initializeRelativeTime(Class<?> clazz, int... limits)
-			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InvalidRelativeTimeClass, InvalidRelativeTimeLimit {
-		if (clazz != null && clazz.getSuperclass().equals(Time.class)) {
-			if (limits != null && limits.length > 0) {
-				ArrayList<Time> relativeTime = new ArrayList<Time>();
-				for (int i = 0; i < limits.length; i++) {
-					Time t = (Time) clazz.getConstructor(Integer.TYPE).newInstance(limits[i]);
+	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimit {
+		if (limits != null && limits.length > 0) {
+			ArrayList<Time> relativeTime = new ArrayList<Time>();
+			for (int i = 0; i < limits.length; i++) {
+				try{
+					RelativeTime t = new RelativeTime(limits[i]);
 					relativeTime.add(t);
+				} catch (InvalidAbsoluteTimeLimit e) {
+					throw new InvalidRelativeTimeLimit();
 				}
-				this.relativeTime = (List<Time>) relativeTime.clone();
-			} else {
-				throw new InvalidRelativeTimeLimit();
 			}
+			this.relativeTime = (List<Time>) relativeTime.clone();
 		} else {
-			throw new InvalidRelativeTimeClass();
+			throw new InvalidRelativeTimeLimit();
 		}
 	}
 
@@ -81,6 +75,16 @@ public abstract class Time {
 		}
 	}
 
+	/**
+	 * The complete evolution of time is the multiplication of the limit of
+	 * absolute time by the product of all limits of relative times.
+	 * lm(t) = limit of absolute time
+	 * d = amount of dimensions (or relative times)
+	 * lim(d-1) = the iteration to get the limit of each dimension (relative time)
+	 * LaTeX formula:
+	 * ${lim(t)\displaystyle \prod_{i=1}^{d} lim(d-1)}$
+	 * @throws TimeLimitReached
+	 */
 	public void increase() throws TimeLimitReached {
 		if (this.limit == null || this.absoluteTime.get() < this.limit.get()) {
 			if (this.relativeTime != null) {
@@ -114,4 +118,10 @@ public abstract class Time {
 		return this.relativeTime;
 	}
 	
+}
+
+final class RelativeTime extends Time {
+	public RelativeTime(int limit) throws InvalidAbsoluteTimeLimit{
+		super(limit);
+	}
 }

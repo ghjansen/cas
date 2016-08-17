@@ -24,7 +24,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeClass;
 import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
 import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
 
@@ -108,19 +107,37 @@ public class TimeTest {
 	}
 
 	@Test
-	public void DimensionalTimeConstructor() throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
-			InvalidRelativeTimeClass, InvalidRelativeTimeLimit, InvalidAbsoluteTimeLimit {
+	public void dimensionalTimeConstructor() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
 		// Unidimensional
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
-		DimensionalTime dt = new DimensionalTime(absoluteLimit, DimensionalTime.class, relativeLimit);
+		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
 		Assert.assertNotNull(dt);
 		Assert.assertTrue(dt.getAbsolute() == 0);
 		Assert.assertNotNull(dt.getRelative());
 		Assert.assertTrue(dt.getRelative().size() == 1);
 		Assert.assertNotNull(dt.getRelative().get(0));
-		Assert.assertTrue(dt.getRelative().get(0).getClass().equals(DimensionalTime.class));
+		Assert.assertTrue(dt.getRelative().get(0).getClass().equals(RelativeTime.class));
+	}
+
+	@Test(expected = InvalidRelativeTimeLimit.class)
+	public void dimensionalTimeConstructorNoLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+		final int absoluteLimit = 1000;
+		new DimensionalTime(absoluteLimit);
+	}
+
+	@Test(expected = InvalidRelativeTimeLimit.class)
+	public void dimensionalTimeConstructorZeroLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+		final int absoluteLimit = 1000;
+		final int relativeLimit = 0;
+		new DimensionalTime(absoluteLimit, relativeLimit);
+	}
+
+	@Test(expected = InvalidRelativeTimeLimit.class)
+	public void dimensionalTimeConstructorNegativeLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+		final int absoluteLimit = 1000;
+		final int relativeLimit = -1;
+		new DimensionalTime(absoluteLimit, relativeLimit);
 	}
 
 }
@@ -142,13 +159,7 @@ final class LimitedTime extends Time {
 
 final class DimensionalTime extends Time {
 
-	public DimensionalTime(final int limit, Class<?> clazz, int... limits) throws InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, InvalidRelativeTimeClass, InvalidRelativeTimeLimit, InvalidAbsoluteTimeLimit {
-		super(limit, clazz, limits);
-	}
-	
-	public DimensionalTime(int limit) throws InvalidAbsoluteTimeLimit{
-		super(limit);
+	public DimensionalTime(final int limit, int... limits) throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+		super(limit, limits);
 	}
 }
