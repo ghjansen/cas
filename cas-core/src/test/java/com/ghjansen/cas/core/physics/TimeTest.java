@@ -18,8 +18,6 @@
 
 package com.ghjansen.cas.core.physics;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -88,18 +86,19 @@ public class TimeTest {
 	@Test
 	public void limitedTimeIncreasing() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
 		final int limit = 1000;
+		final int iterationLimit = limit - 1;
 		final LimitedTime lt = new LimitedTime(limit);
-		for (int i = 0; i < limit; i++) {
+		for (int i = 0; i < iterationLimit; i++) {
 			lt.increase();
 		}
-		Assert.assertTrue(lt.getAbsolute() == limit);
+		Assert.assertTrue(lt.getAbsolute() == limit - 1);
 		Assert.assertNull(lt.getRelative());
 	}
 
 	@Test(expected = TimeLimitReached.class)
-	public void limitedTimeIncreasingBeyond() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
+	public void limitedTimeIncreasingBeyondLimit() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
 		final int limit = 1000;
-		final int amount = 1001;
+		final int amount = 1000;
 		final LimitedTime lt = new LimitedTime(limit);
 		for (int i = 0; i < amount; i++) {
 			lt.increase();
@@ -107,8 +106,8 @@ public class TimeTest {
 	}
 
 	@Test
-	public void dimensionalTimeConstructor() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
-		// Unidimensional
+	public void dimensionalTimeConstructor()
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
@@ -117,29 +116,57 @@ public class TimeTest {
 		Assert.assertNotNull(dt.getRelative());
 		Assert.assertTrue(dt.getRelative().size() == 1);
 		Assert.assertNotNull(dt.getRelative().get(0));
-		Assert.assertTrue(dt.getRelative().get(0).getClass().equals(RelativeTime.class));
+		Assert.assertTrue(dt.getRelative().get(0).getClass().equals(DimensionalTime.class));
 	}
 
 	@Test(expected = InvalidRelativeTimeLimit.class)
-	public void dimensionalTimeConstructorNoLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+	public void dimensionalTimeConstructorNoLimits()
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		new DimensionalTime(absoluteLimit);
 	}
 
 	@Test(expected = InvalidRelativeTimeLimit.class)
-	public void dimensionalTimeConstructorZeroLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+	public void dimensionalTimeConstructorZeroLimits()
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 0;
 		new DimensionalTime(absoluteLimit, relativeLimit);
 	}
 
 	@Test(expected = InvalidRelativeTimeLimit.class)
-	public void dimensionalTimeConstructorNegativeLimits() throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+	public void dimensionalTimeConstructorNegativeLimits()
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = -1;
 		new DimensionalTime(absoluteLimit, relativeLimit);
 	}
 
+	@Test
+	public void dimensionalTimeIncreasing()
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, TimeLimitReached, CloneNotSupportedException {
+		final int absoluteLimit = 1000;
+		final int relativeLimit = 1000;
+		final int timeEvolutionLimit = (absoluteLimit * relativeLimit) - 1;
+		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
+		for (int i = 0; i < timeEvolutionLimit; i++) {
+			dt.increase();
+		}
+		Assert.assertTrue(dt.getAbsolute() == absoluteLimit - 1);
+		Assert.assertTrue(dt.getRelative().get(0).getAbsolute() == relativeLimit - 1);
+	}
+
+	@Test(expected = TimeLimitReached.class)
+	public void dimensionalTimeIncreasingBeyondLimits()
+			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, TimeLimitReached {
+		final int absoluteLimit = 1000;
+		final int relativeLimit = 1000;
+		final int timeEvolutionLimit = (absoluteLimit * relativeLimit);
+		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
+		for (int i = 0; i < timeEvolutionLimit; i++) {
+			dt.increase();
+		}
+	}
 }
 
 final class UnlimitedTime extends Time {
@@ -155,11 +182,14 @@ final class LimitedTime extends Time {
 	public LimitedTime(int limit) throws InvalidAbsoluteTimeLimit {
 		super(limit);
 	}
+
 }
 
 final class DimensionalTime extends Time {
 
-	public DimensionalTime(final int limit, int... limits) throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+	public DimensionalTime(final int limit, int... limits)
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		super(limit, limits);
 	}
+
 }

@@ -29,7 +29,7 @@ import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Time {
+public abstract class Time implements Cloneable {
 
 	private AtomicInteger absoluteTime;
 	private List<Time> relativeTime;
@@ -44,18 +44,21 @@ public abstract class Time {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	public Time(final int limit, int... limits) throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit{
+	public Time(final int limit, int... limits)
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		initializeLimit(limit);
 		initializeRelativeTime(limits);
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimit {
+	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimit, CloneNotSupportedException {
 		if (limits != null && limits.length > 0) {
 			ArrayList<Time> relativeTime = new ArrayList<Time>();
 			for (int i = 0; i < limits.length; i++) {
-				try{
-					RelativeTime t = new RelativeTime(limits[i]);
+				try {
+					Time t = (Time) this.clone();
+					t.initializeLimit(limits[i]);
+					t.absoluteTime = new AtomicInteger();
 					relativeTime.add(t);
 				} catch (InvalidAbsoluteTimeLimit e) {
 					throw new InvalidRelativeTimeLimit();
@@ -77,29 +80,35 @@ public abstract class Time {
 
 	/**
 	 * The complete evolution of time is the multiplication of the limit of
-	 * absolute time by the product of all limits of relative times.
-	 * lm(t) = limit of absolute time
-	 * d = amount of dimensions (or relative times)
-	 * lim(d-1) = the iteration to get the limit of each dimension (relative time)
-	 * LaTeX formula:
-	 * ${lim(t)\displaystyle \prod_{i=1}^{d} lim(d-1)}$
+	 * absolute time by the product of all limits of relative times. 
+	 * - lm(t) = limit of absolute time
+	 * - d = amount of dimensions (or relative times)
+	 * - lim(d-1) = the iteration to get the limit of each dimension (relative
+	 * time) 
+	 * LaTeX formula: ${lim(t)\displaystyle \prod_{i=1}^{d} lim(d-1)}$
+	 * 
 	 * @throws TimeLimitReached
 	 */
 	public void increase() throws TimeLimitReached {
-		if (this.limit == null || this.absoluteTime.get() < this.limit.get()) {
-			if (this.relativeTime != null) {
-				for (int i = this.relativeTime.size(); i > 0; i--) {
-					Time r = this.relativeTime.get(i - 1);
-					try {
-						r.increase();
-						return;
-					} catch (TimeLimitReached e) {
-						r.resetAbsoluteTime();
+		ArrayList<Time> resetPool = new ArrayList<Time>();
+		if (this.relativeTime != null) {
+			for (int i = this.relativeTime.size(); i > 0; i--) {
+				Time r = this.relativeTime.get(i - 1);
+				try {
+					r.increase();
+					for (Time t : resetPool) {
+						t.resetAbsoluteTime();
 					}
+					return;
+				} catch (TimeLimitReached e) {
+					resetPool.add(r);
 				}
-				this.absoluteTime.incrementAndGet();
-			} else {
-				this.absoluteTime.incrementAndGet();
+			}
+		}
+		if (this.limit == null || this.absoluteTime.get() < this.limit.get() - 1) {
+			this.absoluteTime.incrementAndGet();
+			for (Time t : resetPool) {
+				t.resetAbsoluteTime();
 			}
 		} else {
 			throw new TimeLimitReached();
@@ -117,11 +126,5 @@ public abstract class Time {
 	public List<Time> getRelative() {
 		return this.relativeTime;
 	}
-	
-}
 
-final class RelativeTime extends Time {
-	public RelativeTime(int limit) throws InvalidAbsoluteTimeLimit{
-		super(limit);
-	}
 }
