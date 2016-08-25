@@ -35,16 +35,16 @@ public abstract class Time implements Cloneable {
 	private List<Time> relativeTime;
 	private AtomicInteger limit;
 
-	public Time() {
+	protected Time() {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	public Time(final int limit) throws InvalidAbsoluteTimeLimit {
+	protected Time(final int limit) throws InvalidAbsoluteTimeLimit {
 		initializeLimit(limit);
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	public Time(final int limit, int... limits)
+	protected Time(final int limit, int... limits)
 			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		initializeLimit(limit);
 		initializeRelativeTime(limits);

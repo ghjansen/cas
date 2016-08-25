@@ -16,24 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.physics;
-
-import java.util.List;
-
-import com.ghjansen.cas.core.physics.Space;
-import com.ghjansen.cas.core.physics.Time;
-import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
+package com.ghjansen.cas.core.physics.exception.space;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalSpace extends Space {
+public class InvalidInitialCondition extends Throwable {
 
-	protected UnidimensionalSpace(Time time, List<?> initialCondition)
-			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
-		super(time, initialCondition);
-	}
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = 3070196019858178183L;
 
 }

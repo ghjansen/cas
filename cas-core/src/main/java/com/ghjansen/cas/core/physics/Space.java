@@ -18,9 +18,47 @@
 
 package com.ghjansen.cas.core.physics;
 
+import java.util.List;
+
+import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
+import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
+import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Space {
+
+	private List<?> initial;
+	private List<List> history;
+	private List<List> last;
+	private List<List> current;
+	private int dimensionalAmount;
+
+	protected Space(Time time, List<?> initialCondition)
+			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+		if (time.getRelative() != null && time.getRelative().size() > 0) {
+			this.dimensionalAmount = time.getRelative().size();
+		} else {
+			throw new InvalidDimensionalAmount();
+		}
+		if (initialCondition != null && initialCondition.size() > 0) {
+			validateDimensions(initialCondition, this.dimensionalAmount);
+		} else {
+			throw new InvalidInitialCondition();
+		}
+	}
+
+	private void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpace {
+		if (dimensionalAmount == 1) {
+			if (space.size() > 0 && !(space.get(0) instanceof Cell)) {
+				throw new InvalidDimensionalSpace();
+			}
+		} else if (space.size() > 0 && space.get(0) instanceof List) {
+			validateDimensions((List) space.get(0), dimensionalAmount--);
+		} else {
+			throw new InvalidDimensionalSpace();
+		}
+	}
 
 }
