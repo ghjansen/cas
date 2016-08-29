@@ -126,5 +126,9 @@ public abstract class Time implements Cloneable {
 	public List<Time> getRelative() {
 		return this.relativeTime;
 	}
+	
+	public int getLimit(){
+		return this.limit.get();
+	}
 
 }

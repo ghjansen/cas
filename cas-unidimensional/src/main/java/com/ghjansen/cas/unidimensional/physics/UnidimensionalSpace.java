@@ -20,20 +20,65 @@ package com.ghjansen.cas.unidimensional.physics;
 
 import java.util.List;
 
+import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
 import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalCombination;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalSpace extends Space {
+public final class UnidimensionalSpace extends Space {
 
 	protected UnidimensionalSpace(Time time, List<?> initialCondition)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
-		super(time, initialCondition);
+		super(time, initialCondition, true);
+	}
+
+	@Override
+	protected Combination getCombination(Time time, List<?> space) {
+		final int referencePosition = time.getRelative().get(0).getAbsolute();
+		final int lastPosition = time.getRelative().get(0).getLimit() - 1;
+		State leftCellState, referenceCellState, rightCellState;
+		leftCellState = getLeftCellState(referencePosition, lastPosition, space);
+		referenceCellState = getReferenceCellState(referencePosition, space);
+		rightCellState = getRightCellState(referencePosition, lastPosition, space);
+		UnidimensionalCombination uc = new UnidimensionalCombination(referenceCellState, leftCellState, rightCellState);
+		return uc;
+	}
+
+	private State getLeftCellState(final int referencePosition, final int lastPosition, final List<?> space){
+		State leftCellState;
+		if(referencePosition == 0){
+			Cell leftCell = (Cell) space.get(lastPosition);
+			leftCellState = leftCell.getState();
+		} else {
+			Cell leftCell = (Cell) space.get(referencePosition - 1);
+			leftCellState = leftCell.getState();
+		}
+		return leftCellState;
+	}
+	
+	private State getReferenceCellState(final int referencePosition, final List<?> space){
+		Cell referenceCell = (Cell) space.get(referencePosition);
+		return referenceCell.getState();
+	}
+	
+	private State getRightCellState(final int referencePosition, final int lastPosition, final List<?> space){
+		State rightCellState;
+		if(referencePosition == lastPosition){
+			Cell rightCell = (Cell) space.get(0);
+			rightCellState = rightCell.getState();
+		} else {
+			Cell rightCell = (Cell) space.get(referencePosition + 1);
+			rightCellState = rightCell.getState();
+		}
+		return rightCellState;
 	}
 
 }

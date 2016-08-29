@@ -21,6 +21,7 @@ package com.ghjansen.cas.core.physics;
 import java.util.List;
 
 import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
+import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
 
@@ -29,13 +30,14 @@ import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
  */
 public abstract class Space {
 
-	private List<?> initial;
-	private List<List> history;
-	private List<List> last;
-	private List<List> current;
-	private int dimensionalAmount;
+	protected List<?> initial;
+	protected List<List> history;
+	protected List<?> last;
+	protected List<?> current;
+	protected int dimensionalAmount;
+	protected boolean keepHistory;
 
-	protected Space(Time time, List<?> initialCondition)
+	protected Space(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		if (time.getRelative() != null && time.getRelative().size() > 0) {
 			this.dimensionalAmount = time.getRelative().size();
@@ -47,9 +49,10 @@ public abstract class Space {
 		} else {
 			throw new InvalidInitialCondition();
 		}
+		this.keepHistory = keepHistory;
 	}
 
-	private void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpace {
+	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpace {
 		if (dimensionalAmount == 1) {
 			if (space.size() > 0 && !(space.get(0) instanceof Cell)) {
 				throw new InvalidDimensionalSpace();
@@ -60,5 +63,15 @@ public abstract class Space {
 			throw new InvalidDimensionalSpace();
 		}
 	}
+	
+	public Combination getCombination(Time time){
+		if(time.getAbsolute() == 0){
+			return getCombination(time, this.initial);
+		} else {
+			return getCombination(time, this.last);
+		}
+	}
+	
+	protected abstract Combination getCombination(Time time, List<?> space);
 
 }

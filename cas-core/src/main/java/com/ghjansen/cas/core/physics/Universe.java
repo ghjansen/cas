@@ -18,8 +18,6 @@
 
 package com.ghjansen.cas.core.physics;
 
-import com.ghjansen.cas.core.ca.CellularAutomaton;
-
 /**
  * Abstract representation of a n-dimensional universe, where time progress
  * affects space by applying the rules that separates the old state from the new
@@ -37,10 +35,6 @@ public abstract class Universe {
 	 * Keep the amount of iterations applied to the space of the universe
 	 */
 	private Time time;
-	/**
-	 * Mechanism that transforms the space of the universe as time changes
-	 */
-	private CellularAutomaton ca;
 
 	/**
 	 * Creates the universe given the n-dimensional space and time
@@ -48,10 +42,9 @@ public abstract class Universe {
 	 * @param space
 	 *            Instance of a n-dimensional space
 	 */
-	protected Universe(Space space, Time time, CellularAutomaton ca) {
+	protected Universe(Space space, Time time) {
 		this.space = space;
 		this.time = time;
-		this.ca = ca;
 	}
 	
 	/**

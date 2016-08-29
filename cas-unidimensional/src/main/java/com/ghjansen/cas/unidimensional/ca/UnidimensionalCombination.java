@@ -18,11 +18,16 @@
 
 package com.ghjansen.cas.unidimensional.ca;
 
-import com.ghjansen.cas.core.ca.Condition;
+import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.State;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalCondition extends Condition {
+public class UnidimensionalCombination extends Combination {
+
+	public UnidimensionalCombination(State reference, State ... neighbors) {
+		super(reference, neighbors);
+	}
 
 }

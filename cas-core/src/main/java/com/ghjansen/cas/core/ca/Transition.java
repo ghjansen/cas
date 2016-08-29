@@ -23,7 +23,7 @@ package com.ghjansen.cas.core.ca;
  */
 public abstract class Transition {
 	
-	private Condition condition;
+	private Combination condition;
 	private State state;
 
 }

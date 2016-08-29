@@ -20,12 +20,29 @@ package com.ghjansen.cas.core.ca;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Condition {
-	
-	private ArrayList<State> condition;
+public abstract class Combination {
 
+	private State reference;
+	private List<State> neighborhood;
+
+	public Combination(State reference, State ... neighbors) {
+		this.reference = reference;
+		this.neighborhood = new ArrayList<State>();
+		for(int i = 0; i < neighbors.length; i++){
+			this.neighborhood.add(neighbors[i]);
+		}
+	}
+
+	public State getReferenceState() {
+		return reference;
+	}
+
+	public List<State> getNeighborhood() {
+		return this.neighborhood;
+	}
 }

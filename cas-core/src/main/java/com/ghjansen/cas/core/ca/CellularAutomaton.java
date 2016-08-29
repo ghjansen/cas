@@ -19,6 +19,8 @@
 package com.ghjansen.cas.core.ca;
 
 /**
+ * Mechanism that transforms the space of the universe as time changes
+ * 
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class CellularAutomaton {
