@@ -16,33 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.ca;
+package com.ghjansen.cas.unidimensional.physics;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.physics.Cell;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Combination {
+public final class UnidimensionalCell extends Cell {
 
-	private State reference;
-	private List<State> neighborhood;
-
-	public Combination(State reference, State... neighbors) {
-		this.reference = reference;
-		this.neighborhood = new ArrayList<State>();
-		for (int i = 0; i < neighbors.length; i++) {
-			this.neighborhood.add(neighbors[i]);
-		}
+	public UnidimensionalCell(Transition transition) {
+		super(transition);
 	}
 
-	public State getReferenceState() {
-		return reference;
-	}
-
-	public List<State> getNeighborhood() {
-		return this.neighborhood;
-	}
 }

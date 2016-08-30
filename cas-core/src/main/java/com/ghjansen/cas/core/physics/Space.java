@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
 
@@ -30,12 +31,12 @@ import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
  */
 public abstract class Space {
 
-	protected List<?> initial;
-	protected List<List> history;
-	protected List<?> last;
-	protected List<?> current;
-	protected int dimensionalAmount;
-	protected boolean keepHistory;
+	private List<?> initial;
+	private List<List> history;
+	private List<?> last;
+	private List<?> current;
+	private int dimensionalAmount;
+	private boolean keepHistory;
 
 	protected Space(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
@@ -63,15 +64,42 @@ public abstract class Space {
 			throw new InvalidDimensionalSpace();
 		}
 	}
-	
-	public Combination getCombination(Time time){
-		if(time.getAbsolute() == 0){
+
+	public Combination getCombination(Time time) {
+		if (time.getAbsolute() == 0) {
 			return getCombination(time, this.initial);
 		} else {
 			return getCombination(time, this.last);
 		}
 	}
-	
+
 	protected abstract Combination getCombination(Time time, List<?> space);
+
+	public void setState(Time time, Transition transition) {
+		if (isNewIteration(time)) {
+			if (time.getAbsolute() == 0) {
+				initialize(this.history, this.current, this.keepHistory);
+			} else {
+				createNewIteration(time, this.history, this.last, this.current, this.keepHistory);
+			}
+		}
+		createNewCell(time, transition, this.current);
+	}
+
+	private boolean isNewIteration(Time time) {
+		for (Time r : time.getRelative()) {
+			if (r.getAbsolute() != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected abstract void initialize(List<List> history, List<?> current, boolean keepHistory);
+
+	protected abstract void createNewIteration(Time time, List<List> history, List<?> last, List<?> current,
+			boolean keepHistory);
+
+	protected abstract void createNewCell(Time time, Transition transition, List<?> current);
 
 }

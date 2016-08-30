@@ -19,20 +19,30 @@
 package com.ghjansen.cas.core.physics;
 
 import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.ca.Transition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Cell {
-	
+
 	protected State state;
+	protected Transition transition;
+
+	public Cell(Transition transition) {
+		this.transition = transition;
+	}
+
+	public Cell(State state) {
+		this.state = state;
+	}
 
 	public State getState() {
 		return state;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public Transition getTransition() {
+		return this.transition;
 	}
-	
+
 }

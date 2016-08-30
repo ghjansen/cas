@@ -18,10 +18,12 @@
 
 package com.ghjansen.cas.unidimensional.physics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
@@ -52,9 +54,9 @@ public final class UnidimensionalSpace extends Space {
 		return uc;
 	}
 
-	private State getLeftCellState(final int referencePosition, final int lastPosition, final List<?> space){
+	private State getLeftCellState(final int referencePosition, final int lastPosition, final List<?> space) {
 		State leftCellState;
-		if(referencePosition == 0){
+		if (referencePosition == 0) {
 			Cell leftCell = (Cell) space.get(lastPosition);
 			leftCellState = leftCell.getState();
 		} else {
@@ -63,15 +65,15 @@ public final class UnidimensionalSpace extends Space {
 		}
 		return leftCellState;
 	}
-	
-	private State getReferenceCellState(final int referencePosition, final List<?> space){
+
+	private State getReferenceCellState(final int referencePosition, final List<?> space) {
 		Cell referenceCell = (Cell) space.get(referencePosition);
 		return referenceCell.getState();
 	}
-	
-	private State getRightCellState(final int referencePosition, final int lastPosition, final List<?> space){
+
+	private State getRightCellState(final int referencePosition, final int lastPosition, final List<?> space) {
 		State rightCellState;
-		if(referencePosition == lastPosition){
+		if (referencePosition == lastPosition) {
 			Cell rightCell = (Cell) space.get(0);
 			rightCellState = rightCell.getState();
 		} else {
@@ -79,6 +81,34 @@ public final class UnidimensionalSpace extends Space {
 			rightCellState = rightCell.getState();
 		}
 		return rightCellState;
+	}
+
+	@Override
+	protected void initialize(List<List> history, List<?> current, boolean keepHistory) {
+		if (keepHistory) {
+			history = new ArrayList<List>();
+		}
+		current = new ArrayList<Cell>();
+	}
+
+	@Override
+	protected void createNewIteration(Time time, List<List> history, List<?> last, List<?> current,
+			boolean keepHistory) {
+		ArrayList currentClone = (ArrayList) ((ArrayList) current).clone();
+		if (keepHistory) {
+			history.add(currentClone);
+		}
+		last = currentClone;
+		current = new ArrayList<Cell>();
+	}
+
+	@Override
+	protected void createNewCell(Time time, Transition transition, List<?> current) {
+		// time parameter is not used in this method because dimensional access
+		// is linear for one dimension, but it should be used for more than one
+		// dimension
+		Cell cell = new UnidimensionalCell(transition);
+		((ArrayList<Cell>) current).add(cell);
 	}
 
 }

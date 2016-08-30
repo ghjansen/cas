@@ -26,7 +26,7 @@ import com.ghjansen.cas.core.ca.State;
  */
 public class UnidimensionalCombination extends Combination {
 
-	public UnidimensionalCombination(State reference, State ... neighbors) {
+	public UnidimensionalCombination(State reference, State... neighbors) {
 		super(reference, neighbors);
 	}
 
