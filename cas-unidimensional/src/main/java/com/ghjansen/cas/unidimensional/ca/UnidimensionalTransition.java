@@ -18,11 +18,17 @@
 
 package com.ghjansen.cas.unidimensional.ca;
 
+import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalTransition extends Transition {
+public final class UnidimensionalTransition extends Transition {
+
+	public UnidimensionalTransition(Combination combination, State state) {
+		super(combination, state);
+	}
 
 }

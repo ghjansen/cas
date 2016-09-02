@@ -22,8 +22,21 @@ package com.ghjansen.cas.core.ca;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Transition {
-	
-	private Combination condition;
+
+	private Combination combination;
 	private State state;
+
+	public Transition(Combination combination, State state) {
+		this.combination = combination;
+		this.state = state;
+	}
+
+	public Combination getCombination() {
+		return combination;
+	}
+
+	public State getState() {
+		return state;
+	}
 
 }

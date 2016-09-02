@@ -175,7 +175,7 @@
   </generalization>  
   <association id="20">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="21" name="condition">        
+      <attribute id="21" name="combination">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="22" minimum="0" maximum="1">        

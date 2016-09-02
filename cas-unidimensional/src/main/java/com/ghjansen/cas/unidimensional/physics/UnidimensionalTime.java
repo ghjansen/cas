@@ -23,6 +23,6 @@ import com.ghjansen.cas.core.physics.Time;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalTime extends Time {
+public final class UnidimensionalTime extends Time {
 
 }

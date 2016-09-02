@@ -18,7 +18,6 @@
 
 package com.ghjansen.cas.unidimensional.physics;
 
-import com.ghjansen.cas.core.ca.CellularAutomaton;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
 import com.ghjansen.cas.core.physics.Universe;
@@ -26,11 +25,10 @@ import com.ghjansen.cas.core.physics.Universe;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalUniverse extends Universe {
+public final class UnidimensionalUniverse extends Universe {
 
-	protected UnidimensionalUniverse(Space space, Time time, CellularAutomaton ca) {
-		super(space, time, ca);
-		// TODO Auto-generated constructor stub
+	protected UnidimensionalUniverse(Space space, Time time) {
+		super(space, time);
 	}
 
 }

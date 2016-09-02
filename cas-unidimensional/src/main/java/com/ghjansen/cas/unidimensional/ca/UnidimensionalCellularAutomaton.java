@@ -23,6 +23,6 @@ import com.ghjansen.cas.core.ca.CellularAutomaton;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalCellularAutomaton extends CellularAutomaton {
+public final class UnidimensionalCellularAutomaton extends CellularAutomaton {
 
 }

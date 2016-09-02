@@ -16,13 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.ca;
+package com.ghjansen.cas.core.physics;
 
-import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.ca.Transition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalState extends State {
+public final class DimensionalCell extends Cell{
+
+	public DimensionalCell(Transition transition) {
+		super(transition);
+	}
 
 }

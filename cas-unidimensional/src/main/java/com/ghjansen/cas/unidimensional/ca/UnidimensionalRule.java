@@ -23,6 +23,6 @@ import com.ghjansen.cas.core.ca.Rule;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalRule extends Rule {
+public final class UnidimensionalRule extends Rule {
 
 }

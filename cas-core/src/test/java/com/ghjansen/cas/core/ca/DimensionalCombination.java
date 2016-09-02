@@ -16,13 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.ca;
-
-import com.ghjansen.cas.core.ca.State;
+package com.ghjansen.cas.core.ca;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalState extends State {
+public final class DimensionalCombination extends Combination {
+
+	public DimensionalCombination(State reference, State... neighbors) {
+		super(reference, neighbors);
+	}
 
 }
