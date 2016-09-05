@@ -168,28 +168,3 @@ public class TimeTest {
 		}
 	}
 }
-
-final class UnlimitedTime extends Time {
-
-	public UnlimitedTime() {
-		super();
-	}
-
-}
-
-final class LimitedTime extends Time {
-
-	public LimitedTime(int limit) throws InvalidAbsoluteTimeLimit {
-		super(limit);
-	}
-
-}
-
-final class DimensionalTime extends Time {
-
-	public DimensionalTime(final int limit, int... limits)
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
-		super(limit, limits);
-	}
-
-}

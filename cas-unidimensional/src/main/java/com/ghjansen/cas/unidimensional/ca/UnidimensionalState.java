@@ -25,4 +25,8 @@ import com.ghjansen.cas.core.ca.State;
  */
 public final class UnidimensionalState extends State {
 
+	public UnidimensionalState(String name, int value) {
+		super(name, value);
+	}
+
 }

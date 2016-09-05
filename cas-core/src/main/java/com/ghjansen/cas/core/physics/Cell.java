@@ -31,6 +31,7 @@ public abstract class Cell {
 
 	public Cell(Transition transition) {
 		this.transition = transition;
+		this.state = transition.getState();
 	}
 
 	public Cell(State state) {

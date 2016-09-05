@@ -16,27 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.ca;
+package com.ghjansen.cas.core.physics;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class State {
-	
-	private String name;
-	private int value;
-	
-	public State(String name, int value) {
-		this.name = name;
-		this.value = value;
+public final class UnlimitedTime extends Time {
+
+	public UnlimitedTime() {
+		super();
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public int getValue() {
-		return value;
-	}
-	
 }

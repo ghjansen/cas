@@ -22,18 +22,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.DimensionalCombination;
+import com.ghjansen.cas.core.ca.DimensionalState;
+import com.ghjansen.cas.core.ca.DimensionalTransition;
+import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
 import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
 import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.ca.DimensionalState;
-import com.ghjansen.cas.core.ca.DimensionalTransition;
-import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -41,23 +46,17 @@ import com.ghjansen.cas.core.ca.State;
 public class SpaceTest {
 
 	@Test
-	public void dimensionalTimeConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
+	public void dimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
 			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		Time time = new DimensionalTime(1000, 1000);
-		State reference = new DimensionalState();
-		State leftNeighbor = new DimensionalState();
-		State rightNeighbor = new DimensionalState();
-		State newState = new DimensionalState();
-		Combination combination = new DimensionalCombination(reference, leftNeighbor, rightNeighbor);
-		Transition transition = new DimensionalTransition(combination, newState);
-		DimensionalCell cell = new DimensionalCell(transition);
+		Cell cell = getNewValidDimensionalCell();
 		ArrayList<Cell> firstDimension = new ArrayList<Cell>();
 		firstDimension.add(cell);
 		new DimensionalSpace(time, firstDimension, true);
 	}
 
 	@Test(expected = InvalidInitialCondition.class)
-	public void dimensionalTimeConstructorInvalidInitialCondition()
+	public void dimensionalSpaceConstructorInvalidInitialCondition()
 			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
 			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		Time time = new DimensionalTime(1000, 1000);
@@ -65,22 +64,87 @@ public class SpaceTest {
 	}
 
 	@Test(expected = InvalidDimensionalSpace.class)
-	public void dimensionalTimeConstructorInvalidDimensionalSpace()
+	public void dimensionalSpaceConstructorInvalidDimensionalSpace()
 			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
 			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		Time time = new DimensionalTime(1000, 1000);
-		State reference = new DimensionalState();
-		State leftNeighbor = new DimensionalState();
-		State rightNeighbor = new DimensionalState();
-		State newState = new DimensionalState();
-		Combination combination = new DimensionalCombination(reference, leftNeighbor, rightNeighbor);
-		Transition transition = new DimensionalTransition(combination, newState);
-		DimensionalCell cell = new DimensionalCell(transition);
+		Cell cell = getNewValidDimensionalCell();
 		ArrayList<List> firstDimension = new ArrayList<List>();
 		ArrayList<Cell> secondDimension = new ArrayList<Cell>();
 		firstDimension.add(secondDimension);
 		secondDimension.add(cell);
 		new DimensionalSpace(time, firstDimension, true);
+	}
+
+	@Test(expected = InvalidDimensionalAmount.class)
+	public void dimensionalSpaceConstructorInvalidDimensionalAmount() throws InvalidAbsoluteTimeLimit,
+			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+		Time time = new LimitedTime(1000);
+		new DimensionalSpace(time, null, false);
+	}
+
+	@Test
+	public void getCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
+			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace, TimeLimitReached {
+		Time time = new DimensionalTime(3, 1);
+		Cell cell = getNewValidDimensionalCell();
+		ArrayList<Cell> firstDimension = new ArrayList<Cell>();
+		firstDimension.add(cell);
+		Space mockedSpace = spy(new DimensionalSpace(time, firstDimension, true));
+		mockedSpace.getCombination(time);
+		time.increase();
+		mockedSpace.getCombination(time);
+		time.increase();
+		mockedSpace.getCombination(time);
+		ArgumentCaptor<Time> argumentTime = ArgumentCaptor.forClass(Time.class);
+		ArgumentCaptor<List> argumentList = ArgumentCaptor.forClass(List.class);
+		verify(mockedSpace, times(3)).getCombination(argumentTime.capture(), argumentList.capture());
+		List expected = mockedSpace.getInitial();
+		assertEquals(expected, argumentList.getAllValues().get(0));
+		expected = mockedSpace.getLast();
+		assertEquals(expected, argumentList.getAllValues().get(1));
+		assertEquals(expected, argumentList.getAllValues().get(2));
+	}
+
+	@Test
+	public void setState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
+			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace, TimeLimitReached {
+		Time time = new DimensionalTime(3, 2);
+		State black = new DimensionalState("black", 0);
+		State white = new DimensionalState("white", 1);
+		Combination combination = new DimensionalCombination(white, black, black);
+		Transition transition = new DimensionalTransition(combination, black);
+		Cell cell = new DimensionalCell(transition);
+		ArrayList<Cell> firstDimension = new ArrayList<Cell>();
+		firstDimension.add(cell);
+		Space mockedDimensionalSpace = spy(new DimensionalSpace(time, firstDimension, true));
+		mockedDimensionalSpace.setState(time, transition);
+		time.increase();
+		mockedDimensionalSpace.setState(time, transition);
+		time.increase();
+		mockedDimensionalSpace.setState(time, transition);
+		time.increase();
+		mockedDimensionalSpace.setState(time, transition);
+		time.increase();
+		mockedDimensionalSpace.setState(time, transition);
+		time.increase();
+		mockedDimensionalSpace.setState(time, transition);
+		List<List> history = mockedDimensionalSpace.getHistory();
+		List<?> current = mockedDimensionalSpace.getCurrent();
+		List<?> last = mockedDimensionalSpace.getLast();
+		boolean keepHistory = mockedDimensionalSpace.isKeepHistory();
+//		verify(mockedDimensionalSpace, times(1)).initialize();
+		verify(mockedDimensionalSpace, times(2)).createNewIteration(time);
+		verify(mockedDimensionalSpace, times(6)).createNewCell(time, transition);
+		//TODO refactor this test and make sure space rotation is working
+	}
+
+	private Cell getNewValidDimensionalCell() {
+		State black = new DimensionalState("black", 0);
+		State white = new DimensionalState("white", 1);
+		Combination combination = new DimensionalCombination(white, black, black);
+		Transition transition = new DimensionalTransition(combination, black);
+		return new DimensionalCell(transition);
 	}
 
 }

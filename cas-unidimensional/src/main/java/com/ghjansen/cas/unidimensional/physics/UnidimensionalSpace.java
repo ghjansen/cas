@@ -37,7 +37,7 @@ import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
  */
 public final class UnidimensionalSpace extends Space {
 
-	protected UnidimensionalSpace(Time time, List<?> initialCondition)
+	public UnidimensionalSpace(Time time, List<?> initialCondition)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		super(time, initialCondition, true);
 	}
@@ -84,26 +84,27 @@ public final class UnidimensionalSpace extends Space {
 	}
 
 	@Override
-	protected void initialize(List<List> history, List<?> current, boolean keepHistory) {
-		if (keepHistory) {
-			history = new ArrayList<List>();
+	protected void initialize() {
+		if (super.keepHistory) {
+			super.history = new ArrayList<List>();
 		}
-		current = new ArrayList<Cell>();
+		super.current = new ArrayList<Cell>();
 	}
 
 	@Override
-	protected void createNewIteration(Time time, List<List> history, List<?> last, List<?> current,
-			boolean keepHistory) {
-		ArrayList currentClone = (ArrayList) ((ArrayList) current).clone();
-		if (keepHistory) {
-			history.add(currentClone);
+	protected void createNewIteration(Time time) {
+		/*
+		ArrayList currentClone = (ArrayList) ((ArrayList) this.current).clone();
+		if (this.keepHistory) {
+			this.history.add(currentClone);
 		}
-		last = currentClone;
-		current = new ArrayList<Cell>();
+		this.last = currentClone;
+		*/
+		this.current = new ArrayList<Cell>();
 	}
 
 	@Override
-	protected void createNewCell(Time time, Transition transition, List<?> current) {
+	protected void createNewCell(Time time, Transition transition) {
 		// time parameter is not used in this method because dimensional access
 		// is linear for one dimension, but it should be used for more than one
 		// dimension

@@ -20,25 +20,26 @@ package com.ghjansen.cas.core.physics;
 
 import java.util.List;
 
-import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
 import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
+import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Space {
 
-	private List<?> initial;
-	private List<List> history;
-	private List<?> last;
-	private List<?> current;
-	private int dimensionalAmount;
-	private boolean keepHistory;
+	protected List<?> initial;
+	protected List<List> history;
+	protected List<?> last;
+	protected List<?> current;
+	protected int dimensionalAmount;
+	protected boolean keepHistory;
+	protected boolean rotating;
 
-	protected Space(Time time, List<?> initialCondition, boolean keepHistory)
+	public Space(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
 		if (time.getRelative() != null && time.getRelative().size() > 0) {
 			this.dimensionalAmount = time.getRelative().size();
@@ -47,10 +48,14 @@ public abstract class Space {
 		}
 		if (initialCondition != null && initialCondition.size() > 0) {
 			validateDimensions(initialCondition, this.dimensionalAmount);
+			this.initial = initialCondition;
 		} else {
 			throw new InvalidInitialCondition();
 		}
 		this.keepHistory = keepHistory;
+		this.rotating = false;
+		// initialize(this.history, this.current, this.keepHistory);
+		initialize();
 	}
 
 	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpace {
@@ -76,14 +81,22 @@ public abstract class Space {
 	protected abstract Combination getCombination(Time time, List<?> space);
 
 	public void setState(Time time, Transition transition) {
+		/*
 		if (isNewIteration(time)) {
-			if (time.getAbsolute() == 0) {
-				initialize(this.history, this.current, this.keepHistory);
-			} else {
-				createNewIteration(time, this.history, this.last, this.current, this.keepHistory);
-			}
+			// createNewIteration(time, this.history, this.last, this.current,
+			// this.keepHistory);
+			createNewIteration(time);
+		}*/
+		// createNewCell(time, transition, this.current);
+		if(this.rotating){
+			this.rotating = false;
+			createNewIteration(time);
 		}
-		createNewCell(time, transition, this.current);
+		createNewCell(time, transition);
+		if(isEndOfIteration(time)){
+			rotate();
+			createNewIteration(time);
+		}
 	}
 
 	private boolean isNewIteration(Time time) {
@@ -94,12 +107,60 @@ public abstract class Space {
 		}
 		return true;
 	}
+	
+	private boolean isEndOfIteration(Time time){
+		for (Time r : time.getRelative()) {
+			if (r.getAbsolute() != r.getLimit() - 1) {
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	private void rotate(){
+		this.rotating = true;
+		List currentClone = this.current.subList(0, this.current.size());
+		if (this.keepHistory) {
+			this.history.add(currentClone);
+		}
+		this.last = currentClone;
+	}
 
-	protected abstract void initialize(List<List> history, List<?> current, boolean keepHistory);
+	// protected abstract void initialize(List<List> history, List<?> current,
+	// boolean keepHistory);
+	protected abstract void initialize();
 
-	protected abstract void createNewIteration(Time time, List<List> history, List<?> last, List<?> current,
-			boolean keepHistory);
+	// protected abstract void createNewIteration(Time time, List<List> history,
+	// List<?> last, List<?> current,
+	// boolean keepHistory);
+	protected abstract void createNewIteration(Time time);
 
-	protected abstract void createNewCell(Time time, Transition transition, List<?> current);
+	// protected abstract void createNewCell(Time time, Transition transition,
+	// List<?> current);
+	protected abstract void createNewCell(Time time, Transition transition);
+
+	public List<?> getInitial() {
+		return this.initial;
+	}
+
+	public List<List> getHistory() {
+		return this.history;
+	}
+
+	public List<?> getLast() {
+		return this.last;
+	}
+
+	public List<?> getCurrent() {
+		return this.current;
+	}
+
+	public int getDimensionalAmout() {
+		return this.dimensionalAmount;
+	}
+
+	public boolean isKeepHistory() {
+		return this.keepHistory;
+	}
 
 }

@@ -44,7 +44,7 @@ public abstract class Time implements Cloneable {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	protected Time(final int limit, int... limits)
+	public Time(final int limit, int... limits)
 			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		initializeLimit(limit);
 		initializeRelativeTime(limits);

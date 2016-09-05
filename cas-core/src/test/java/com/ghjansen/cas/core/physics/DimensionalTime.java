@@ -16,27 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.ca;
+package com.ghjansen.cas.core.physics;
+
+import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
+import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class State {
-	
-	private String name;
-	private int value;
-	
-	public State(String name, int value) {
-		this.name = name;
-		this.value = value;
+public final class DimensionalTime extends Time {
+
+	public DimensionalTime(final int limit, int... limits)
+			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+		super(limit, limits);
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public int getValue() {
-		return value;
-	}
-	
 }

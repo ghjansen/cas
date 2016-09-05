@@ -23,4 +23,8 @@ package com.ghjansen.cas.core.ca;
  */
 public final class DimensionalState extends State {
 
+	public DimensionalState(String name, int value) {
+		super(name, value);
+	}
+
 }

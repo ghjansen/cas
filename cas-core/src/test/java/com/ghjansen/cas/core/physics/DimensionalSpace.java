@@ -29,7 +29,7 @@ import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalSpace extends Space {
+public class DimensionalSpace extends Space {
 
 	protected DimensionalSpace(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
@@ -45,22 +45,21 @@ public final class DimensionalSpace extends Space {
 	}
 
 	@Override
-	protected void initialize(List<List> history, List<?> current, boolean keepHistory) {
+	protected void initialize() {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module.
 	}
 
 	@Override
-	protected void createNewIteration(Time time, List<List> history, List<?> last, List<?> current,
-			boolean keepHistory) {
+	protected void createNewIteration(Time time) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module.
 	}
 
 	@Override
-	protected void createNewCell(Time time, Transition transition, List<?> current) {
+	protected void createNewCell(Time time, Transition transition) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module.
