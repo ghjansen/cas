@@ -18,6 +18,7 @@
 
 package com.ghjansen.cas.core.physics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
@@ -54,7 +55,6 @@ public abstract class Space {
 		}
 		this.keepHistory = keepHistory;
 		this.rotating = false;
-		// initialize(this.history, this.current, this.keepHistory);
 		initialize();
 	}
 
@@ -81,62 +81,38 @@ public abstract class Space {
 	protected abstract Combination getCombination(Time time, List<?> space);
 
 	public void setState(Time time, Transition transition) {
-		/*
-		if (isNewIteration(time)) {
-			// createNewIteration(time, this.history, this.last, this.current,
-			// this.keepHistory);
-			createNewIteration(time);
-		}*/
-		// createNewCell(time, transition, this.current);
-		if(this.rotating){
+		if (this.rotating) {
 			this.rotating = false;
 			createNewIteration(time);
 		}
 		createNewCell(time, transition);
-		if(isEndOfIteration(time)){
+		if (needsNewIteration(time)) {
 			rotate();
-			createNewIteration(time);
 		}
 	}
 
-	private boolean isNewIteration(Time time) {
+	private boolean needsNewIteration(Time time) {
 		for (Time r : time.getRelative()) {
-			if (r.getAbsolute() != 0) {
+			if (time.getAbsolute() == time.getLimit() - 1 || r.getAbsolute() != r.getLimit() - 1) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	private boolean isEndOfIteration(Time time){
-		for (Time r : time.getRelative()) {
-			if (r.getAbsolute() != r.getLimit() - 1) {
-				return false;
-			}
-		}
-		return false;
-	}
-	
-	private void rotate(){
+
+	private void rotate() {
 		this.rotating = true;
-		List currentClone = this.current.subList(0, this.current.size());
+		ArrayList currentClone = (ArrayList) ((ArrayList) this.current).clone();
 		if (this.keepHistory) {
 			this.history.add(currentClone);
 		}
 		this.last = currentClone;
 	}
 
-	// protected abstract void initialize(List<List> history, List<?> current,
-	// boolean keepHistory);
 	protected abstract void initialize();
 
-	// protected abstract void createNewIteration(Time time, List<List> history,
-	// List<?> last, List<?> current,
-	// boolean keepHistory);
 	protected abstract void createNewIteration(Time time);
 
-	// protected abstract void createNewCell(Time time, Transition transition,
-	// List<?> current);
 	protected abstract void createNewCell(Time time, Transition transition);
 
 	public List<?> getInitial() {

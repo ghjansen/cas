@@ -18,6 +18,7 @@
 
 package com.ghjansen.cas.core.physics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
@@ -40,7 +41,8 @@ public class DimensionalSpace extends Space {
 	protected Combination getCombination(Time time, List<?> space) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
-		// module.
+		// module. The implementation here (if any) is used since required to
+		// test other structures.
 		return null;
 	}
 
@@ -48,21 +50,28 @@ public class DimensionalSpace extends Space {
 	protected void initialize() {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
-		// module.
+		// module. The implementation here (if any) is used since required to
+		// test other structures.
+		if (super.keepHistory) {
+			super.history = new ArrayList<List>();
+		}
+		super.current = new ArrayList<Cell>();
 	}
 
 	@Override
 	protected void createNewIteration(Time time) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
-		// module.
+		// module. The implementation here (if any) is used since required to
+		// test other structures.
 	}
 
 	@Override
 	protected void createNewCell(Time time, Transition transition) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
-		// module.
+		// module. The implementation here (if any) is used since required to
+		// test other structures.
 	}
 
 }

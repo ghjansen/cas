@@ -32,43 +32,43 @@ public class TimeTest {
 
 	@Test
 	public void unlimitedTimeContructor() {
-		final UnlimitedTime ut = new UnlimitedTime();
-		Assert.assertTrue(ut.getAbsolute() == 0);
-		Assert.assertNull(ut.getRelative());
+		final Time unlimitedTime = new UnlimitedTime();
+		Assert.assertTrue(unlimitedTime.getAbsolute() == 0);
+		Assert.assertNull(unlimitedTime.getRelative());
 	}
 
 	@Test
 	public void unlimitedTimeIncreasing() throws TimeLimitReached {
 		final int amount = 1000;
-		UnlimitedTime ut = new UnlimitedTime();
+		final Time unlimitedTime = new UnlimitedTime();
 		for (int i = 0; i < amount; i++) {
-			ut.increase();
+			unlimitedTime.increase();
 		}
-		Assert.assertTrue(ut.getAbsolute() == amount);
-		Assert.assertNull(ut.getRelative());
+		Assert.assertTrue(unlimitedTime.getAbsolute() == amount);
+		Assert.assertNull(unlimitedTime.getRelative());
 	}
 
 	@Test
 	public void unlimitedTimeReset() throws TimeLimitReached {
 		final int amount = 1000;
 		final int reset = 0;
-		UnlimitedTime ut = new UnlimitedTime();
+		final Time unlimitedTime = new UnlimitedTime();
 		for (int i = 0; i < amount; i++) {
-			ut.increase();
+			unlimitedTime.increase();
 		}
-		Assert.assertTrue(ut.getAbsolute() == amount);
-		ut.resetAbsoluteTime();
-		Assert.assertTrue(ut.getAbsolute() == reset);
-		Assert.assertNull(ut.getRelative());
+		Assert.assertTrue(unlimitedTime.getAbsolute() == amount);
+		unlimitedTime.resetAbsoluteTime();
+		Assert.assertTrue(unlimitedTime.getAbsolute() == reset);
+		Assert.assertNull(unlimitedTime.getRelative());
 	}
 
 	@Test
 	public void limitedTimeConstructor() throws InvalidAbsoluteTimeLimit {
 		final int limit = 10;
-		final LimitedTime lt = new LimitedTime(limit);
-		Assert.assertNotNull(lt);
-		Assert.assertTrue(lt.getAbsolute() == 0);
-		Assert.assertNull(lt.getRelative());
+		final Time limitedTime = new LimitedTime(limit);
+		Assert.assertNotNull(limitedTime);
+		Assert.assertTrue(limitedTime.getAbsolute() == 0);
+		Assert.assertNull(limitedTime.getRelative());
 	}
 
 	@Test(expected = InvalidAbsoluteTimeLimit.class)
@@ -87,21 +87,21 @@ public class TimeTest {
 	public void limitedTimeIncreasing() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
 		final int limit = 1000;
 		final int iterationLimit = limit - 1;
-		final LimitedTime lt = new LimitedTime(limit);
+		final Time limitedTime = new LimitedTime(limit);
 		for (int i = 0; i < iterationLimit; i++) {
-			lt.increase();
+			limitedTime.increase();
 		}
-		Assert.assertTrue(lt.getAbsolute() == limit - 1);
-		Assert.assertNull(lt.getRelative());
+		Assert.assertTrue(limitedTime.getAbsolute() == limit - 1);
+		Assert.assertNull(limitedTime.getRelative());
 	}
 
 	@Test(expected = TimeLimitReached.class)
 	public void limitedTimeIncreasingBeyondLimit() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
 		final int limit = 1000;
 		final int amount = 1000;
-		final LimitedTime lt = new LimitedTime(limit);
+		final Time limitedTime = new LimitedTime(limit);
 		for (int i = 0; i < amount; i++) {
-			lt.increase();
+			limitedTime.increase();
 		}
 	}
 
@@ -110,13 +110,13 @@ public class TimeTest {
 			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
-		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
-		Assert.assertNotNull(dt);
-		Assert.assertTrue(dt.getAbsolute() == 0);
-		Assert.assertNotNull(dt.getRelative());
-		Assert.assertTrue(dt.getRelative().size() == 1);
-		Assert.assertNotNull(dt.getRelative().get(0));
-		Assert.assertTrue(dt.getRelative().get(0).getClass().equals(DimensionalTime.class));
+		final Time dimensionalTime = new DimensionalTime(absoluteLimit, relativeLimit);
+		Assert.assertNotNull(dimensionalTime);
+		Assert.assertTrue(dimensionalTime.getAbsolute() == 0);
+		Assert.assertNotNull(dimensionalTime.getRelative());
+		Assert.assertTrue(dimensionalTime.getRelative().size() == 1);
+		Assert.assertNotNull(dimensionalTime.getRelative().get(0));
+		Assert.assertTrue(dimensionalTime.getRelative().get(0).getClass().equals(DimensionalTime.class));
 	}
 
 	@Test(expected = InvalidRelativeTimeLimit.class)
@@ -148,12 +148,12 @@ public class TimeTest {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit) - 1;
-		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
+		final Time dimensionalTime = new DimensionalTime(absoluteLimit, relativeLimit);
 		for (int i = 0; i < timeEvolutionLimit; i++) {
-			dt.increase();
+			dimensionalTime.increase();
 		}
-		Assert.assertTrue(dt.getAbsolute() == absoluteLimit - 1);
-		Assert.assertTrue(dt.getRelative().get(0).getAbsolute() == relativeLimit - 1);
+		Assert.assertTrue(dimensionalTime.getAbsolute() == absoluteLimit - 1);
+		Assert.assertTrue(dimensionalTime.getRelative().get(0).getAbsolute() == relativeLimit - 1);
 	}
 
 	@Test(expected = TimeLimitReached.class)
@@ -162,9 +162,9 @@ public class TimeTest {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit);
-		DimensionalTime dt = new DimensionalTime(absoluteLimit, relativeLimit);
+		final Time dimensionalTime = new DimensionalTime(absoluteLimit, relativeLimit);
 		for (int i = 0; i < timeEvolutionLimit; i++) {
-			dt.increase();
+			dimensionalTime.increase();
 		}
 	}
 }

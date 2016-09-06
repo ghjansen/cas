@@ -93,13 +93,6 @@ public final class UnidimensionalSpace extends Space {
 
 	@Override
 	protected void createNewIteration(Time time) {
-		/*
-		ArrayList currentClone = (ArrayList) ((ArrayList) this.current).clone();
-		if (this.keepHistory) {
-			this.history.add(currentClone);
-		}
-		this.last = currentClone;
-		*/
 		this.current = new ArrayList<Cell>();
 	}
 
