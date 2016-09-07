@@ -19,6 +19,7 @@
 package com.ghjansen.cas.unidimensional.physics;
 
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidTransition;
 import com.ghjansen.cas.core.physics.Cell;
 
 /**
@@ -26,7 +27,7 @@ import com.ghjansen.cas.core.physics.Cell;
  */
 public final class UnidimensionalCell extends Cell {
 
-	public UnidimensionalCell(Transition transition) {
+	public UnidimensionalCell(Transition transition) throws InvalidTransition {
 		super(transition);
 	}
 

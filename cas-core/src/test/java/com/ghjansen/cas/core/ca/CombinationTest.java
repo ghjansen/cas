@@ -18,9 +18,38 @@
 
 package com.ghjansen.cas.core.ca;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.ghjansen.cas.core.exception.InvalidState;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class CombinationTest {
+
+	@Test
+	public void dimensionalCombinationConstructor() throws InvalidState {
+		final State dimensionalBlackState = new DimensionalState("black", 0);
+		final State dimensionalWhiteState = new DimensionalState("white", 1);
+		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+				dimensionalWhiteState, dimensionalBlackState);
+		Assert.assertTrue(dimensionalCombination.getReferenceState().equals(dimensionalBlackState));
+		Assert.assertTrue(dimensionalCombination.getNeighborhood().get(0).equals(dimensionalWhiteState));
+		Assert.assertTrue(dimensionalCombination.getNeighborhood().get(1).equals(dimensionalBlackState));
+	}
+
+	@Test(expected = InvalidState.class)
+	public void dimensionalCombinationConstructorInvalidReference() throws InvalidState {
+		final State dimensionalBlackState = new DimensionalState("black", 0);
+		final State dimensionalWhiteState = new DimensionalState("white", 1);
+		new DimensionalCombination(null, dimensionalWhiteState, dimensionalBlackState);
+	}
+
+	@Test(expected = InvalidState.class)
+	public void dimensionalCombinationConstructorInvalidNeighborhood() throws InvalidState {
+		final State dimensionalBlackState = new DimensionalState("black", 0);
+		new DimensionalCombination(dimensionalBlackState, null);
+	}
 
 }

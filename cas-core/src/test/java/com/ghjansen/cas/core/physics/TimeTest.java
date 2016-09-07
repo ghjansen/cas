@@ -21,9 +21,9 @@ package com.ghjansen.cas.core.physics;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
+import com.ghjansen.cas.core.exception.TimeLimitReached;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)

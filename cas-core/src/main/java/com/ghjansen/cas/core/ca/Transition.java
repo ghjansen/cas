@@ -18,6 +18,9 @@
 
 package com.ghjansen.cas.core.ca;
 
+import com.ghjansen.cas.core.exception.InvalidCombination;
+import com.ghjansen.cas.core.exception.InvalidState;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -26,7 +29,13 @@ public abstract class Transition {
 	private Combination combination;
 	private State state;
 
-	public Transition(Combination combination, State state) {
+	public Transition(Combination combination, State state) throws InvalidCombination, InvalidState {
+		if (combination == null) {
+			throw new InvalidCombination();
+		}
+		if (state == null) {
+			throw new InvalidState();
+		}
 		this.combination = combination;
 		this.state = state;
 	}

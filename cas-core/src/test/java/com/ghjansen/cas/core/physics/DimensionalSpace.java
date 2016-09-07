@@ -23,9 +23,9 @@ import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
+import com.ghjansen.cas.core.exception.InvalidInitialCondition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)

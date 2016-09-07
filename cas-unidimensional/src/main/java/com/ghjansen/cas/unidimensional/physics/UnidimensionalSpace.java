@@ -24,13 +24,15 @@ import java.util.List;
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
+import com.ghjansen.cas.core.exception.InvalidInitialCondition;
+import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidTransition;
 import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
-import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalCombination;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -43,7 +45,7 @@ public final class UnidimensionalSpace extends Space {
 	}
 
 	@Override
-	protected Combination getCombination(Time time, List<?> space) {
+	protected Combination getCombination(Time time, List<?> space) throws InvalidState {
 		final int referencePosition = time.getRelative().get(0).getAbsolute();
 		final int lastPosition = time.getRelative().get(0).getLimit() - 1;
 		State leftCellState, referenceCellState, rightCellState;
@@ -97,7 +99,7 @@ public final class UnidimensionalSpace extends Space {
 	}
 
 	@Override
-	protected void createNewCell(Time time, Transition transition) {
+	protected void createNewCell(Time time, Transition transition) throws InvalidTransition {
 		// time parameter is not used in this method because dimensional access
 		// is linear for one dimension, but it should be used for more than one
 		// dimension

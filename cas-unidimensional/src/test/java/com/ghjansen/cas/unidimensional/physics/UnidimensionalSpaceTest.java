@@ -27,15 +27,18 @@ import org.junit.Test;
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidCombination;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
+import com.ghjansen.cas.core.exception.InvalidInitialCondition;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidTransition;
+import com.ghjansen.cas.core.exception.TimeLimitReached;
 import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.physics.exception.space.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.physics.exception.space.InvalidInitialCondition;
-import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.physics.exception.time.TimeLimitReached;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalCombination;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalState;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
@@ -47,7 +50,8 @@ public class UnidimensionalSpaceTest {
 
 	@Test
 	public void unidimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
+			InvalidState, InvalidCombination, InvalidTransition {
 		final Time unidimensionalTime = new UnidimensionalTime(1000, 1000);
 		final Cell unidimensionalCell = getNewWhiteUnidimensionalCell(new UnidimensionalState("black", 0),
 				new UnidimensionalState("white", 1));
@@ -63,9 +67,9 @@ public class UnidimensionalSpaceTest {
 	}
 
 	@Test
-	public void undimensionalGetCombination()
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
-			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace, TimeLimitReached {
+	public void unidimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
+			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
+			TimeLimitReached, InvalidState, InvalidCombination, InvalidTransition {
 		final Time unidimensionalTime = new UnidimensionalTime(3, 3);
 		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
 		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
@@ -122,30 +126,95 @@ public class UnidimensionalSpaceTest {
 		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(1)).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(2)).getState().equals(unidimensionalBlackState));
 	}
-	
+
 	@Test
-	public void unidimensionalSetState(){
-		//TODO implement unidimensionalSetState
+	public void unidimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
+			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
+			TimeLimitReached, InvalidState, InvalidCombination, InvalidTransition {
+		final Time unidimensionalTime = new UnidimensionalTime(3, 3);
+		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
+		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final List<Cell> initialCondition = new ArrayList<Cell>();
+		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
+		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
+		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
+		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewWhiteUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewBlackUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewWhiteUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewBlackUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewWhiteUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewBlackUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewWhiteUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewBlackUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		unidimensionalTime.increase();
+		unidimensionalSpace.setState(unidimensionalTime,
+				getNewWhiteUnidimensionalTransition(unidimensionalBlackState, unidimensionalWhiteState));
+		// Assert initial condition
+		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(0)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(1)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(2)).getState().equals(unidimensionalBlackState));
+		// Assert history
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(0).get(0)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(0).get(1)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(0).get(2)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(1).get(0)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(1).get(1)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				((Cell) unidimensionalSpace.getHistory().get(1).get(2)).getState().equals(unidimensionalBlackState));
+		// Assert last
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(0)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(1)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(2)).getState().equals(unidimensionalBlackState));
+		// Assert current
+		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(0)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(1)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(2)).getState().equals(unidimensionalWhiteState));
+
 	}
 
-	private Cell getNewWhiteUnidimensionalCell(State black, State white) {
+	private Cell getNewWhiteUnidimensionalCell(State black, State white)
+			throws InvalidState, InvalidCombination, InvalidTransition {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
 		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, white);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
-	private Cell getNewBlackUnidimensionalCell(State black, State white) {
+	private Cell getNewBlackUnidimensionalCell(State black, State white)
+			throws InvalidState, InvalidCombination, InvalidTransition {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
 		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, black);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
-	private Transition getNewWhiteUnidimensionalTransition(State black, State white) {
+	private Transition getNewWhiteUnidimensionalTransition(State black, State white)
+			throws InvalidState, InvalidCombination {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
 		return new UnidimensionalTransition(unidimensionalCombination, white);
 	}
 
-	private Transition getNewBlackUnidimensionalTransition(State black, State white) {
+	private Transition getNewBlackUnidimensionalTransition(State black, State white)
+			throws InvalidState, InvalidCombination {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
 		return new UnidimensionalTransition(unidimensionalCombination, black);
 	}

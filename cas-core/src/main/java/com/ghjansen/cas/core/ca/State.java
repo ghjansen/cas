@@ -22,11 +22,14 @@ package com.ghjansen.cas.core.ca;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class State {
-	
+
 	private String name;
 	private int value;
-	
+
 	public State(String name, int value) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
 		this.name = name;
 		this.value = value;
 	}
@@ -38,5 +41,5 @@ public abstract class State {
 	public int getValue() {
 		return value;
 	}
-	
+
 }

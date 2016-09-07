@@ -18,7 +18,7 @@
 
 package com.ghjansen.cas.core.physics;
 
-import com.ghjansen.cas.core.physics.exception.time.InvalidAbsoluteTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)

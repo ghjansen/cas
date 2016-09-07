@@ -18,9 +18,28 @@
 
 package com.ghjansen.cas.core.ca;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class StateTest {
+
+	@Test
+	public void dimensionalStateConstructor() {
+		final String name = "black";
+		final int value = 0;
+		final State dimensionalState = new DimensionalState(name, value);
+		Assert.assertTrue(dimensionalState.getName().equals(name));
+		Assert.assertTrue(dimensionalState.getValue() == value);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void dimensionalStateConstructorInvalidName() {
+		final String name = null;
+		final int value = 0;
+		new DimensionalState(name, value);
+	}
 
 }

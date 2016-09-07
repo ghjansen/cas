@@ -20,6 +20,7 @@ package com.ghjansen.cas.core.physics;
 
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidTransition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -29,7 +30,10 @@ public abstract class Cell {
 	protected State state;
 	protected Transition transition;
 
-	public Cell(Transition transition) {
+	public Cell(Transition transition) throws InvalidTransition {
+		if (transition == null) {
+			throw new InvalidTransition();
+		}
 		this.transition = transition;
 		this.state = transition.getState();
 	}

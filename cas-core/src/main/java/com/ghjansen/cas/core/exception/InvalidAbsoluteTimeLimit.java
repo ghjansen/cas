@@ -16,20 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.physics;
-
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.physics.Time;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalTime extends Time {
+public class InvalidAbsoluteTimeLimit extends Throwable {
 
-	public UnidimensionalTime(final int limit, int... limits)
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
-		super(limit, limits);
-	}
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = 8503779819489685979L;
 
 }

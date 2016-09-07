@@ -16,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics.exception.time;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidRelativeTimeLimit extends Throwable {
+public class InvalidDimensionalAmount extends Throwable {
 
 	/**
 	 * Serialization management
 	 */
-	private static final long serialVersionUID = -8421027467680752602L;
+	private static final long serialVersionUID = 1514291655215196494L;
 
 }

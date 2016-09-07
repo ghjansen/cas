@@ -18,12 +18,14 @@
 
 package com.ghjansen.cas.core.ca;
 
+import com.ghjansen.cas.core.exception.InvalidState;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class DimensionalCombination extends Combination {
 
-	public DimensionalCombination(State reference, State... neighbors) {
+	public DimensionalCombination(State reference, State... neighbors) throws InvalidState {
 		super(reference, neighbors);
 	}
 

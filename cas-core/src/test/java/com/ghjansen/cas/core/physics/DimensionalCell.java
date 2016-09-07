@@ -19,13 +19,14 @@
 package com.ghjansen.cas.core.physics;
 
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidTransition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class DimensionalCell extends Cell{
 
-	public DimensionalCell(Transition transition) {
+	public DimensionalCell(Transition transition) throws InvalidTransition {
 		super(transition);
 	}
 

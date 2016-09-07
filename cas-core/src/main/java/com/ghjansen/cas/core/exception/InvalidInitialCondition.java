@@ -16,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics.exception.space;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidDimensionalSpace extends Throwable {
+public class InvalidInitialCondition extends Throwable {
 
 	/**
 	 * Serialization management
 	 */
-	private static final long serialVersionUID = -859556206406629948L;
+	private static final long serialVersionUID = 3070196019858178183L;
 
 }

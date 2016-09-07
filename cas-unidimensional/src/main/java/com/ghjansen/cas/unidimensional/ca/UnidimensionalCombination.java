@@ -20,13 +20,14 @@ package com.ghjansen.cas.unidimensional.ca;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.exception.InvalidState;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class UnidimensionalCombination extends Combination {
 
-	public UnidimensionalCombination(State reference, State... neighbors) {
+	public UnidimensionalCombination(State reference, State... neighbors) throws InvalidState {
 		super(reference, neighbors);
 	}
 

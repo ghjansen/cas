@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.ghjansen.cas.core.exception.InvalidState;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -30,7 +32,10 @@ public abstract class Combination {
 	private State reference;
 	private List<State> neighborhood;
 
-	public Combination(State reference, State... neighbors) {
+	public Combination(State reference, State... neighbors) throws InvalidState {
+		if (reference == null || neighbors == null) {
+			throw new InvalidState();
+		}
 		this.reference = reference;
 		this.neighborhood = new ArrayList<State>();
 		for (int i = 0; i < neighbors.length; i++) {
@@ -45,13 +50,13 @@ public abstract class Combination {
 	public List<State> getNeighborhood() {
 		return this.neighborhood;
 	}
-	
-	//TODO migrate this method to rule
-	public boolean isGeneralEquivalent(Combination combination){
-		if(this.reference.equals(combination.getReferenceState())){
-			for(int i = 0; i < this.neighborhood.size(); i++){
+
+	// TODO migrate this method to rule
+	public boolean isGeneralEquivalent(Combination combination) {
+		if (this.reference.equals(combination.getReferenceState())) {
+			for (int i = 0; i < this.neighborhood.size(); i++) {
 				List<State> differentNeighborhood = combination.getNeighborhood();
-				if(!this.neighborhood.get(i).equals(differentNeighborhood.get(i))) {
+				if (!this.neighborhood.get(i).equals(differentNeighborhood.get(i))) {
 					return false;
 				}
 			}
