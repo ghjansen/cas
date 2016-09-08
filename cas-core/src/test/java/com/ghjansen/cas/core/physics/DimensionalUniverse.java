@@ -16,16 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.exception;
+package com.ghjansen.cas.core.physics;
+
+import com.ghjansen.cas.core.exception.InvalidSpaceException;
+import com.ghjansen.cas.core.exception.InvalidTimeException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidDimensionalAmount extends Throwable {
+public final class DimensionalUniverse extends Universe {
 
-	/**
-	 * Serialization management
-	 */
-	private static final long serialVersionUID = 1514291655215196494L;
+	protected DimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+		super(space, time);
+	}
 
 }

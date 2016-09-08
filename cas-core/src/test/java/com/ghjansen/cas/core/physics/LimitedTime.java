@@ -18,14 +18,14 @@
 
 package com.ghjansen.cas.core.physics;
 
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class LimitedTime extends Time {
 
-	public LimitedTime(int limit) throws InvalidAbsoluteTimeLimit {
+	public LimitedTime(int limit) throws InvalidAbsoluteTimeLimitException {
 		super(limit);
 	}
 

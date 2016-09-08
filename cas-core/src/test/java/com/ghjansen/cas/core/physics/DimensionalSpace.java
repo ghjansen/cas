@@ -23,9 +23,9 @@ import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.exception.InvalidInitialCondition;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
+import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -33,7 +33,7 @@ import com.ghjansen.cas.core.exception.InvalidInitialCondition;
 public class DimensionalSpace extends Space {
 
 	protected DimensionalSpace(Time time, List<?> initialCondition, boolean keepHistory)
-			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		super(time, initialCondition, keepHistory);
 	}
 

@@ -19,12 +19,67 @@
 package com.ghjansen.cas.core.ca;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Rule {
+
+	private Map<State, List<Transition>> transitions;
+
+	protected Rule(Transition... transitions) throws InvalidTransitionException {
+		if (transitions == null) {
+			throw new InvalidTransitionException();
+		}
+		initialize(transitions);
+	}
+
+	private void initialize(Transition... transitions) {
+		this.transitions = new HashMap<State, List<Transition>>();
+		for (Transition t : transitions) {
+			State s = t.getCombination().getReferenceState();
+			if (this.transitions.containsKey(s)) {
+				this.transitions.get(s).add(t);
+			} else {
+				ArrayList<Transition> l = new ArrayList<Transition>();
+				l.add(t);
+				this.transitions.put(s, l);
+			}
+		}
+	}
+
+	public Transition getTransition(Combination combination) throws InvalidStateException, InvalidCombinationException {
+		State s = combination.getReferenceState();
+		List<Transition> l = this.transitions.get(s);
+		if (l == null) {
+			throw new InvalidStateException();
+		}
+		for (Transition t : l) {
+			boolean found = true;
+			for (int i = 0; i < combination.getNeighborhood().size(); i++) {
+				State neighborCombination = combination.getNeighborhood().get(i);
+				State neighborTransition = t.getCombination().getNeighborhood().get(i);
+				if (!neighborCombination.equals(neighborTransition)) {
+					found = false;
+					break;
+				}
+			}
+			if (found) {
+				return t;
+			}
+		}
+		throw new InvalidCombinationException();
+	}
 	
-	private ArrayList<Transition> transitions;
+	public Map<State, List<Transition>> getTransitions(){
+		return this.transitions;
+	}
 
 }

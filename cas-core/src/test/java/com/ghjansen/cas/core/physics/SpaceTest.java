@@ -31,15 +31,15 @@ import com.ghjansen.cas.core.ca.DimensionalState;
 import com.ghjansen.cas.core.ca.DimensionalTransition;
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidCombination;
-import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.exception.InvalidInitialCondition;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidState;
-import com.ghjansen.cas.core.exception.InvalidTransition;
-import com.ghjansen.cas.core.exception.TimeLimitReached;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
+import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -50,9 +50,9 @@ import static org.mockito.Mockito.*;
 public class SpaceTest {
 
 	@Test
-	public void dimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			InvalidState, InvalidTransition, InvalidCombination {
+	public void dimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			InvalidStateException, InvalidTransitionException, InvalidCombinationException {
 		final Time dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
@@ -63,18 +63,18 @@ public class SpaceTest {
 		Assert.assertTrue(dimensionalSpace.isKeepHistory());
 	}
 
-	@Test(expected = InvalidInitialCondition.class)
+	@Test(expected = InvalidInitialConditionException.class)
 	public void dimensionalSpaceConstructorInvalidInitialCondition()
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit,
-			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException,
+			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		final Time dimensionalTime = new DimensionalTime(1000, 1000);
 		new DimensionalSpace(dimensionalTime, null, true);
 	}
 
-	@Test(expected = InvalidDimensionalSpace.class)
+	@Test(expected = InvalidDimensionalSpaceException.class)
 	public void dimensionalSpaceConstructorInvalidDimensionalSpace() throws CloneNotSupportedException,
-			InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition,
-			InvalidDimensionalSpace, InvalidState, InvalidTransition, InvalidCombination {
+			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException,
+			InvalidDimensionalSpaceException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
 		final Time dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<List> firstDimension = new ArrayList<List>();
@@ -84,17 +84,17 @@ public class SpaceTest {
 		new DimensionalSpace(dimensionalTime, firstDimension, true);
 	}
 
-	@Test(expected = InvalidDimensionalAmount.class)
-	public void dimensionalSpaceConstructorInvalidDimensionalAmount() throws InvalidAbsoluteTimeLimit,
-			InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+	@Test(expected = InvalidDimensionalAmountException.class)
+	public void dimensionalSpaceConstructorInvalidDimensionalAmount() throws InvalidAbsoluteTimeLimitException,
+			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		final Time dimensionalTime = new LimitedTime(1000);
 		new DimensionalSpace(dimensionalTime, null, false);
 	}
 
 	@Test
-	public void dimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			TimeLimitReached, InvalidState, InvalidTransition, InvalidCombination {
+	public void dimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			TimeLimitReachedException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
 		final Time dimensionalTime = new DimensionalTime(3, 1);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
@@ -116,9 +116,9 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void dimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			TimeLimitReached, InvalidState, InvalidTransition, InvalidCombination {
+	public void dimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			TimeLimitReachedException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
 		final Time dimensionalTime = new DimensionalTime(3, 2);
 		final State dimensionalBlackState = new DimensionalState("black", 0);
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
@@ -145,7 +145,7 @@ public class SpaceTest {
 		verify(mockedDimensionalSpace, times(6)).createNewCell(dimensionalTime, dimensionalTransition);
 	}
 
-	private Cell getNewValidDimensionalCell() throws InvalidState, InvalidTransition, InvalidCombination {
+	private Cell getNewValidDimensionalCell() throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
 		final State dimensionalBlackState = new DimensionalState("black", 0);
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
 		final Combination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,

@@ -21,9 +21,9 @@ package com.ghjansen.cas.core.physics;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.exception.TimeLimitReached;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -38,7 +38,7 @@ public class TimeTest {
 	}
 
 	@Test
-	public void unlimitedTimeIncreasing() throws TimeLimitReached {
+	public void unlimitedTimeIncreasing() throws TimeLimitReachedException {
 		final int amount = 1000;
 		final Time unlimitedTime = new UnlimitedTime();
 		for (int i = 0; i < amount; i++) {
@@ -49,7 +49,7 @@ public class TimeTest {
 	}
 
 	@Test
-	public void unlimitedTimeReset() throws TimeLimitReached {
+	public void unlimitedTimeReset() throws TimeLimitReachedException {
 		final int amount = 1000;
 		final int reset = 0;
 		final Time unlimitedTime = new UnlimitedTime();
@@ -63,7 +63,7 @@ public class TimeTest {
 	}
 
 	@Test
-	public void limitedTimeConstructor() throws InvalidAbsoluteTimeLimit {
+	public void limitedTimeConstructor() throws InvalidAbsoluteTimeLimitException {
 		final int limit = 10;
 		final Time limitedTime = new LimitedTime(limit);
 		Assert.assertNotNull(limitedTime);
@@ -71,20 +71,20 @@ public class TimeTest {
 		Assert.assertNull(limitedTime.getRelative());
 	}
 
-	@Test(expected = InvalidAbsoluteTimeLimit.class)
-	public void limitedTimeConstructorZero() throws InvalidAbsoluteTimeLimit {
+	@Test(expected = InvalidAbsoluteTimeLimitException.class)
+	public void limitedTimeConstructorZero() throws InvalidAbsoluteTimeLimitException {
 		final int limit = 0;
 		new LimitedTime(limit);
 	}
 
-	@Test(expected = InvalidAbsoluteTimeLimit.class)
-	public void limitedTimeConstructorNegative() throws InvalidAbsoluteTimeLimit {
+	@Test(expected = InvalidAbsoluteTimeLimitException.class)
+	public void limitedTimeConstructorNegative() throws InvalidAbsoluteTimeLimitException {
 		final int limit = -1;
 		new LimitedTime(limit);
 	}
 
 	@Test
-	public void limitedTimeIncreasing() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
+	public void limitedTimeIncreasing() throws InvalidAbsoluteTimeLimitException, TimeLimitReachedException {
 		final int limit = 1000;
 		final int iterationLimit = limit - 1;
 		final Time limitedTime = new LimitedTime(limit);
@@ -95,8 +95,8 @@ public class TimeTest {
 		Assert.assertNull(limitedTime.getRelative());
 	}
 
-	@Test(expected = TimeLimitReached.class)
-	public void limitedTimeIncreasingBeyondLimit() throws InvalidAbsoluteTimeLimit, TimeLimitReached {
+	@Test(expected = TimeLimitReachedException.class)
+	public void limitedTimeIncreasingBeyondLimit() throws InvalidAbsoluteTimeLimitException, TimeLimitReachedException {
 		final int limit = 1000;
 		final int amount = 1000;
 		final Time limitedTime = new LimitedTime(limit);
@@ -107,7 +107,7 @@ public class TimeTest {
 
 	@Test
 	public void dimensionalTimeConstructor()
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final Time dimensionalTime = new DimensionalTime(absoluteLimit, relativeLimit);
@@ -119,24 +119,24 @@ public class TimeTest {
 		Assert.assertTrue(dimensionalTime.getRelative().get(0).getClass().equals(DimensionalTime.class));
 	}
 
-	@Test(expected = InvalidRelativeTimeLimit.class)
+	@Test(expected = InvalidRelativeTimeLimitException.class)
 	public void dimensionalTimeConstructorNoLimits()
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		new DimensionalTime(absoluteLimit);
 	}
 
-	@Test(expected = InvalidRelativeTimeLimit.class)
+	@Test(expected = InvalidRelativeTimeLimitException.class)
 	public void dimensionalTimeConstructorZeroLimits()
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 0;
 		new DimensionalTime(absoluteLimit, relativeLimit);
 	}
 
-	@Test(expected = InvalidRelativeTimeLimit.class)
+	@Test(expected = InvalidRelativeTimeLimitException.class)
 	public void dimensionalTimeConstructorNegativeLimits()
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = -1;
 		new DimensionalTime(absoluteLimit, relativeLimit);
@@ -144,7 +144,7 @@ public class TimeTest {
 
 	@Test
 	public void dimensionalTimeIncreasing()
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, TimeLimitReached, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, TimeLimitReachedException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit) - 1;
@@ -156,9 +156,9 @@ public class TimeTest {
 		Assert.assertTrue(dimensionalTime.getRelative().get(0).getAbsolute() == relativeLimit - 1);
 	}
 
-	@Test(expected = TimeLimitReached.class)
+	@Test(expected = TimeLimitReachedException.class)
 	public void dimensionalTimeIncreasingBeyondLimits()
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, TimeLimitReached {
+			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, TimeLimitReachedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit);

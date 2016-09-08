@@ -16,13 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.ca;
-
-import com.ghjansen.cas.core.ca.Rule;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalRule extends Rule {
+public class InvalidTimeException extends Throwable {
+
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = 4810377526354040415L;
 
 }

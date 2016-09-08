@@ -21,11 +21,11 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class TimeLimitReached extends Throwable {
+public class InvalidDimensionalSpaceException extends Throwable {
 
 	/**
 	 * Serialization management
 	 */
-	private static final long serialVersionUID = -6359890788325087840L;
+	private static final long serialVersionUID = -859556206406629948L;
 
 }

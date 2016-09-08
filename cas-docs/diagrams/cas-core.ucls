@@ -117,10 +117,10 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.ghjansen.cas.unidimensional.ca.UnidimensionalRule" 
+  <class id="13" language="java" name="com.ghjansen.cas.unidimensional.ca.UnidimensionalGeneralRule" 
     project="cas-unidimensional" 
-    file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalRule.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+    file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalGeneralRule.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="870" y="486"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

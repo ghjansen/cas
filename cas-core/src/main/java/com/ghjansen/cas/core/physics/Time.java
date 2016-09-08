@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.exception.TimeLimitReached;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -39,19 +39,19 @@ public abstract class Time implements Cloneable {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	protected Time(final int limit) throws InvalidAbsoluteTimeLimit {
+	protected Time(final int limit) throws InvalidAbsoluteTimeLimitException {
 		initializeLimit(limit);
 		this.absoluteTime = new AtomicInteger();
 	}
 
 	public Time(final int limit, int... limits)
-			throws InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit, CloneNotSupportedException {
+			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		initializeLimit(limit);
 		initializeRelativeTime(limits);
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimit, CloneNotSupportedException {
+	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		if (limits != null && limits.length > 0) {
 			ArrayList<Time> relativeTime = new ArrayList<Time>();
 			for (int i = 0; i < limits.length; i++) {
@@ -60,21 +60,21 @@ public abstract class Time implements Cloneable {
 					t.initializeLimit(limits[i]);
 					t.absoluteTime = new AtomicInteger();
 					relativeTime.add(t);
-				} catch (InvalidAbsoluteTimeLimit e) {
-					throw new InvalidRelativeTimeLimit();
+				} catch (InvalidAbsoluteTimeLimitException e) {
+					throw new InvalidRelativeTimeLimitException();
 				}
 			}
 			this.relativeTime = (List<Time>) relativeTime.clone();
 		} else {
-			throw new InvalidRelativeTimeLimit();
+			throw new InvalidRelativeTimeLimitException();
 		}
 	}
 
-	private void initializeLimit(int limit) throws InvalidAbsoluteTimeLimit {
+	private void initializeLimit(int limit) throws InvalidAbsoluteTimeLimitException {
 		if (limit > 0) {
 			this.limit = new AtomicInteger(limit);
 		} else {
-			throw new InvalidAbsoluteTimeLimit();
+			throw new InvalidAbsoluteTimeLimitException();
 		}
 	}
 
@@ -87,9 +87,9 @@ public abstract class Time implements Cloneable {
 	 * time) 
 	 * LaTeX formula: ${lim(t)\displaystyle \prod_{i=1}^{d} lim(d-1)}$
 	 * 
-	 * @throws TimeLimitReached
+	 * @throws TimeLimitReachedException
 	 */
-	public void increase() throws TimeLimitReached {
+	public void increase() throws TimeLimitReachedException {
 		ArrayList<Time> resetPool = new ArrayList<Time>();
 		if (this.relativeTime != null) {
 			for (int i = this.relativeTime.size(); i > 0; i--) {
@@ -100,7 +100,7 @@ public abstract class Time implements Cloneable {
 						t.resetAbsoluteTime();
 					}
 					return;
-				} catch (TimeLimitReached e) {
+				} catch (TimeLimitReachedException e) {
 					resetPool.add(r);
 				}
 			}
@@ -111,7 +111,7 @@ public abstract class Time implements Cloneable {
 				t.resetAbsoluteTime();
 			}
 		} else {
-			throw new TimeLimitReached();
+			throw new TimeLimitReachedException();
 		}
 	}
 

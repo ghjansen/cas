@@ -16,16 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.exception;
+package com.ghjansen.cas.core.ca;
+
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidDimensionalSpace extends Throwable {
+public final class DimensionalRule extends Rule {
 
-	/**
-	 * Serialization management
-	 */
-	private static final long serialVersionUID = -859556206406629948L;
+	protected DimensionalRule(Transition ... transitions) throws InvalidTransitionException {
+		super(transitions);
+	}
 
 }

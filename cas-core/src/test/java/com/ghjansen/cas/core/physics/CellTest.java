@@ -18,9 +18,40 @@
 
 package com.ghjansen.cas.core.physics;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.DimensionalCombination;
+import com.ghjansen.cas.core.ca.DimensionalState;
+import com.ghjansen.cas.core.ca.DimensionalTransition;
+import com.ghjansen.cas.core.ca.State;
+import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class CellTest {
+	
+	@Test
+	public void dimensionalCellConstructor() throws InvalidStateException, InvalidCombinationException, InvalidTransitionException{
+		final State dimensionalBlackState = new DimensionalState("black", 0);
+		final State dimensionalWhiteState = new DimensionalState("white", 1);
+		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+				dimensionalWhiteState, dimensionalBlackState);
+		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+				dimensionalWhiteState);
+		final Cell dimensionalCell = new DimensionalCell(dimensionalTransition);
+		Assert.assertTrue(dimensionalCell.getTransition().equals(dimensionalTransition));
+		Assert.assertTrue(dimensionalCell.getState().equals(dimensionalTransition.getState()));
+	}
+	
+	@Test(expected = InvalidTransitionException.class)
+	public void dimensionalCellConstructorInvalidTransition() throws InvalidTransitionException {
+		new DimensionalCell(null);
+	}
 
 }

@@ -35,11 +35,11 @@ public abstract class State {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public int getValue() {
-		return value;
+		return this.value;
 	}
 
 }

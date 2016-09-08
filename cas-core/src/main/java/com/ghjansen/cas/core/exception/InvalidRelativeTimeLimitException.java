@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidRelativeTimeLimit extends Throwable {
+public class InvalidRelativeTimeLimitException extends Throwable {
 
 	/**
 	 * Serialization management

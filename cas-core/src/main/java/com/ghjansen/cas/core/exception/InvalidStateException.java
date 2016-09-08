@@ -21,11 +21,11 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidTransition extends Throwable {
+public class InvalidStateException extends Throwable {
 
 	/**
 	 * Serialization management
 	 */
-	private static final long serialVersionUID = 1848434169756515614L;
+	private static final long serialVersionUID = -7435119307025647318L;
 
 }

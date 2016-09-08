@@ -18,6 +18,8 @@
 
 package com.ghjansen.cas.unidimensional.physics;
 
+import com.ghjansen.cas.core.exception.InvalidSpaceException;
+import com.ghjansen.cas.core.exception.InvalidTimeException;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
 import com.ghjansen.cas.core.physics.Universe;
@@ -27,7 +29,7 @@ import com.ghjansen.cas.core.physics.Universe;
  */
 public final class UnidimensionalUniverse extends Universe {
 
-	protected UnidimensionalUniverse(Space space, Time time) {
+	protected UnidimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
 		super(space, time);
 	}
 

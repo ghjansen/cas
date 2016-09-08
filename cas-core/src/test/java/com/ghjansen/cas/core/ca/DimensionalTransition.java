@@ -18,15 +18,15 @@
 
 package com.ghjansen.cas.core.ca;
 
-import com.ghjansen.cas.core.exception.InvalidCombination;
-import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class DimensionalTransition extends Transition {
 
-	public DimensionalTransition(Combination combination, State state) throws InvalidCombination, InvalidState {
+	public DimensionalTransition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
 		super(combination, state);
 	}
 

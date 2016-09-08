@@ -18,8 +18,8 @@
 
 package com.ghjansen.cas.unidimensional.physics;
 
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
 import com.ghjansen.cas.core.physics.Time;
 
 /**
@@ -28,7 +28,7 @@ import com.ghjansen.cas.core.physics.Time;
 public final class UnidimensionalTime extends Time {
 
 	public UnidimensionalTime(final int limit, int... limits)
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimit, InvalidRelativeTimeLimit {
+			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException {
 		super(limit, limits);
 	}
 

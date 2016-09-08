@@ -19,10 +19,16 @@
 package com.ghjansen.cas.unidimensional.ca;
 
 import com.ghjansen.cas.core.ca.CellularAutomaton;
+import com.ghjansen.cas.core.ca.Rule;
+import com.ghjansen.cas.core.exception.InvalidRuleException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class UnidimensionalCellularAutomaton extends CellularAutomaton {
+
+	protected UnidimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
+		super(rule);
+	}
 
 }

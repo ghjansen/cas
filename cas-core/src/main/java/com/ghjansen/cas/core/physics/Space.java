@@ -23,11 +23,11 @@ import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.exception.InvalidInitialCondition;
-import com.ghjansen.cas.core.exception.InvalidState;
-import com.ghjansen.cas.core.exception.InvalidTransition;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
+import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -43,36 +43,36 @@ public abstract class Space {
 	protected boolean rotating;
 
 	public Space(Time time, List<?> initialCondition, boolean keepHistory)
-			throws InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace {
+			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		if (time.getRelative() != null && time.getRelative().size() > 0) {
 			this.dimensionalAmount = time.getRelative().size();
 		} else {
-			throw new InvalidDimensionalAmount();
+			throw new InvalidDimensionalAmountException();
 		}
 		if (initialCondition != null && initialCondition.size() > 0) {
 			validateDimensions(initialCondition, this.dimensionalAmount);
 			this.initial = initialCondition;
 		} else {
-			throw new InvalidInitialCondition();
+			throw new InvalidInitialConditionException();
 		}
 		this.keepHistory = keepHistory;
 		this.rotating = false;
 		initialize();
 	}
 
-	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpace {
+	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
 		if (dimensionalAmount == 1) {
 			if (space.size() > 0 && !(space.get(0) instanceof Cell)) {
-				throw new InvalidDimensionalSpace();
+				throw new InvalidDimensionalSpaceException();
 			}
 		} else if (space.size() > 0 && space.get(0) instanceof List) {
 			validateDimensions((List) space.get(0), dimensionalAmount--);
 		} else {
-			throw new InvalidDimensionalSpace();
+			throw new InvalidDimensionalSpaceException();
 		}
 	}
 
-	public Combination getCombination(Time time) throws InvalidState {
+	public Combination getCombination(Time time) throws InvalidStateException {
 		if (time.getAbsolute() == 0) {
 			return getCombination(time, this.initial);
 		} else {
@@ -80,7 +80,7 @@ public abstract class Space {
 		}
 	}
 
-	public void setState(Time time, Transition transition) throws InvalidTransition {
+	public void setState(Time time, Transition transition) throws InvalidTransitionException {
 		if (this.rotating) {
 			this.rotating = false;
 			createNewIteration(time);
@@ -136,10 +136,10 @@ public abstract class Space {
 	
 	protected abstract void initialize();
 	
-	protected abstract Combination getCombination(Time time, List<?> space) throws InvalidState;
+	protected abstract Combination getCombination(Time time, List<?> space) throws InvalidStateException;
 
 	protected abstract void createNewIteration(Time time);
 
-	protected abstract void createNewCell(Time time, Transition transition) throws InvalidTransition;
+	protected abstract void createNewCell(Time time, Transition transition) throws InvalidTransitionException;
 
 }

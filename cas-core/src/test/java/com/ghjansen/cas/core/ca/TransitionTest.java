@@ -21,8 +21,8 @@ package com.ghjansen.cas.core.ca;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.ghjansen.cas.core.exception.InvalidCombination;
-import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -30,7 +30,7 @@ import com.ghjansen.cas.core.exception.InvalidState;
 public class TransitionTest {
 
 	@Test
-	public void dimensionalTransitionConstructor() throws InvalidState, InvalidCombination {
+	public void dimensionalTransitionConstructor() throws InvalidStateException, InvalidCombinationException {
 		final State dimensionalBlackState = new DimensionalState("black", 0);
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
 		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
@@ -41,14 +41,14 @@ public class TransitionTest {
 		Assert.assertTrue(dimensionalTransition.getState().equals(dimensionalWhiteState));
 	}
 
-	@Test(expected = InvalidCombination.class)
-	public void dimensionalTransitionConstructorInvalidCombination() throws InvalidState, InvalidCombination {
+	@Test(expected = InvalidCombinationException.class)
+	public void dimensionalTransitionConstructorInvalidCombination() throws InvalidStateException, InvalidCombinationException {
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
 		new DimensionalTransition(null, dimensionalWhiteState);
 	}
 
-	@Test(expected = InvalidState.class)
-	public void dimensionalTransitionConstructorInvalidState() throws InvalidState, InvalidCombination {
+	@Test(expected = InvalidStateException.class)
+	public void dimensionalTransitionConstructorInvalidState() throws InvalidStateException, InvalidCombinationException {
 		final State dimensionalBlackState = new DimensionalState("black", 0);
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
 		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,

@@ -18,13 +18,38 @@
 
 package com.ghjansen.cas.core.ca;
 
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidRuleException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
+import com.ghjansen.cas.core.physics.Space;
+import com.ghjansen.cas.core.physics.Time;
+
 /**
- * Mechanism that transforms the space of the universe as time changes
- * 
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class CellularAutomaton {
-	
+
 	private Rule rule;
+
+	protected CellularAutomaton(Rule rule) throws InvalidRuleException {
+		if (rule == null) {
+			throw new InvalidRuleException();
+		}
+		this.rule = rule;
+	}
+
+	public void executeRule(Space space, Time time) throws InvalidStateException, InvalidCombinationException,
+			InvalidTransitionException, TimeLimitReachedException {
+		Combination combination = space.getCombination(time);
+		Transition transition = this.rule.getTransition(combination);
+		space.setState(time, transition);
+		time.increase();
+	}
+
+	public Rule getRule() {
+		return this.rule;
+	}
 
 }

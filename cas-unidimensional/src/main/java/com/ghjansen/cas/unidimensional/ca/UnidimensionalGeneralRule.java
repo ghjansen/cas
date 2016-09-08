@@ -16,19 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
+package com.ghjansen.cas.unidimensional.ca;
 
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+import com.ghjansen.cas.core.ca.Rule;
+import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalTime extends Time {
+public final class UnidimensionalGeneralRule extends Rule {
 
-	public DimensionalTime(final int limit, int... limits)
-			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
-		super(limit, limits);
+	protected UnidimensionalGeneralRule(Transition ... transitions) throws InvalidTransitionException {
+		super(transitions);
 	}
 
 }

@@ -21,11 +21,11 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidInitialCondition extends Throwable {
+public class InvalidAbsoluteTimeLimitException extends Throwable {
 
 	/**
 	 * Serialization management
 	 */
-	private static final long serialVersionUID = 3070196019858178183L;
+	private static final long serialVersionUID = 8503779819489685979L;
 
 }

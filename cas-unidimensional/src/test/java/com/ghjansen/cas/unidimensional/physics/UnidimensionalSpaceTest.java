@@ -27,15 +27,15 @@ import org.junit.Test;
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidCombination;
-import com.ghjansen.cas.core.exception.InvalidDimensionalAmount;
-import com.ghjansen.cas.core.exception.InvalidDimensionalSpace;
-import com.ghjansen.cas.core.exception.InvalidInitialCondition;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimit;
-import com.ghjansen.cas.core.exception.InvalidState;
-import com.ghjansen.cas.core.exception.InvalidTransition;
-import com.ghjansen.cas.core.exception.TimeLimitReached;
+import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
+import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
+import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
+import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
+import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
@@ -49,9 +49,9 @@ import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 public class UnidimensionalSpaceTest {
 
 	@Test
-	public void unidimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			InvalidState, InvalidCombination, InvalidTransition {
+	public void unidimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final Time unidimensionalTime = new UnidimensionalTime(1000, 1000);
 		final Cell unidimensionalCell = getNewWhiteUnidimensionalCell(new UnidimensionalState("black", 0),
 				new UnidimensionalState("white", 1));
@@ -67,9 +67,9 @@ public class UnidimensionalSpaceTest {
 	}
 
 	@Test
-	public void unidimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			TimeLimitReached, InvalidState, InvalidCombination, InvalidTransition {
+	public void unidimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			TimeLimitReachedException, InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final Time unidimensionalTime = new UnidimensionalTime(3, 3);
 		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
 		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
@@ -128,9 +128,9 @@ public class UnidimensionalSpaceTest {
 	}
 
 	@Test
-	public void unidimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimit,
-			InvalidRelativeTimeLimit, InvalidDimensionalAmount, InvalidInitialCondition, InvalidDimensionalSpace,
-			TimeLimitReached, InvalidState, InvalidCombination, InvalidTransition {
+	public void unidimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
+			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
+			TimeLimitReachedException, InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final Time unidimensionalTime = new UnidimensionalTime(3, 3);
 		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
 		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
@@ -194,27 +194,27 @@ public class UnidimensionalSpaceTest {
 	}
 
 	private Cell getNewWhiteUnidimensionalCell(State black, State white)
-			throws InvalidState, InvalidCombination, InvalidTransition {
+			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
 		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, white);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
 	private Cell getNewBlackUnidimensionalCell(State black, State white)
-			throws InvalidState, InvalidCombination, InvalidTransition {
+			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
 		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, black);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
 	private Transition getNewWhiteUnidimensionalTransition(State black, State white)
-			throws InvalidState, InvalidCombination {
+			throws InvalidStateException, InvalidCombinationException {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
 		return new UnidimensionalTransition(unidimensionalCombination, white);
 	}
 
 	private Transition getNewBlackUnidimensionalTransition(State black, State white)
-			throws InvalidState, InvalidCombination {
+			throws InvalidStateException, InvalidCombinationException {
 		final Combination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
 		return new UnidimensionalTransition(unidimensionalCombination, black);
 	}

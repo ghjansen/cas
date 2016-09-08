@@ -18,42 +18,34 @@
 
 package com.ghjansen.cas.core.physics;
 
+import com.ghjansen.cas.core.exception.InvalidSpaceException;
+import com.ghjansen.cas.core.exception.InvalidTimeException;
+
 /**
- * Abstract representation of a n-dimensional universe, where time progress
- * affects space by applying the rules that separates the old state from the new
- * state.
- * 
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public abstract class Universe {
 
-	/**
-	 * Abstract representation of a n-dimensional space
-	 */
 	private Space space;
-	/**
-	 * Keep the amount of iterations applied to the space of the universe
-	 */
 	private Time time;
 
-	/**
-	 * Creates the universe given the n-dimensional space and time
-	 * 
-	 * @param space
-	 *            Instance of a n-dimensional space
-	 */
-	protected Universe(Space space, Time time) {
+	protected Universe(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+		if(space == null) {
+			throw new InvalidSpaceException();
+		}
+		if(time == null) {
+			throw new InvalidTimeException();
+		}
 		this.space = space;
 		this.time = time;
 	}
-	
-	/**
-	 * Perform one new iteration of the whole universe, transforming space and increasing one time unit
-	 */
-	protected void update(){
-		//this.space.nextIteration()
-		//this.time.increase();
-		
+
+	public Space getSpace() {
+		return space;
 	}
 
+	public Time getTime() {
+		return time;
+	}
+	
 }

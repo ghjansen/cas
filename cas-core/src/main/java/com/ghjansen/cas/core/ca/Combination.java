@@ -19,10 +19,9 @@
 package com.ghjansen.cas.core.ca;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -32,9 +31,9 @@ public abstract class Combination {
 	private State reference;
 	private List<State> neighborhood;
 
-	public Combination(State reference, State... neighbors) throws InvalidState {
+	public Combination(State reference, State... neighbors) throws InvalidStateException {
 		if (reference == null || neighbors == null) {
-			throw new InvalidState();
+			throw new InvalidStateException();
 		}
 		this.reference = reference;
 		this.neighborhood = new ArrayList<State>();
@@ -44,24 +43,10 @@ public abstract class Combination {
 	}
 
 	public State getReferenceState() {
-		return reference;
+		return this.reference;
 	}
 
 	public List<State> getNeighborhood() {
 		return this.neighborhood;
-	}
-
-	// TODO migrate this method to rule
-	public boolean isGeneralEquivalent(Combination combination) {
-		if (this.reference.equals(combination.getReferenceState())) {
-			for (int i = 0; i < this.neighborhood.size(); i++) {
-				List<State> differentNeighborhood = combination.getNeighborhood();
-				if (!this.neighborhood.get(i).equals(differentNeighborhood.get(i))) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
 	}
 }

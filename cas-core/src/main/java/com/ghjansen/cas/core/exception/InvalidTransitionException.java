@@ -16,19 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
-
-import com.ghjansen.cas.core.exception.InvalidAbsoluteTimeLimitException;
-import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalTime extends Time {
+public class InvalidTransitionException extends Throwable {
 
-	public DimensionalTime(final int limit, int... limits)
-			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
-		super(limit, limits);
-	}
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = 1848434169756515614L;
 
 }

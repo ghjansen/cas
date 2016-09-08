@@ -21,15 +21,15 @@ package com.ghjansen.cas.unidimensional.ca;
 import com.ghjansen.cas.core.ca.Combination;
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidCombination;
-import com.ghjansen.cas.core.exception.InvalidState;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public final class UnidimensionalTransition extends Transition {
 
-	public UnidimensionalTransition(Combination combination, State state) throws InvalidCombination, InvalidState {
+	public UnidimensionalTransition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
 		super(combination, state);
 	}
 
