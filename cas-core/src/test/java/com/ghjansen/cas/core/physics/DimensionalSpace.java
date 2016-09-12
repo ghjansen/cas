@@ -32,7 +32,7 @@ import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
  */
 public class DimensionalSpace extends Space {
 
-	protected DimensionalSpace(Time time, List<?> initialCondition, boolean keepHistory)
+	public DimensionalSpace(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		super(time, initialCondition, keepHistory);
 	}

@@ -24,7 +24,7 @@ import com.ghjansen.cas.core.exception.InvalidRelativeTimeLimitException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalTime extends Time {
+public class DimensionalTime extends Time {
 
 	public DimensionalTime(final int limit, int... limits)
 			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {

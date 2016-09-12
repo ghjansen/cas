@@ -39,20 +39,16 @@ public class RuleTest {
 				dimensionalBlackState, dimensionalBlackState);
 		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-
 		final Combination dimensionalCombination1 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalWhiteState);
 		final Transition dimensionalTransition1 = new DimensionalTransition(dimensionalCombination1,
 				dimensionalBlackState);
-
 		final Combination dimensionalCombination2 = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
 		final Transition dimensionalTransition2 = new DimensionalTransition(dimensionalCombination2,
 				dimensionalBlackState);
-
-		Rule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
+		final Rule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
 				dimensionalTransition2);
-
 		Assert.assertNotNull(dimensionalRule.getTransitions());
 		Assert.assertTrue(dimensionalRule.getTransitions().size() > 0);
 		Assert.assertTrue(dimensionalRule.getTransitions().size() == 2);
@@ -78,23 +74,19 @@ public class RuleTest {
 				dimensionalBlackState, dimensionalBlackState);
 		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-
 		final Combination dimensionalCombination1 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalWhiteState);
 		final Transition dimensionalTransition1 = new DimensionalTransition(dimensionalCombination1,
 				dimensionalBlackState);
-
 		final Combination dimensionalCombination2 = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
 		final Transition dimensionalTransition2 = new DimensionalTransition(dimensionalCombination2,
 				dimensionalBlackState);
-
-		Rule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
+		final Rule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
 				dimensionalTransition2);
-
-		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination0).equals(dimensionalWhiteState));
-		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination1).equals(dimensionalBlackState));
-		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination2).equals(dimensionalBlackState));
+		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination0).equals(dimensionalTransition0));
+		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination1).equals(dimensionalTransition1));
+		Assert.assertTrue(dimensionalRule.getTransition(dimensionalCombination2).equals(dimensionalTransition2));
 	}
 
 }

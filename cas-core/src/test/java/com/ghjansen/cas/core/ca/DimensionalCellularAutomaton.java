@@ -18,15 +18,15 @@
 
 package com.ghjansen.cas.core.ca;
 
-import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.core.exception.InvalidRuleException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalRule extends Rule {
+public class DimensionalCellularAutomaton extends CellularAutomaton {
 
-	protected DimensionalRule(Transition ... transitions) throws InvalidTransitionException {
-		super(transitions);
+	protected DimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
+		super(rule);
 	}
 
 }
