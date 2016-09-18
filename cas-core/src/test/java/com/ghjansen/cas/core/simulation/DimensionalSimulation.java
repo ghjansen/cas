@@ -16,17 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.ca;
+package com.ghjansen.cas.core.simulation;
 
-import com.ghjansen.cas.core.exception.InvalidRuleException;
+import com.ghjansen.cas.core.ca.CellularAutomaton;
+import com.ghjansen.cas.core.exception.InvalidCellularAutomataException;
+import com.ghjansen.cas.core.exception.InvalidUniverseException;
+import com.ghjansen.cas.core.physics.Universe;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalCellularAutomaton extends CellularAutomaton {
+public final class DimensionalSimulation extends Simulation {
 
-	public DimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
-		super(rule);
+	protected DimensionalSimulation(Universe universe, CellularAutomaton ca)
+			throws InvalidUniverseException, InvalidCellularAutomataException {
+		super(universe, ca);
 	}
 
 }

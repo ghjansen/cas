@@ -25,7 +25,7 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
  */
 public class DimensionalRule extends Rule {
 
-	protected DimensionalRule(Transition ... transitions) throws InvalidTransitionException {
+	public DimensionalRule(Transition ... transitions) throws InvalidTransitionException {
 		super(transitions);
 	}
 

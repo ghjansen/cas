@@ -16,17 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.ca;
-
-import com.ghjansen.cas.core.exception.InvalidRuleException;
+package com.ghjansen.cas.core.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalCellularAutomaton extends CellularAutomaton {
+public class InvalidUniverseException extends Throwable {
 
-	public DimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
-		super(rule);
-	}
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = -5140302667570723804L;
 
 }
