@@ -153,14 +153,22 @@ public class UnidimensionalGeneralRuleTest {
 				unidimensionalTransition2, unidimensionalTransition3, unidimensionalTransition4,
 				unidimensionalTransition5, unidimensionalTransition6, unidimensionalTransition7);
 
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination0).equals(unidimensionalWhiteState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination1).equals(unidimensionalBlackState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination2).equals(unidimensionalBlackState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination3).equals(unidimensionalWhiteState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination4).equals(unidimensionalBlackState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination5).equals(unidimensionalBlackState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination6).equals(unidimensionalBlackState));
-		Assert.assertTrue(unidimensionalRule.getTransition(unidimensionalCombination7).equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination0).equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination1).equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination2).equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination3).equals(unidimensionalWhiteState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination4).equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination5).equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination6).equals(unidimensionalBlackState));
+		Assert.assertTrue(
+				unidimensionalRule.getTransition(unidimensionalCombination7).equals(unidimensionalWhiteState));
 	}
 
 }

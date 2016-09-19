@@ -18,17 +18,28 @@
 
 package com.ghjansen.cas.unidimensional.ca;
 
-import com.ghjansen.cas.core.ca.CellularAutomaton;
-import com.ghjansen.cas.core.ca.Rule;
-import com.ghjansen.cas.core.exception.InvalidRuleException;
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.ghjansen.cas.core.ca.State;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalCellularAutomaton extends CellularAutomaton {
+public class UnidimensionalStateTest {
 
-	public UnidimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
-		super(rule);
+	@Test
+	public void unidimensionalStateConstructor() {
+		final String nameBlack = "black";
+		final int valueBlack = 0;
+		final String nameWhite = "white";
+		final int valueWhite = 1;
+		final State unidimensionalBlackState = new UnidimensionalState(nameBlack, valueBlack);
+		final State unidimensionalWhiteState = new UnidimensionalState(nameWhite, valueWhite);
+		Assert.assertTrue(unidimensionalBlackState.getName().equals(nameBlack));
+		Assert.assertTrue(unidimensionalBlackState.getValue() == valueBlack);
+		Assert.assertTrue(unidimensionalWhiteState.getName().equals(nameWhite));
+		Assert.assertTrue(unidimensionalWhiteState.getValue() == valueWhite);
 	}
 
 }

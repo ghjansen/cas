@@ -151,9 +151,9 @@ public class SimulationTest {
 		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
 		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
-		final int absoluteTime = 3;
-		final int relativeTime = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTime, relativeTime));
+		final int absoluteTimeLimit = 3;
+		final int relativeTimeLimit = 3;
+		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
@@ -174,14 +174,14 @@ public class SimulationTest {
 		} catch (InvalidTransitionException e) {
 			throw e;
 		} catch (TimeLimitReachedException e) {
-			//throw e; // End of simulation signal
+			// throw e; // End of simulation signal
 		}
-		final int ruleExecutions = absoluteTime * relativeTime;
+		final int ruleExecutions = absoluteTimeLimit * relativeTimeLimit;
 		verify(mockedDimensionalCellularAutomaton, times(ruleExecutions)).executeRule(mockedDimensionalSpace,
 				mockedDimensionalTime);
 		Assert.assertTrue(dimensionalSimulation.isActive() == false);
 	}
-	
+
 	@Test
 	public void dimensionalSimulationSimulateIteration() throws InvalidStateException, InvalidCombinationException,
 			InvalidTransitionException, InvalidRuleException, CloneNotSupportedException,
@@ -197,9 +197,9 @@ public class SimulationTest {
 		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
 		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
-		final int absoluteTime = 3;
-		final int relativeTime = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTime, relativeTime));
+		final int absoluteTimeLimit = 3;
+		final int relativeTimeLimit = 3;
+		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
@@ -220,14 +220,14 @@ public class SimulationTest {
 		} catch (InvalidTransitionException e) {
 			throw e;
 		} catch (TimeLimitReachedException e) {
-			//throw e; // End of simulation signal
+			// throw e; // End of simulation signal
 		}
-		final int ruleExecutions = relativeTime;
+		final int ruleExecutions = relativeTimeLimit;
 		verify(mockedDimensionalCellularAutomaton, times(ruleExecutions)).executeRule(mockedDimensionalSpace,
 				mockedDimensionalTime);
 		Assert.assertTrue(dimensionalSimulation.isActive() == false);
 	}
-	
+
 	@Test
 	public void dimensionalSimulationSimulateCell() throws InvalidStateException, InvalidCombinationException,
 			InvalidTransitionException, InvalidRuleException, CloneNotSupportedException,
@@ -243,9 +243,9 @@ public class SimulationTest {
 		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
 		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
-		final int absoluteTime = 3;
-		final int relativeTime = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTime, relativeTime));
+		final int absoluteTimeLimit = 3;
+		final int relativeTimeLimit = 3;
+		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
@@ -266,7 +266,7 @@ public class SimulationTest {
 		} catch (InvalidTransitionException e) {
 			throw e;
 		} catch (TimeLimitReachedException e) {
-			//throw e; // End of simulation signal
+			// throw e; // End of simulation signal
 		}
 		final int ruleExecutions = 1;
 		verify(mockedDimensionalCellularAutomaton, times(ruleExecutions)).executeRule(mockedDimensionalSpace,

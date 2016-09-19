@@ -143,8 +143,8 @@ public class TimeTest {
 	}
 
 	@Test
-	public void dimensionalTimeIncreasing()
-			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, TimeLimitReachedException, CloneNotSupportedException {
+	public void dimensionalTimeIncrease() throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException,
+			TimeLimitReachedException, CloneNotSupportedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit) - 1;
@@ -157,8 +157,8 @@ public class TimeTest {
 	}
 
 	@Test(expected = TimeLimitReachedException.class)
-	public void dimensionalTimeIncreasingBeyondLimits()
-			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, TimeLimitReachedException {
+	public void dimensionalTimeIncreasingBeyondLimits() throws CloneNotSupportedException,
+			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, TimeLimitReachedException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit);

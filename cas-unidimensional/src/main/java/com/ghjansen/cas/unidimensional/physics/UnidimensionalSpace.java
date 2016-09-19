@@ -39,8 +39,8 @@ import com.ghjansen.cas.unidimensional.ca.UnidimensionalCombination;
  */
 public final class UnidimensionalSpace extends Space {
 
-	public UnidimensionalSpace(Time time, List<?> initialCondition)
-			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
+	public UnidimensionalSpace(Time time, List<?> initialCondition) throws InvalidDimensionalAmountException,
+			InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		super(time, initialCondition, true);
 	}
 

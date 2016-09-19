@@ -80,12 +80,15 @@ public abstract class Time implements Cloneable {
 
 	/**
 	 * The complete evolution of time is the multiplication of the limit of
-	 * absolute time by the product of all limits of relative times. 
-	 * - lm(t) = limit of absolute time
+	 * absolute time by the product of all limits of relative times, minus one.
+	 * Removing one is necessary since the initial time (0) is used. Without
+	 * removing one, we have the formula that calculates the amount of times
+	 * the rule will be executed to reach complete evolution.
+	 * - lim(t) = limit of absolute time
 	 * - d = amount of dimensions (or relative times)
 	 * - lim(d-1) = the iteration to get the limit of each dimension (relative
 	 * time) 
-	 * LaTeX formula: ${lim(t)\displaystyle \prod_{i=1}^{d} lim(d-1)}$
+	 * LaTeX formula: ${lim(t)\displaystyle \left(\prod_{i=1}^{d} lim(d-1)\right)-1}$
 	 * 
 	 * @throws TimeLimitReachedException
 	 */
