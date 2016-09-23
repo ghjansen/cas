@@ -37,8 +37,8 @@ public class UnidimensionalGeneralRuleTest {
 	@Test
 	public void unidimensionalGeneralRuleConstructor()
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
 		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
 		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
@@ -107,43 +107,36 @@ public class UnidimensionalGeneralRuleTest {
 	@Test
 	public void unidimensionalGeneralRuleGetNextState()
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
 		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
 		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-
 		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
 		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalBlackState);
-
 		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
 		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalBlackState);
-
 		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
 		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalWhiteState);
-
 		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
 		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-
 		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
 		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalBlackState);
-
 		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
 		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-
 		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
 		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
@@ -154,21 +147,21 @@ public class UnidimensionalGeneralRuleTest {
 				unidimensionalTransition5, unidimensionalTransition6, unidimensionalTransition7);
 
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination0).equals(unidimensionalWhiteState));
+				unidimensionalRule.getTransition(unidimensionalCombination0).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination1).equals(unidimensionalBlackState));
+				unidimensionalRule.getTransition(unidimensionalCombination1).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination2).equals(unidimensionalBlackState));
+				unidimensionalRule.getTransition(unidimensionalCombination2).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination3).equals(unidimensionalWhiteState));
+				unidimensionalRule.getTransition(unidimensionalCombination3).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination4).equals(unidimensionalBlackState));
+				unidimensionalRule.getTransition(unidimensionalCombination4).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination5).equals(unidimensionalBlackState));
+				unidimensionalRule.getTransition(unidimensionalCombination5).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination6).equals(unidimensionalBlackState));
+				unidimensionalRule.getTransition(unidimensionalCombination6).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				unidimensionalRule.getTransition(unidimensionalCombination7).equals(unidimensionalWhiteState));
+				unidimensionalRule.getTransition(unidimensionalCombination7).getState().equals(unidimensionalWhiteState));
 	}
 
 }

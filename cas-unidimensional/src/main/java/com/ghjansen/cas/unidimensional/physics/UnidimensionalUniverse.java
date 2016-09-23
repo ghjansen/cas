@@ -29,7 +29,7 @@ import com.ghjansen.cas.core.physics.Universe;
  */
 public final class UnidimensionalUniverse extends Universe {
 
-	protected UnidimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+	public UnidimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
 		super(space, time);
 	}
 

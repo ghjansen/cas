@@ -143,20 +143,12 @@ public class UnidimensionalCellularAutomatonTest {
 		final CellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
 				unidimensionalRule);
 		final int absoluteTimeLimit = 3;
-		final int relativeTimeLimit = 11;
+		final int relativeTimeLimit = 3;
 		final Time unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
-		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
 		final int ruleExecutions = absoluteTimeLimit * relativeTimeLimit;
 		try {
@@ -169,86 +161,28 @@ public class UnidimensionalCellularAutomatonTest {
 		// Assert initial condition
 		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(0)).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(1)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(2)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(3)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(4)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(5)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(6)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(7)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(8)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(9)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getInitial().get(10)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getInitial().get(2)).getState().equals(unidimensionalBlackState));
 		// Assert history
 		Assert.assertTrue(
 				((Cell) unidimensionalSpace.getHistory().get(0).get(0)).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(1)).getState().equals(unidimensionalWhiteState));
+				((Cell) unidimensionalSpace.getHistory().get(0).get(1)).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(2)).getState().equals(unidimensionalWhiteState));
+				((Cell) unidimensionalSpace.getHistory().get(0).get(2)).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(3)).getState().equals(unidimensionalWhiteState));
+				((Cell) unidimensionalSpace.getHistory().get(1).get(0)).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(4)).getState().equals(unidimensionalBlackState));
+				((Cell) unidimensionalSpace.getHistory().get(1).get(1)).getState().equals(unidimensionalBlackState));
 		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(5)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(6)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(7)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(8)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(9)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(0).get(10)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(0)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(1)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(2)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(3)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(4)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(5)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(6)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(7)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(8)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(9)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getHistory().get(1).get(10)).getState().equals(unidimensionalWhiteState));
+				((Cell) unidimensionalSpace.getHistory().get(1).get(2)).getState().equals(unidimensionalBlackState));
 		// Assert last
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(0)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(1)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(2)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(3)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(4)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(5)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(6)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(7)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(8)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(9)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(10)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(0)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(1)).getState().equals(unidimensionalBlackState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getLast().get(2)).getState().equals(unidimensionalBlackState));
 		// Assert current
 		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(0)).getState().equals(unidimensionalWhiteState));
 		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(1)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(2)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(3)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(4)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(5)).getState().equals(unidimensionalBlackState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(6)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(7)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(8)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(9)).getState().equals(unidimensionalWhiteState));
-		Assert.assertTrue(
-				((Cell) unidimensionalSpace.getCurrent().get(10)).getState().equals(unidimensionalWhiteState));
+		Assert.assertTrue(((Cell) unidimensionalSpace.getCurrent().get(2)).getState().equals(unidimensionalWhiteState));
 
 	}
 
