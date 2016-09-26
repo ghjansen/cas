@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.ghjansen.cas.core.physics.Space" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="357" y="272"/>    
+    <position height="-1" width="-1" x="769" y="450"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="com.ghjansen.cas.core.physics.Universe" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/physics/Universe.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="140" y="270"/>    
+    <position height="-1" width="-1" x="507" y="270"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="com.ghjansen.cas.core.physics.Time" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="523" y="271"/>    
+    <position height="-1" width="-1" x="1015" y="360"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="com.ghjansen.cas.core.ca.CellularAutomaton" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="686" y="274"/>    
+    <position height="-1" width="-1" x="1475" y="269"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="com.ghjansen.cas.core.ca.Rule" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="870" y="274"/>    
+    <position height="-1" width="-1" x="1763" y="271"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="com.ghjansen.cas.core.ca.Transition" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1075" y="276"/>    
+    <position height="-1" width="-1" x="2041" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="com.ghjansen.cas.core.ca.Combination" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1279" y="276"/>    
+    <position height="-1" width="-1" x="2328" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="com.ghjansen.cas.core.ca.State" project="cas-core" 
     file="/cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1483" y="276"/>    
+    <position height="-1" width="-1" x="2567" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -77,7 +77,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalCellularAutomaton.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="685" y="582"/>    
+    <position height="-1" width="-1" x="1474" y="785"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -88,7 +88,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/physics/UnidimensionalUniverse.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="141" y="487"/>    
+    <position height="-1" width="-1" x="508" y="785"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -99,7 +99,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/physics/UnidimensionalSpace.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="356" y="585"/>    
+    <position height="-1" width="-1" x="768" y="848"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -110,7 +110,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/physics/UnidimensionalTime.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="522" y="485"/>    
+    <position height="-1" width="-1" x="1014" y="785"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -121,7 +121,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalGeneralRule.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="870" y="486"/>    
+    <position height="-1" width="-1" x="1763" y="784"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -132,7 +132,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalTransition.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1074" y="581"/>    
+    <position height="-1" width="-1" x="2040" y="784"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -143,7 +143,7 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalCombination.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1279" y="484"/>    
+    <position height="-1" width="-1" x="2328" y="784"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -154,123 +154,211 @@
     project="cas-unidimensional" 
     file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/ca/UnidimensionalState.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1484" y="581"/>    
+    <position height="-1" width="-1" x="2568" y="784"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="17">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="3"/>  
+  <class id="17" language="java" name="com.ghjansen.cas.core.physics.Cell" project="cas-core" 
+    file="/cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1230" y="278"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.ghjansen.cas.unidimensional.physics.UnidimensionalCell" 
+    project="cas-unidimensional" 
+    file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/physics/UnidimensionalCell.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1230" y="785"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.ghjansen.cas.core.simulation.Simulation" project="cas-core" 
+    file="/cas-core/src/main/java/com/ghjansen/cas/core/simulation/Simulation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="212" y="331"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="com.ghjansen.cas.unidimensional.simulation.UnidimensionalSimulation" 
+    project="cas-unidimensional" 
+    file="/cas-unidimensional/src/main/java/com/ghjansen/cas/unidimensional/simulation/UnidimensionalSimulation.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="212" y="795"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
   </generalization>  
-  <generalization id="18">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="4"/>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="8"/>  
   </generalization>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="20">    
-    <bendpoint x="140" y="146"/>    
-    <bendpoint x="523" y="146"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="21" name="time">        
-        <position height="18" width="31" x="490" y="167"/>      
+  <association id="23">    
+    <bendpoint x="1230" y="164"/>    
+    <bendpoint x="1969" y="164"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="24" name="transition">        
+        <position height="18" width="61" x="1923" y="186"/>      
       </attribute>      
-      <multiplicity id="22" minimum="0" maximum="1">        
-        <position height="16" width="25" x="530" y="168"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="27">    
+    <bendpoint x="507" y="146"/>    
+    <bendpoint x="1014" y="146"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="28" name="time">        
+        <position height="18" width="31" x="980" y="182"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="16" width="25" x="1020" y="183"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="24">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="25" name="transitions">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="26" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <association id="29">    
+  <association id="30">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="30" name="rule">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="31" name="rule">        
+        <position height="0" width="0" x="893" y="-3"/>      
       </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="32" minimum="0" maximum="1">        
+        <position height="0" width="0" x="893" y="-3"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="7"/>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
-  <association id="33">    
-    <bendpoint x="140" y="177"/>    
-    <bendpoint x="357" y="177"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="34" name="space">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="35" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="36">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="5"/>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
-  <association id="37">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="38" name="combination">        
-        <position height="0" width="0" x="0" y="0"/>      
+  <generalization id="35">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <association id="36">    
+    <bendpoint x="1230" y="112"/>    
+    <bendpoint x="2568" y="112"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="37" name="state">        
+        <position height="18" width="37" x="2447" y="91"/>      
       </attribute>      
-      <multiplicity id="39" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="40">    
-    <bendpoint x="1076" y="191"/>    
-    <bendpoint x="1483" y="191"/>    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="41" name="state">        
-        <position height="18" width="34" x="1446" y="203"/>      
-      </attribute>      
-      <multiplicity id="42" minimum="0" maximum="1">        
-        <position height="16" width="25" x="1486" y="205"/>      
+      <multiplicity id="38" minimum="0" maximum="1">        
+        <position height="16" width="25" x="2494" y="91"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="39">    
+    <bendpoint x="2041" y="164"/>    
+    <bendpoint x="2568" y="164"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="40" name="state">        
+        <position height="18" width="34" x="2451" y="144"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="1">        
+        <position height="16" width="25" x="2495" y="145"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="42">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="43">    
+    <bendpoint x="212" y="164"/>    
+    <bendpoint x="432" y="164"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="44" name="universe">        
+        <position height="18" width="55" x="389" y="183"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="47">    
+    <bendpoint x="507" y="177"/>    
+    <bendpoint x="767" y="177"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="48" name="space">        
+        <position height="0" width="0" x="412" y="178"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="412" y="178"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="50">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="51" name="combination">        
+        <position height="0" width="0" x="1049" y="-3"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1049" y="-3"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="54">    
+    <bendpoint x="212" y="58"/>    
+    <bendpoint x="1229" y="58"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="55" name="ca">        
+        <position height="18" width="21" x="1352" y="182"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="1">        
+        <position height="16" width="25" x="1394" y="182"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="57">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
