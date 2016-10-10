@@ -8,4 +8,12 @@
   <artifactId>cas-control</artifactId>
   <name>cas-control</name>
   <description>Resources to manipulate dimensional implementations</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ghjansen</groupId>
+			<artifactId>cas-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

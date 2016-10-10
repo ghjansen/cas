@@ -16,23 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
-
-import com.ghjansen.cas.core.ca.State;
-import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidStateException;
-import com.ghjansen.cas.core.exception.InvalidTransitionException;
+package com.ghjansen.cas.control.parameter;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCell extends Cell {
+public abstract class RuleConfigurationParameter {
 
-	public DimensionalCell(Transition transition) throws InvalidTransitionException {
-		super(transition);
+	private final int[] stateValues;
+
+	public RuleConfigurationParameter(int... stateValues) {
+		this.stateValues = stateValues;
 	}
 
-	public DimensionalCell(State state) throws InvalidStateException {
-		super(state);
+	public int[] getStateValues() {
+		return stateValues;
 	}
 }

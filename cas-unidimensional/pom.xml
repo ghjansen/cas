@@ -16,5 +16,10 @@
 			<artifactId>cas-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.ghjansen</groupId>
+			<artifactId>cas-control</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

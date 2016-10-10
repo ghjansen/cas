@@ -27,16 +27,11 @@ import com.ghjansen.cas.core.simulation.Simulation;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-final class UnidimensionalSimulation extends Simulation {
-	
-	protected UnidimensionalSimulation(Universe universe, CellularAutomaton ca)
+public final class UnidimensionalSimulation extends Simulation {
+
+	public UnidimensionalSimulation(Universe universe, CellularAutomaton ca)
 			throws InvalidUniverseException, InvalidCellularAutomataException {
 		super(universe, ca);
-	}
-	
-	public UnidimensionalSimulation(boolean generalRule) throws InvalidUniverseException, InvalidCellularAutomataException{
-		
-		super(null, null);
 	}
 
 }

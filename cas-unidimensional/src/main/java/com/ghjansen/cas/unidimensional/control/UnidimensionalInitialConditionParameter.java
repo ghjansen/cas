@@ -16,23 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
+package com.ghjansen.cas.unidimensional.control;
 
-import com.ghjansen.cas.core.ca.State;
-import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidStateException;
-import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import java.util.List;
+
+import com.ghjansen.cas.control.parameter.InitialConditionParameter;
+import com.ghjansen.cas.control.parameter.SequenceParameter;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCell extends Cell {
+public class UnidimensionalInitialConditionParameter extends InitialConditionParameter {
 
-	public DimensionalCell(Transition transition) throws InvalidTransitionException {
-		super(transition);
+	public UnidimensionalInitialConditionParameter(List<SequenceParameter> sequences) {
+		super(sequences);
 	}
 
-	public DimensionalCell(State state) throws InvalidStateException {
-		super(state);
-	}
 }

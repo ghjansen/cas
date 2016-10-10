@@ -18,7 +18,9 @@
 
 package com.ghjansen.cas.unidimensional.physics;
 
+import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 import com.ghjansen.cas.core.exception.InvalidTransitionException;
 import com.ghjansen.cas.core.physics.Cell;
 
@@ -29,6 +31,10 @@ public final class UnidimensionalCell extends Cell {
 
 	public UnidimensionalCell(Transition transition) throws InvalidTransitionException {
 		super(transition);
+	}
+
+	public UnidimensionalCell(State state) throws InvalidStateException {
+		super(state);
 	}
 
 }

@@ -16,23 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
-
-import com.ghjansen.cas.core.ca.State;
-import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidStateException;
-import com.ghjansen.cas.core.exception.InvalidTransitionException;
+package com.ghjansen.cas.control.exception;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCell extends Cell {
+public class SimulationBuilderException extends Throwable {
 
-	public DimensionalCell(Transition transition) throws InvalidTransitionException {
-		super(transition);
+	/**
+	 * Serialization management
+	 */
+	private static final long serialVersionUID = -8982233794055802924L;
+	private final Throwable buildException;
+
+	public SimulationBuilderException(Throwable buildException) {
+		super();
+		this.buildException = buildException;
 	}
 
-	public DimensionalCell(State state) throws InvalidStateException {
-		super(state);
+	public Throwable getBuildException() {
+		return buildException;
 	}
+
 }

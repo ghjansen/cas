@@ -16,23 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
+package com.ghjansen.cas.control.task;
 
-import com.ghjansen.cas.core.ca.State;
-import com.ghjansen.cas.core.ca.Transition;
-import com.ghjansen.cas.core.exception.InvalidStateException;
-import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.control.simulation.SimulationController;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCell extends Cell {
+public abstract class Task implements Runnable {
 
-	public DimensionalCell(Transition transition) throws InvalidTransitionException {
-		super(transition);
+	protected SimulationController simulationController;
+
+	public Task(SimulationController simulationController) {
+		this.simulationController = simulationController;
 	}
 
-	public DimensionalCell(State state) throws InvalidStateException {
-		super(state);
-	}
 }

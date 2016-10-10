@@ -20,6 +20,7 @@ package com.ghjansen.cas.core.physics;
 
 import com.ghjansen.cas.core.ca.State;
 import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.core.exception.InvalidStateException;
 import com.ghjansen.cas.core.exception.InvalidTransitionException;
 
 /**
@@ -38,7 +39,10 @@ public abstract class Cell {
 		this.state = transition.getState();
 	}
 
-	public Cell(State state) {
+	public Cell(State state) throws InvalidStateException {
+		if (state == null) {
+			throw new InvalidStateException();
+		}
 		this.state = state;
 	}
 

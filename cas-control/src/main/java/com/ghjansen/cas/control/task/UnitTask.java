@@ -16,23 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.core.physics;
+package com.ghjansen.cas.control.task;
 
-import com.ghjansen.cas.core.ca.State;
-import com.ghjansen.cas.core.ca.Transition;
+import com.ghjansen.cas.control.simulation.SimulationController;
+import com.ghjansen.cas.core.exception.InvalidCombinationException;
 import com.ghjansen.cas.core.exception.InvalidStateException;
 import com.ghjansen.cas.core.exception.InvalidTransitionException;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCell extends Cell {
+public class UnitTask extends Task {
 
-	public DimensionalCell(Transition transition) throws InvalidTransitionException {
-		super(transition);
+	public UnitTask(SimulationController simulationController) {
+		super(simulationController);
 	}
 
-	public DimensionalCell(State state) throws InvalidStateException {
-		super(state);
+	public void run() {
+		try {
+			this.simulationController.getSimulation().simulateUnit();
+		} catch (InvalidStateException e) {
+			this.simulationController.processThreadInterruption(e);
+		} catch (InvalidCombinationException e) {
+			this.simulationController.processThreadInterruption(e);
+		} catch (InvalidTransitionException e) {
+			this.simulationController.processThreadInterruption(e);
+		} catch (TimeLimitReachedException e) {
+			this.simulationController.processThreadInterruption(e);
+		}
 	}
 }

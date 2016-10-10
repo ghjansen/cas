@@ -35,9 +35,10 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class CellTest {
-	
+
 	@Test
-	public void dimensionalCellConstructor() throws InvalidStateException, InvalidCombinationException, InvalidTransitionException{
+	public void dimensionalCellConstructor()
+			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
 		final State dimensionalBlackState = new DimensionalState("black", 0);
 		final State dimensionalWhiteState = new DimensionalState("white", 1);
 		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
@@ -48,10 +49,17 @@ public class CellTest {
 		Assert.assertTrue(dimensionalCell.getTransition().equals(dimensionalTransition));
 		Assert.assertTrue(dimensionalCell.getState().equals(dimensionalTransition.getState()));
 	}
-	
+
 	@Test(expected = InvalidTransitionException.class)
 	public void dimensionalCellConstructorInvalidTransition() throws InvalidTransitionException {
-		new DimensionalCell(null);
+		Transition t = null;
+		new DimensionalCell(t);
+	}
+
+	@Test(expected = InvalidStateException.class)
+	public void dimensionalCellConstructorInvalidState() throws InvalidStateException {
+		State s = null;
+		new DimensionalCell(s);
 	}
 
 }
