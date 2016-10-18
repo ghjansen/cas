@@ -9,4 +9,20 @@
 	<artifactId>cas-ui-desktop</artifactId>
 	<name>cas-ui-desktop</name>
 	<description>Desktop user interface</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ghjansen</groupId>
+			<artifactId>cas-unidimensional</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>forms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.processing</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+	</dependencies>
 </project>
