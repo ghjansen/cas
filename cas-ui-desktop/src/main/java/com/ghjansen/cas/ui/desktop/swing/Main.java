@@ -18,49 +18,48 @@
 
 package com.ghjansen.cas.ui.desktop.swing;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JFrame;
-
-import javax.swing.JPanel;
-
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JProgressBar;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ColorUIResource;
 
-import java.awt.Color;
-
-import java.awt.Dimension;
-import java.awt.Font;
-
-import javax.swing.Icon;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import javax.swing.ButtonGroup;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-
-import java.awt.SystemColor;
-import java.util.HashMap;
-import java.util.Map;
+import com.ghjansen.cas.ui.desktop.manager.EventManager;
+import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
+import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class Main {
+	
+	private EventManager em;
+	public RuleTransitionsProcessing ruleTransitions;
+	public SimulationViewProcessing simulationView;
 
 	private JFrame frame;
 	private JTextField txtRuleNumber;
@@ -89,13 +88,16 @@ public class Main {
 	}
 
 	private void initialize() {
+		em = new EventManager(this);
+		ruleTransitions = new RuleTransitionsProcessing();
+		simulationView = new SimulationViewProcessing();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 918, 665);
+		frame.setBounds(100, 100, 947, 665);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel pnlUnidimensional = new JPanel();
-		pnlUnidimensional.setBounds(0, 0, 918, 645);
+		pnlUnidimensional.setBounds(0, 0, 947, 645);
 		frame.getContentPane().add(pnlUnidimensional);
 		pnlUnidimensional.setLayout(null);
 		
@@ -145,7 +147,7 @@ public class Main {
 		txtRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtRuleNumber.setColumns(10);
 		
-		RuleTransitionsPanel pnlRuleTransitions = new RuleTransitionsPanel();
+		RuleTransitionsPanel pnlRuleTransitions = new RuleTransitionsPanel(ruleTransitions);
 		GroupLayout gl_pnlRuleConfig = new GroupLayout(pnlRuleConfig);
 		gl_pnlRuleConfig.setHorizontalGroup(
 			gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
@@ -247,6 +249,9 @@ public class Main {
 		
 		Object[][] tabledata = {
 				{ "inicio", "fim", "Cor" },
+				{ "inicio", "fim", "Cor" },
+				{ "inicio", "fim", "Cor" },
+				{ "inicio", "fim", "Cor" },
 				{ "inicio", "fim", "Cor" }};
 
 		String columnheaders[] = { "", "", "" };
@@ -316,6 +321,11 @@ public class Main {
 		});
 		
 		JButton btnSimulateComplete = new JButton("");
+		btnSimulateComplete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				em.executeComplete();
+			}
+		});
 		btnSimulateComplete.setIcon(new ImageIcon(Main.class.getResource("fa-play.png")));
 		
 		JButton btnSimulateIteration = new JButton("");
@@ -385,7 +395,7 @@ public class Main {
 		pnlControl.setLayout(gl_pnlControl);
 		
 		JPanel pnlStatus = new JPanel();
-		pnlStatus.setBounds(6, 613, 756, 27);
+		pnlStatus.setBounds(6, 613, 791, 27);
 		pnlUnidimensional.add(pnlStatus);
 		
 		JLabel lblStatus = new JLabel("Pronto.");
@@ -394,8 +404,8 @@ public class Main {
 		gl_pnlStatus.setHorizontalGroup(
 			gl_pnlStatus.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlStatus.createSequentialGroup()
-					.addComponent(lblStatus, GroupLayout.PREFERRED_SIZE, 741, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(15, Short.MAX_VALUE))
+					.addComponent(lblStatus, GroupLayout.PREFERRED_SIZE, 771, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		gl_pnlStatus.setVerticalGroup(
 			gl_pnlStatus.createParallelGroup(Alignment.LEADING)
@@ -404,21 +414,24 @@ public class Main {
 		pnlStatus.setLayout(gl_pnlStatus);
 		
 		JPanel pnlView = new JPanel();
-		pnlView.setBounds(336, 6, 576, 606);
+		pnlView.setBounds(336, 6, 606, 606);
 		pnlUnidimensional.add(pnlView);
 		pnlView.setBorder(new TitledBorder(null, "6. Visualiza\u00E7\u00E3o", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		SimulationViewPanel pnlSimulationView = new SimulationViewPanel();
+		SimulationViewPanel pnlSimulationView = new SimulationViewPanel(simulationView);
 		GroupLayout gl_pnlView = new GroupLayout(pnlView);
 		gl_pnlView.setHorizontalGroup(
-			gl_pnlView.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_pnlView.createSequentialGroup()
+			gl_pnlView.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_pnlView.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(pnlSimulationView, GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+					.addComponent(pnlSimulationView, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_pnlView.setVerticalGroup(
 			gl_pnlView.createParallelGroup(Alignment.LEADING)
-				.addComponent(pnlSimulationView, GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+				.addGroup(gl_pnlView.createSequentialGroup()
+					.addComponent(pnlSimulationView, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		GroupLayout gl_pnlViewProcessing = new GroupLayout(pnlSimulationView);
 		gl_pnlViewProcessing.setHorizontalGroup(
@@ -439,7 +452,7 @@ public class Main {
 		JComboBox comboBox = new JComboBox(new Object[] {"Portugues", "Ingles"});
 		comboBox.setRenderer(new IconListRenderer(icons));
 		comboBox.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		comboBox.setBounds(774, 613, 138, 27);
+		comboBox.setBounds(809, 613, 138, 27);
 		pnlUnidimensional.add(comboBox);
 	}
 }

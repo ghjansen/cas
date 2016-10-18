@@ -25,4 +25,8 @@ import com.ghjansen.cas.control.parameter.RuleConfigurationParameter;
  */
 public class UnidimensionalRuleConfigurationParameter extends RuleConfigurationParameter {
 
+	public UnidimensionalRuleConfigurationParameter(int ... stateValues) {
+		super(stateValues);
+	}
+
 }

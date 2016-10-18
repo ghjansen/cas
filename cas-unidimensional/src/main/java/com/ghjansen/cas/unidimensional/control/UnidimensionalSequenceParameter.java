@@ -25,7 +25,7 @@ import com.ghjansen.cas.control.parameter.SequenceParameter;
  */
 public class UnidimensionalSequenceParameter extends SequenceParameter {
 
-	protected UnidimensionalSequenceParameter(int initialPosition, int finalPosition, int value) {
+	public UnidimensionalSequenceParameter(int initialPosition, int finalPosition, int value) {
 		super(initialPosition, finalPosition, value);
 	}
 

@@ -25,7 +25,7 @@ import com.ghjansen.cas.control.parameter.LimitsParameter;
  */
 public class UnidimensionalLimitsParameter extends LimitsParameter {
 
-	protected UnidimensionalLimitsParameter(int cells, int iterations) {
+	public UnidimensionalLimitsParameter(int cells, int iterations) {
 		super(cells, iterations);
 	}
 

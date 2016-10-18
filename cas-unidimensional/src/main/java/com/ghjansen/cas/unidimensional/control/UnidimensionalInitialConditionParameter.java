@@ -18,7 +18,8 @@
 
 package com.ghjansen.cas.unidimensional.control;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.ghjansen.cas.control.parameter.InitialConditionParameter;
 import com.ghjansen.cas.control.parameter.SequenceParameter;
@@ -27,9 +28,9 @@ import com.ghjansen.cas.control.parameter.SequenceParameter;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class UnidimensionalInitialConditionParameter extends InitialConditionParameter {
-
-	public UnidimensionalInitialConditionParameter(List<SequenceParameter> sequences) {
-		super(sequences);
+	
+	public UnidimensionalInitialConditionParameter(UnidimensionalSequenceParameter ... sequences){
+		super(new ArrayList<SequenceParameter>(Arrays.asList(sequences)));
 	}
 
 }

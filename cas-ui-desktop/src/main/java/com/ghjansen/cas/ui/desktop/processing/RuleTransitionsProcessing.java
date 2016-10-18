@@ -26,7 +26,7 @@ import processing.core.PApplet;
 public class RuleTransitionsProcessing extends PApplet {
 
 	public void setup() {
-		size(100, 100);
+		size(301, 169);
 	}
 
 	public void draw() {

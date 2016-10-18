@@ -113,7 +113,9 @@ public class UnidimensionalSimulationBuilder extends SimulationBuilder {
 
 	@Override
 	public Rule buildRule(List<Transition> transitions) throws InvalidTransitionException {
-		return new UnidimensionalGeneralRule((Transition[]) transitions.toArray());
+		Transition[] transitionsArray = new Transition[transitions.size()];
+		transitions.toArray(transitionsArray);
+		return new UnidimensionalGeneralRule(transitionsArray);
 	}
 
 	@Override

@@ -27,10 +27,7 @@ import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
  */
 public class SimulationViewPanel extends JPanel {
 
-	private SimulationViewProcessing ruleViewProcessing;
-
-	public SimulationViewPanel() {
-		ruleViewProcessing = new SimulationViewProcessing();
+	public SimulationViewPanel(SimulationViewProcessing ruleViewProcessing) {
 		add(ruleViewProcessing);
 		ruleViewProcessing.init();
 	}

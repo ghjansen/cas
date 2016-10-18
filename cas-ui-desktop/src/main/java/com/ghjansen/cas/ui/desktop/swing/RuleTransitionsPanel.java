@@ -27,10 +27,7 @@ import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
  */
 public class RuleTransitionsPanel extends JPanel {
 
-	private RuleTransitionsProcessing ruleTransitionsProcessing;
-
-	public RuleTransitionsPanel() {
-		ruleTransitionsProcessing = new RuleTransitionsProcessing();
+	public RuleTransitionsPanel(RuleTransitionsProcessing ruleTransitionsProcessing) {
 		add(ruleTransitionsProcessing);
 		ruleTransitionsProcessing.init();
 	}

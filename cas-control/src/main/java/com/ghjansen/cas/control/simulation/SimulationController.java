@@ -75,6 +75,7 @@ public abstract class SimulationController {
 	public void processThreadInterruption(Throwable e) {
 		// TODO create observer agent to interact with ui interface when the
 		// simulation finishes or something bad happens
+		System.out.println(e);
 	}
 
 }
