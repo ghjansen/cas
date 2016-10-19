@@ -25,6 +25,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +53,9 @@ import javax.swing.plaf.ColorUIResource;
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
+
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -107,13 +112,27 @@ public class Main {
 		pnlRuleType.setBorder(new TitledBorder(null, "1. Tipo de regra", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		JRadioButton rdbtnElementary = new JRadioButton("Elementar");
+		rdbtnElementary.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					em.showElementaryTransitions();
+				}
+			}
+		});
 		grpRuleType.add(rdbtnElementary);
 		rdbtnElementary.setSelected(true);
 		rdbtnElementary.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		JRadioButton rdbtnTotalstic = new JRadioButton("Totalista");
-		grpRuleType.add(rdbtnTotalstic);
-		rdbtnTotalstic.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		JRadioButton rdbtnTotalistic = new JRadioButton("Totalista");
+		rdbtnTotalistic.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					em.showTotalisticTransitions();
+				}
+			}
+		});
+		grpRuleType.add(rdbtnTotalistic);
+		rdbtnTotalistic.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlRuleType = new GroupLayout(pnlRuleType);
 		gl_pnlRuleType.setHorizontalGroup(
 			gl_pnlRuleType.createParallelGroup(Alignment.TRAILING)
@@ -121,7 +140,7 @@ public class Main {
 					.addContainerGap()
 					.addComponent(rdbtnElementary)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(rdbtnTotalstic)
+					.addComponent(rdbtnTotalistic)
 					.addContainerGap(115, Short.MAX_VALUE))
 		);
 		gl_pnlRuleType.setVerticalGroup(
@@ -129,7 +148,7 @@ public class Main {
 				.addGroup(gl_pnlRuleType.createSequentialGroup()
 					.addGroup(gl_pnlRuleType.createParallelGroup(Alignment.BASELINE)
 						.addComponent(rdbtnElementary)
-						.addComponent(rdbtnTotalstic))
+						.addComponent(rdbtnTotalistic))
 					.addContainerGap(8, Short.MAX_VALUE))
 		);
 		pnlRuleType.setLayout(gl_pnlRuleType);
@@ -140,38 +159,17 @@ public class Main {
 		pnlRuleConfig.setBorder(new TitledBorder(null, "2. Configura\u00E7\u00E3o da regra", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		JLabel lblRuleNumber = new JLabel("Número da regra:");
+		lblRuleNumber.setBounds(12, 70, 104, 15);
 		lblRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtRuleNumber = new JTextField();
+		txtRuleNumber.setBounds(144, 64, 169, 27);
 		txtRuleNumber.setText("0");
 		txtRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtRuleNumber.setColumns(10);
 		
 		RuleTransitionsPanel pnlRuleTransitions = new RuleTransitionsPanel(ruleTransitions);
-		GroupLayout gl_pnlRuleConfig = new GroupLayout(pnlRuleConfig);
-		gl_pnlRuleConfig.setHorizontalGroup(
-			gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlRuleConfig.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlRuleConfig.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnlRuleTransitions, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_pnlRuleConfig.createSequentialGroup()
-							.addComponent(lblRuleNumber)
-							.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-							.addComponent(txtRuleNumber, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		gl_pnlRuleConfig.setVerticalGroup(
-			gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlRuleConfig.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(pnlRuleTransitions, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_pnlRuleConfig.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblRuleNumber)
-						.addComponent(txtRuleNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		pnlRuleTransitions.setBounds(11, 23, 307, 35);
 		GroupLayout gl_pnlRuleTransitionsProcessing = new GroupLayout(pnlRuleTransitions);
 		gl_pnlRuleTransitionsProcessing.setHorizontalGroup(
 			gl_pnlRuleTransitionsProcessing.createParallelGroup(Alignment.LEADING)
@@ -182,7 +180,10 @@ public class Main {
 				.addGap(0, 37, Short.MAX_VALUE)
 		);
 		pnlRuleTransitions.setLayout(gl_pnlRuleTransitionsProcessing);
-		pnlRuleConfig.setLayout(gl_pnlRuleConfig);
+		pnlRuleConfig.setLayout(null);
+		pnlRuleConfig.add(lblRuleNumber);
+		pnlRuleConfig.add(txtRuleNumber);
+		pnlRuleConfig.add(pnlRuleTransitions);
 		
 		JPanel pnlLimits = new JPanel();
 		pnlLimits.setBounds(6, 187, 325, 95);

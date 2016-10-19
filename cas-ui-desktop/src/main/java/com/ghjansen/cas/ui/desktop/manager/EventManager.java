@@ -69,6 +69,14 @@ public class EventManager {
 		}
 	}
 	
+	public void showElementaryTransitions(){
+		
+	}
+	
+	public void showTotalisticTransitions(){
+		
+	}
+	
 	
 
 }

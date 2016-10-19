@@ -100,15 +100,34 @@ public class UnidimensionalSimulationBuilder extends SimulationBuilder {
 		List<Transition> transitions = new ArrayList<Transition>();
 		State whiteState = states.get(0);
 		State blackState = states.get(1);
-		transitions.add(new UnidimensionalTransition(combinations.get(0), whiteState));
-		transitions.add(new UnidimensionalTransition(combinations.get(1), blackState));
-		transitions.add(new UnidimensionalTransition(combinations.get(2), blackState));
-		transitions.add(new UnidimensionalTransition(combinations.get(3), whiteState));
-		transitions.add(new UnidimensionalTransition(combinations.get(4), blackState));
-		transitions.add(new UnidimensionalTransition(combinations.get(5), blackState));
-		transitions.add(new UnidimensionalTransition(combinations.get(6), blackState));
-		transitions.add(new UnidimensionalTransition(combinations.get(7), whiteState));
+		int value0 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[0];
+		int value1 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[1];
+		int value2 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[2];
+		int value3 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[3];
+		int value4 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[4];
+		int value5 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[5];
+		int value6 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[6];
+		int value7 = this.getSimulationParameter().getRuleConfigurationParameter().getStateValues()[7];
+		transitions.add(new UnidimensionalTransition(combinations.get(0), getStateFromValue(value0, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(1), getStateFromValue(value1, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(2), getStateFromValue(value2, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(3), getStateFromValue(value3, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(4), getStateFromValue(value4, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(5), getStateFromValue(value5, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(6), getStateFromValue(value6, whiteState, blackState)));
+		transitions.add(new UnidimensionalTransition(combinations.get(7), getStateFromValue(value7, whiteState, blackState)));
 		return transitions;
+	}
+	
+	private State getStateFromValue(int value, State whiteState, State blackState){
+		switch(value){
+		case 0:
+			return whiteState;
+		case 1:
+			return blackState;
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
