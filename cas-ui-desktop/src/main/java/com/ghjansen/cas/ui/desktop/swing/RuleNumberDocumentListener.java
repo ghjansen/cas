@@ -35,20 +35,20 @@ public class RuleNumberDocumentListener implements DocumentListener {
 	}
 	
 	public void insertUpdate(DocumentEvent e) {
-		if(!em.isAvoidRuleNumberListener()){
-			em.refreshTransitions();
+		if(!em.isSkipRuleNumberEvent()){
+			em.ruleNumberEvent();
 		}
 	}
 
 	public void removeUpdate(DocumentEvent e) {
-		if(!em.isAvoidRuleNumberListener()){
-			em.refreshTransitions();
+		if(!em.isSkipRuleNumberEvent()){
+			em.ruleNumberEvent();
 		}
 	}
 
 	public void changedUpdate(DocumentEvent e) {
-		if(!em.isAvoidRuleNumberListener()){
-			em.refreshTransitions();
+		if(!em.isSkipRuleNumberEvent()){
+			em.ruleNumberEvent();
 		}
 	}
 }

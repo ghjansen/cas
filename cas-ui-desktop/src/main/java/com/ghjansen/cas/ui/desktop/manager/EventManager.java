@@ -22,9 +22,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 
+import javax.swing.JButton;
+
 import com.ghjansen.cas.control.exception.InvalidSimulationParameterException;
 import com.ghjansen.cas.control.exception.SimulationAlreadyActiveException;
 import com.ghjansen.cas.control.exception.SimulationBuilderException;
+import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.Main;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalLimitsParameter;
@@ -42,16 +45,18 @@ import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 public class EventManager {
 	
 	private Main main;
-	private boolean avoidRuleNumberListener;
+	private boolean skipRuleNumberEvent;
 	private Color invalidFieldColor;
-	private boolean isStatusAvailable;
+	private GUIValidator validator;
 
 	public EventManager(Main main) {
 		this.main = main;
-		this.avoidRuleNumberListener = false;
+		this.skipRuleNumberEvent = false;
 		this.invalidFieldColor = Color.red;
-		this.isStatusAvailable = true;
+		this.validator = new GUIValidator(main, invalidFieldColor);
 	}
+	
+	
 	
 	public void executeComplete(){
 		int[] s = main.ruleTransitions.getStates();
@@ -83,28 +88,29 @@ public class EventManager {
 		}
 	}
 	
-	public void showElementaryTransitions(){
+	public void elementaryRuleTypeEvent(){
 		
 	}
 	
-	public void showTotalisticTransitions(){
+	public void totalisticRuleTypeEvent(){
 		
 	}
 	
-	public void refreshRuleNumber(){
+	public void transitionsEvent(){
 		int[] states = main.ruleTransitions.getStates();
 		int result = 0;
 		for(int i = 0; i < states.length; i++){
 			result = (int) (result + (states[i] == 1 ? Math.pow(2, i) : 0));
 		}
-		this.avoidRuleNumberListener = true;
+		this.skipRuleNumberEvent = true;
 		main.txtRuleNumber.setText(String.valueOf(result));
 		main.txtRuleNumber.setBackground(SystemColor.text);
-		this.avoidRuleNumberListener = false;
+		validator.updateStatus();
+		this.skipRuleNumberEvent = false;
 	}
 	
-	public void refreshTransitions(){
-		if(isRuleNumberValid()){
+	public void ruleNumberEvent(){
+		if(validator.isRuleNumberValid()){
 			int value = Integer.valueOf(main.txtRuleNumber.getText());
 			main.txtRuleNumber.setBackground(SystemColor.text);
 			char[] binary = Integer.toBinaryString(value).toCharArray();
@@ -120,73 +126,35 @@ public class EventManager {
 		}
 	}
 	
-	public boolean isAvoidRuleNumberListener(){
-		return this.avoidRuleNumberListener;
+	public void cellsEvent(){
+		validator.isCellsValid();
 	}
 	
-	public boolean isRuleNumberValid(){
-		String errorMessage = "O numero da regra deve ser um numero inteiro maior ou igual a 0 e menor ou igual a 255";
-		String value = main.txtRuleNumber.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > -1 && Integer.valueOf(value) < 256){
-			main.txtRuleNumber.setBackground(SystemColor.text);
-			removeStatus(errorMessage);
-			return true;
-		}
-		main.txtRuleNumber.setBackground(invalidFieldColor);
-		setStatus(errorMessage, invalidFieldColor);
-		return false;
+	public void iterationsEvent(){
+		validator.isIterationsValid();
 	}
 	
-	public boolean isCellsValid(){
-		String errorMessage = "A quantidade de células deve ser um numero inteiro maior ou igual a 1";
-		String value = main.txtCells.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
-			main.txtCells.setBackground(SystemColor.text);
-			removeStatus(errorMessage);
-			return true;
-		}
-		main.txtCells.setBackground(invalidFieldColor);
-		setStatus(errorMessage, invalidFieldColor);
-		return false;
-	}
-	
-	public boolean isIterationsValid(){
-		String errorMessage = "A quantidade de iterações deve ser um numero inteiro maior ou igual a 1";
-		String value = main.txtIterations.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
-			main.txtIterations.setBackground(SystemColor.text);
-			removeStatus(errorMessage);
-			return true;
-		}
-		main.txtIterations.setBackground(invalidFieldColor);
-		setStatus(errorMessage, invalidFieldColor);
-		return false;
-	}
-	
-	private boolean isValidPositiveInteger(String value){
-		try{
-			int integer = Integer.valueOf(value);
-			if(integer > -1){
-				return true;
-			} 
-			return false;
-		} catch(Exception e){
-			return false;
+	public void uniqueCellEvent(){
+		if(main.scrollPane != null){
+			main.scrollPane.setEnabled(false);
+			main.table.setEnabled(false);
+			main.btnAdicionar.setEnabled(false);
+			main.btnRemover.setEnabled(false);
+			main.btnNewButton.setEnabled(false);
 		}
 	}
 	
-	private void setStatus(String message, Color color){
-		if(main.lblStatus.getText().equals("Pronto.")){
-			main.lblStatus.setText(message);
-			main.lblStatus.setForeground(color);
-		}
+	public void informPatternCellEvent(){
+		main.scrollPane.setEnabled(true);
+		main.table.setEnabled(true);
+		main.btnAdicionar.setEnabled(true);
+		main.btnRemover.setEnabled(true);
+		main.btnNewButton.setEnabled(true);
 	}
 	
-	private void removeStatus(String message){
-		if(main.lblStatus.getText().equals(message)){
-			main.lblStatus.setText("Pronto.");
-			main.lblStatus.setForeground(SystemColor.textText);
-		}
+	
+	public boolean isSkipRuleNumberEvent(){
+		return this.skipRuleNumberEvent;
 	}
-
+	
 }

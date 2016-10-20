@@ -74,8 +74,12 @@ public class Main {
 	public JTextField txtIterations;
 	private final ButtonGroup grpRuleType = new ButtonGroup();
 	private final ButtonGroup grpInitialCondition = new ButtonGroup();
-	private JTable table;
+	public JTable table;
 	public JLabel lblStatus;
+	public JScrollPane scrollPane;
+	public JButton btnAdicionar;
+	public JButton btnRemover;
+	public JButton btnNewButton;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -118,7 +122,7 @@ public class Main {
 		rdbtnElementary.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					em.showElementaryTransitions();
+					em.elementaryRuleTypeEvent();
 				}
 			}
 		});
@@ -130,7 +134,7 @@ public class Main {
 		rdbtnTotalistic.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					em.showTotalisticTransitions();
+					em.totalisticRuleTypeEvent();
 				}
 			}
 		});
@@ -169,11 +173,11 @@ public class Main {
 		txtRuleNumber.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				em.refreshRuleNumber();
+				em.transitionsEvent();
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				em.refreshRuleNumber();
+				em.transitionsEvent();
 			}
 		});
 		txtRuleNumber.setBounds(144, 64, 169, 27);
@@ -215,15 +219,15 @@ public class Main {
 		txtCells.getDocument().addDocumentListener(new DocumentListener() {
 			
 			public void removeUpdate(DocumentEvent e) {
-				em.isCellsValid();
+				em.cellsEvent();
 			}
 			
 			public void insertUpdate(DocumentEvent e) {
-				em.isCellsValid();
+				em.cellsEvent();
 			}
 			
 			public void changedUpdate(DocumentEvent e) {
-				em.isCellsValid();
+				em.cellsEvent();
 			}
 		});
 		
@@ -237,15 +241,15 @@ public class Main {
 		txtIterations.getDocument().addDocumentListener(new DocumentListener() {
 			
 			public void removeUpdate(DocumentEvent e) {
-				em.isIterationsValid();
+				em.iterationsEvent();
 			}
 			
 			public void insertUpdate(DocumentEvent e) {
-				em.isIterationsValid();
+				em.iterationsEvent();
 			}
 			
 			public void changedUpdate(DocumentEvent e) {
-				em.isIterationsValid();
+				em.iterationsEvent();
 			}
 		});
 		GroupLayout gl_pnlLimits = new GroupLayout(pnlLimits);
@@ -283,11 +287,25 @@ public class Main {
 		pnlInitialCondition.setBorder(new TitledBorder(null, "4. Condi\u00E7\u00E3o inicial ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		JRadioButton rdbtnUniqueCell = new JRadioButton("Célula única de cor preta");
+		rdbtnUniqueCell.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					em.uniqueCellEvent();
+				}
+			}
+		});
 		grpInitialCondition.add(rdbtnUniqueCell);
 		rdbtnUniqueCell.setSelected(true);
 		rdbtnUniqueCell.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		JRadioButton rdbtnInformPattern = new JRadioButton("Informar padrão:");
+		rdbtnInformPattern.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					em.informPatternCellEvent();
+				}
+			}
+		});
 		grpInitialCondition.add(rdbtnInformPattern);
 		rdbtnInformPattern.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
@@ -301,19 +319,24 @@ public class Main {
 		String columnheaders[] = { "", "", "" };
 
 		table = new JTable(tabledata, columnheaders);
+		table.setEnabled(false);
 		table.setPreferredScrollableViewportSize(new Dimension(100, 50));
 		table.setBackground(Color.WHITE);
 		table.setTableHeader(null);
-		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setEnabled(false);
 		scrollPane.getViewport().setBackground(SystemColor.window);
 		
-		JButton btnAdicionar = new JButton("Adicionar");
+		btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.setEnabled(false);
 		btnAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		JButton btnRemover = new JButton("Remover");
+		btnRemover = new JButton("Remover");
+		btnRemover.setEnabled(false);
 		btnRemover.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		JButton btnNewButton = new JButton("Limpar");
+		btnNewButton = new JButton("Limpar");
+		btnNewButton.setEnabled(false);
 		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlInitialCondition = new GroupLayout(pnlInitialCondition);
 		gl_pnlInitialCondition.setHorizontalGroup(

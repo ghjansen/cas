@@ -126,7 +126,7 @@ public class RuleTransitionsProcessing extends PApplet {
 		} else if (n >= 7){
 			states[0] = getNextState(states[0]);
 		}
-		em.refreshRuleNumber();
+		em.transitionsEvent();
 	}
 	
 	private int getNextState(int currentState){
