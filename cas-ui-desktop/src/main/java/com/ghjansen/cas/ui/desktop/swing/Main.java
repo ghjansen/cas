@@ -48,14 +48,16 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -67,12 +69,13 @@ public class Main {
 	public SimulationViewProcessing simulationView;
 
 	private JFrame frame;
-	private JTextField txtRuleNumber;
-	private JTextField txtCells;
-	private JTextField txtIterations;
+	public JTextField txtRuleNumber;
+	public JTextField txtCells;
+	public JTextField txtIterations;
 	private final ButtonGroup grpRuleType = new ButtonGroup();
 	private final ButtonGroup grpInitialCondition = new ButtonGroup();
 	private JTable table;
+	public JLabel lblStatus;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -94,7 +97,7 @@ public class Main {
 
 	private void initialize() {
 		em = new EventManager(this);
-		ruleTransitions = new RuleTransitionsProcessing();
+		ruleTransitions = new RuleTransitionsProcessing(em);
 		simulationView = new SimulationViewProcessing();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 947, 665);
@@ -163,13 +166,25 @@ public class Main {
 		lblRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtRuleNumber = new JTextField();
+		txtRuleNumber.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				em.refreshRuleNumber();
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				em.refreshRuleNumber();
+			}
+		});
 		txtRuleNumber.setBounds(144, 64, 169, 27);
 		txtRuleNumber.setText("0");
 		txtRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtRuleNumber.setColumns(10);
+		txtRuleNumber.getDocument().addDocumentListener(new RuleNumberDocumentListener(this.em));
+		
 		
 		RuleTransitionsPanel pnlRuleTransitions = new RuleTransitionsPanel(ruleTransitions);
-		pnlRuleTransitions.setBounds(11, 23, 307, 35);
+		pnlRuleTransitions.setBounds(11, 23, 302, 35);
 		GroupLayout gl_pnlRuleTransitionsProcessing = new GroupLayout(pnlRuleTransitions);
 		gl_pnlRuleTransitionsProcessing.setHorizontalGroup(
 			gl_pnlRuleTransitionsProcessing.createParallelGroup(Alignment.LEADING)
@@ -197,6 +212,20 @@ public class Main {
 		txtCells.setText("1");
 		txtCells.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtCells.setColumns(10);
+		txtCells.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void removeUpdate(DocumentEvent e) {
+				em.isCellsValid();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				em.isCellsValid();
+			}
+			
+			public void changedUpdate(DocumentEvent e) {
+				em.isCellsValid();
+			}
+		});
 		
 		JLabel lblIterations = new JLabel("Iterações do universo:");
 		lblIterations.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
@@ -205,6 +234,20 @@ public class Main {
 		txtIterations.setText("1");
 		txtIterations.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtIterations.setColumns(10);
+		txtIterations.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void removeUpdate(DocumentEvent e) {
+				em.isIterationsValid();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				em.isIterationsValid();
+			}
+			
+			public void changedUpdate(DocumentEvent e) {
+				em.isIterationsValid();
+			}
+		});
 		GroupLayout gl_pnlLimits = new GroupLayout(pnlLimits);
 		gl_pnlLimits.setHorizontalGroup(
 			gl_pnlLimits.createParallelGroup(Alignment.LEADING)
@@ -399,7 +442,7 @@ public class Main {
 		pnlStatus.setBounds(6, 613, 791, 27);
 		pnlUnidimensional.add(pnlStatus);
 		
-		JLabel lblStatus = new JLabel("Pronto.");
+		lblStatus = new JLabel("Pronto.");
 		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlStatus = new GroupLayout(pnlStatus);
 		gl_pnlStatus.setHorizontalGroup(

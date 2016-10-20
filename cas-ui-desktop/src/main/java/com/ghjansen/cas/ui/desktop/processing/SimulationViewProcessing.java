@@ -38,15 +38,20 @@ public class SimulationViewProcessing extends PApplet {
 	private int y = 0;
 	private int feedbackRate = 60;
 	private boolean isWelcomeVisible;
+	private boolean reset;
 
 	public void setup() {
 		size(width, height);
 		textAlign(CENTER);
 		background(background);
+		this.reset = false;
 	}
 
 	public void draw() {
-		if (universe != null && universe.getSpace().getHistory().size() > 0) {
+		if(reset){
+			background(background);
+			reset = false;
+		} else if (universe != null && universe.getSpace().getHistory().size() > 0) {
 			hideWelcome();
 			drawSpace();
 			drawTools();
@@ -115,6 +120,12 @@ public class SimulationViewProcessing extends PApplet {
 
 	public void setUniverse(UnidimensionalUniverse universe) {
 		this.universe = universe;
+	}
+	
+	public void reset(){
+		this.reset = true;
+		x = -1;
+		y = 0;
 	}
 
 }

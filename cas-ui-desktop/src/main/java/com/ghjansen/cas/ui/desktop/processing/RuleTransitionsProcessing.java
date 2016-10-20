@@ -20,6 +20,8 @@ package com.ghjansen.cas.ui.desktop.processing;
 
 import processing.core.PApplet;
 
+import com.ghjansen.cas.ui.desktop.manager.EventManager;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -36,6 +38,11 @@ public class RuleTransitionsProcessing extends PApplet {
 	private int combinationPosition = 9;
 	private int nextStatePosition = 17;
 	private int[] states;
+	private EventManager em;
+	
+	public RuleTransitionsProcessing(EventManager em){
+		this.em = em;
+	}
 
 	public void setup() {
 		size(width, height);
@@ -92,7 +99,7 @@ public class RuleTransitionsProcessing extends PApplet {
 		// Next state
 		fill(255);
 		for(int i = 0; i < 8; i++){
-			fill(getFillForStateValue(states[i]));
+			fill(getFillForStateValue(states[states.length - 1 - i]));
 			rect(transitionSquareWidth * i + referenceMargin, nextStatePosition, stateSize, stateSize);
 		}
 		stroke(204);
@@ -103,22 +110,23 @@ public class RuleTransitionsProcessing extends PApplet {
 		super.mousePressed();
 		float n = mouseX / transitionSquareWidth;
 		if(n >= 0 && n < 1){
-			states[0] = getNextState(states[0]);
-		} else if (n >= 1 && n < 2){
-			states[1] = getNextState(states[1]);
-		} else if (n >= 2 && n < 3){
-			states[2] = getNextState(states[2]);
-		} else if (n >= 3 && n < 4){
-			states[3] = getNextState(states[3]);
-		} else if (n >= 4 && n < 5){
-			states[4] = getNextState(states[4]);
-		} else if (n >= 5 && n < 6){
-			states[5] = getNextState(states[5]);
-		} else if (n >= 6 && n < 7){
-			states[6] = getNextState(states[6]);
-		} else if (n >= 7){
 			states[7] = getNextState(states[7]);
+		} else if (n >= 1 && n < 2){
+			states[6] = getNextState(states[6]);
+		} else if (n >= 2 && n < 3){
+			states[5] = getNextState(states[5]);
+		} else if (n >= 3 && n < 4){
+			states[4] = getNextState(states[4]);
+		} else if (n >= 4 && n < 5){
+			states[3] = getNextState(states[3]);
+		} else if (n >= 5 && n < 6){
+			states[2] = getNextState(states[2]);
+		} else if (n >= 6 && n < 7){
+			states[1] = getNextState(states[1]);
+		} else if (n >= 7){
+			states[0] = getNextState(states[0]);
 		}
+		em.refreshRuleNumber();
 	}
 	
 	private int getNextState(int currentState){
@@ -139,6 +147,14 @@ public class RuleTransitionsProcessing extends PApplet {
 		} else {
 			return 255;
 		}
+	}
+	
+	public int[] getStates(){
+		return states;
+	}
+	
+	public void setStates(int[] states){
+		this.states = states;
 	}
 
 }
