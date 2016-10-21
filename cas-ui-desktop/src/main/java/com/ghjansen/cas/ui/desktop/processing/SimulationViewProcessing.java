@@ -51,16 +51,51 @@ public class SimulationViewProcessing extends PApplet {
 		if(reset){
 			background(background);
 			reset = false;
-		} else if (universe != null && universe.getSpace().getHistory().size() > 0) {
-			hideWelcome();
+		} else if (isSpaceAvailable()) {
 			drawSpace();
-			drawTools();
 		} else {
 			drawWelcome();
 		}
 	}
-
-	private void drawSpace() {
+	
+	private boolean isSpaceAvailable(){
+		return universe != null && universe.getSpace().getInitial().size() > 0;
+	}
+	
+	private void drawSpace(){
+		hideWelcome();
+		drawInitialCondition();
+		if(universe.getSpace().getHistory().size() > 0){
+			drawHistory();
+		}
+		if(universe.getSpace().getCurrent().size() > 0){
+			drawCurrent();
+		}
+	}
+	
+	private void hideWelcome(){
+		if(isWelcomeVisible){
+			background(204);
+			isWelcomeVisible = false;
+		}
+		
+	}
+	
+	private void drawInitialCondition(){
+		List<?> initialCondition = universe.getSpace().getInitial();
+		for(int i = 0; i < initialCondition.size(); i++){
+			UnidimensionalCell c = (UnidimensionalCell) initialCondition.get(i);
+			if (c.getState().getValue() == 0) {
+				fill(255);
+			} else if (c.getState().getValue() == 1) {
+				fill(0);
+			}
+			noStroke();
+			rect(i, 0, 1, 1);
+		}
+	}
+	
+	private void drawHistory() {
 		List<List> history = universe.getSpace().getHistory();
 		// Draw all complete lines
 		int iterations = 0;
@@ -80,6 +115,20 @@ public class SimulationViewProcessing extends PApplet {
 			}
 		}
 	}
+	
+	private void drawCurrent(){
+		List<?> current = universe.getSpace().getCurrent();
+		for(int i = 0; i < current.size(); i++){
+			UnidimensionalCell c = (UnidimensionalCell) current.get(i);
+			if (c.getState().getValue() == 0) {
+				fill(255);
+			} else if (c.getState().getValue() == 1) {
+				fill(0);
+			}
+			noStroke();
+			rect(i, y+1, 1, 1);
+		}
+	}
 
 	private void drawTools() {
 
@@ -91,14 +140,6 @@ public class SimulationViewProcessing extends PApplet {
 		isWelcomeVisible = true;
 	}
 	
-	private void hideWelcome(){
-		if(isWelcomeVisible){
-			background(204);
-			isWelcomeVisible = false;
-		}
-		
-	}
-
 	private void drawCell(UnidimensionalCell c) {
 		if (c.getState().getValue() == 0) {
 			fill(255);
@@ -106,7 +147,7 @@ public class SimulationViewProcessing extends PApplet {
 			fill(0);
 		}
 		noStroke();
-		rect(x, y, 1, 1);
+		rect(x, y+1, 1, 1);
 	}
 
 	private void shiftColumn() {

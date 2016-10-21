@@ -64,7 +64,7 @@ public class EventManager {
 		int cells = Integer.valueOf(main.txtCells.getText());
 		UnidimensionalRuleTypeParameter ruleType = new UnidimensionalRuleTypeParameter(true);
 		UnidimensionalRuleConfigurationParameter ruleConfiguration = new UnidimensionalRuleConfigurationParameter(s[7],s[6],s[5],s[4],s[3],s[2],s[1],s[0]);
-		UnidimensionalLimitsParameter limits = new UnidimensionalLimitsParameter(iterations, cells);
+		UnidimensionalLimitsParameter limits = new UnidimensionalLimitsParameter(cells, iterations);
 		UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, cells/2, 0);
 		UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter((cells/2)+1, (cells/2)+1, 1);
 		UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter((cells/2)+2, cells, 0);
