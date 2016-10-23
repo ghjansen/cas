@@ -38,21 +38,21 @@ public class SimulationViewProcessing extends PApplet {
 	private int y = 0;
 	private int feedbackRate = 60;
 	private boolean isWelcomeVisible;
-	private boolean reset;
+	private int mousePressedX;
+	private int mousePressedY;
+	private int translationX;
+	private int translationY;
 
 	public void setup() {
 		size(width, height);
 		textAlign(CENTER);
 		background(background);
-		this.reset = false;
 	}
 
 	public void draw() {
-		if(reset){
-			background(background);
-			reset = false;
-		} else if (isSpaceAvailable()) {
+		if (isSpaceAvailable()) {
 			drawSpace();
+			drawTools();
 		} else {
 			drawWelcome();
 		}
@@ -64,6 +64,7 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawSpace(){
 		hideWelcome();
+		translate(translationX, translationY);
 		drawInitialCondition();
 		if(universe.getSpace().getHistory().size() > 0){
 			drawHistory();
@@ -101,16 +102,16 @@ public class SimulationViewProcessing extends PApplet {
 		int iterations = 0;
 		while (history.size() - 1 > y && iterations < feedbackRate) {
 			while (history.get(y).size() - 1 > x) {
-				shiftColumn();
+				nextColumn();
 				drawCell((UnidimensionalCell) history.get(y).get(x));
 			}
-			shiftLine();
+			nextLine();
 			iterations++;
 		}
 		// Draw incomplete or last line
 		if (history.size() - 1 == y && history.size() - 1 > y) {
 			while (history.get(y).size() - 1 > x) {
-				shiftColumn();
+				nextColumn();
 				drawCell((UnidimensionalCell) history.get(y).get(x));
 			}
 		}
@@ -150,11 +151,11 @@ public class SimulationViewProcessing extends PApplet {
 		rect(x, y+1, 1, 1);
 	}
 
-	private void shiftColumn() {
+	private void nextColumn() {
 		x++;
 	}
 
-	private void shiftLine() {
+	private void nextLine() {
 		y++;
 		x = -1;
 	}
@@ -164,9 +165,26 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	public void reset(){
-		this.reset = true;
+		translationX = 0;
+		translationY = 0;
+		refresh();
+	}
+	
+	private void refresh(){
 		x = -1;
 		y = 0;
+		background(background);
+	}
+	
+	public void mousePressed(){
+		mousePressedX = mouseX;
+		mousePressedY = mouseY;
+	}
+	
+	public void mouseReleased(){
+		translationX = translationX + (mouseX - mousePressedX);
+		translationY = translationY + (mouseY - mousePressedY);
+		refresh();
 	}
 
 }
