@@ -37,7 +37,6 @@ public class SimulationViewProcessing extends PApplet {
 	private int x = -1;
 	private int y = 0;
 	private int feedbackRate = 60;
-	private boolean isWelcomeVisible;
 	private int mousePressedX;
 	private int mousePressedY;
 	private int translationX;
@@ -63,7 +62,7 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private void drawSpace(){
-		hideWelcome();
+		pushMatrix();
 		translate(translationX, translationY);
 		drawInitialCondition();
 		if(universe.getSpace().getHistory().size() > 0){
@@ -72,14 +71,7 @@ public class SimulationViewProcessing extends PApplet {
 		if(universe.getSpace().getCurrent().size() > 0){
 			drawCurrent();
 		}
-	}
-	
-	private void hideWelcome(){
-		if(isWelcomeVisible){
-			background(204);
-			isWelcomeVisible = false;
-		}
-		
+		popMatrix();
 	}
 	
 	private void drawInitialCondition(){
@@ -138,7 +130,6 @@ public class SimulationViewProcessing extends PApplet {
 	private void drawWelcome() {
 		textSize(25);
 		text("Mensagem de boas vindas aqui!", 291, 291);
-		isWelcomeVisible = true;
 	}
 	
 	private void drawCell(UnidimensionalCell c) {
