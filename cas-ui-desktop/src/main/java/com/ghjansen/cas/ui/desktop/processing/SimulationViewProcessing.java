@@ -34,13 +34,15 @@ public class SimulationViewProcessing extends PApplet {
 	private int width = 582;
 	private int height = 582;
 	private int background = 204;
+	private int squareSize = 100;
 	private int x = -1;
 	private int y = 0;
 	private int feedbackRate = 60;
 	private int mousePressedX;
 	private int mousePressedY;
-	private int translationX;
-	private int translationY;
+	private float translationX;
+	private float translationY;
+	private float scale = 0.01F;
 
 	public void setup() {
 		size(width, height);
@@ -64,6 +66,13 @@ public class SimulationViewProcessing extends PApplet {
 	private void drawSpace(){
 		pushMatrix();
 		translate(translationX, translationY);
+		scale(scale);
+		if(scale > 0.16){
+			stroke(background);
+			strokeWeight(1);
+		} else {
+			noStroke();
+		}
 		drawInitialCondition();
 		if(universe.getSpace().getHistory().size() > 0){
 			drawHistory();
@@ -83,8 +92,7 @@ public class SimulationViewProcessing extends PApplet {
 			} else if (c.getState().getValue() == 1) {
 				fill(0);
 			}
-			noStroke();
-			rect(i, 0, 1, 1);
+			rect(squareSize * i, 1, squareSize, squareSize);
 		}
 	}
 	
@@ -92,7 +100,7 @@ public class SimulationViewProcessing extends PApplet {
 		List<List> history = universe.getSpace().getHistory();
 		// Draw all complete lines
 		int iterations = 0;
-		while (history.size() - 1 > y && iterations < feedbackRate) {
+		while (history.size() > y && iterations < feedbackRate) {
 			while (history.get(y).size() - 1 > x) {
 				nextColumn();
 				drawCell((UnidimensionalCell) history.get(y).get(x));
@@ -118,8 +126,7 @@ public class SimulationViewProcessing extends PApplet {
 			} else if (c.getState().getValue() == 1) {
 				fill(0);
 			}
-			noStroke();
-			rect(i, y+1, 1, 1);
+			rect(squareSize * i, squareSize * (y + 1), squareSize, squareSize);
 		}
 	}
 
@@ -138,8 +145,7 @@ public class SimulationViewProcessing extends PApplet {
 		} else if (c.getState().getValue() == 1) {
 			fill(0);
 		}
-		noStroke();
-		rect(x, y+1, 1, 1);
+		rect(squareSize * x, squareSize * (y + 1), squareSize, squareSize);
 	}
 
 	private void nextColumn() {
@@ -177,5 +183,13 @@ public class SimulationViewProcessing extends PApplet {
 		translationY = translationY + (mouseY - mousePressedY);
 		refresh();
 	}
-
+	
+	public void keyPressed(){
+		if(key == '1' && scale > 0.01){
+			scale = scale / 2;
+		} else if (key == '2' && scale < 0.64){
+			scale = scale * 2;
+		}
+		refresh();
+	}
 }
