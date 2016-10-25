@@ -34,15 +34,23 @@ public class SimulationViewProcessing extends PApplet {
 	private int width = 582;
 	private int height = 582;
 	private int background = 204;
-	private int squareSize = 100;
+	private float squareSize = 100.0F;
 	private int x = -1;
 	private int y = 0;
 	private int feedbackRate = 60;
-	private int mousePressedX;
-	private int mousePressedY;
 	private float translationX;
 	private float translationY;
-	private float scale = 0.01F;
+	private float minScale = 0.01F;
+	private float maxScale = 1.28F;
+	private float alphaScale = 2.0F;
+	private float deltaScale = 0.0F;
+	private float scale = minScale;
+	private float lastScale = scale; 
+	private float mousePressedX;
+	private float mousePressedY;
+	private boolean transitionInspector = false;
+	private float inspectionSubjectX;
+	private float inspectionSubjectY;
 
 	public void setup() {
 		size(width, height);
@@ -57,6 +65,7 @@ public class SimulationViewProcessing extends PApplet {
 		} else {
 			drawWelcome();
 		}
+		updateLastScale();
 	}
 	
 	private boolean isSpaceAvailable(){
@@ -67,12 +76,7 @@ public class SimulationViewProcessing extends PApplet {
 		pushMatrix();
 		translate(translationX, translationY);
 		scale(scale);
-		if(scale > 0.16){
-			stroke(background);
-			strokeWeight(1);
-		} else {
-			noStroke();
-		}
+		strokeControl();
 		drawInitialCondition();
 		if(universe.getSpace().getHistory().size() > 0){
 			drawHistory();
@@ -80,6 +84,7 @@ public class SimulationViewProcessing extends PApplet {
 		if(universe.getSpace().getCurrent().size() > 0){
 			drawCurrent();
 		}
+		drawInspector();
 		popMatrix();
 	}
 	
@@ -93,6 +98,15 @@ public class SimulationViewProcessing extends PApplet {
 				fill(0);
 			}
 			rect(squareSize * i, 1, squareSize, squareSize);
+		}
+	}
+	
+	private void strokeControl(){
+		if(scale > 0.16){
+			stroke(background);
+			strokeWeight(1);
+		} else {
+			noStroke();
 		}
 	}
 	
@@ -129,6 +143,32 @@ public class SimulationViewProcessing extends PApplet {
 			rect(squareSize * i, squareSize * (y + 1), squareSize, squareSize);
 		}
 	}
+	
+	private void drawInspector(){
+		if(transitionInspector){
+			float scaledSquareSize = scale * squareSize;
+			float fCellX = (inspectionSubjectX - translationX) / scaledSquareSize;
+			float fCellY = (inspectionSubjectY - translationY) / scaledSquareSize;
+			int iCellX = (int) fCellX;
+			int iCellY = (int) fCellY;
+			stroke(255.0F, 0.0F, 0.0F);
+			strokeWeight(squareSize/10);
+			noFill();
+			rect(iCellX * squareSize, iCellY * squareSize, squareSize, squareSize);
+		}
+	}
+	
+	private void updateInspectionSubject(){
+		if(lastScale != scale){
+			if(lastScale > scale){
+				inspectionSubjectX = ((inspectionSubjectX - translationX) / alphaScale) + translationX;
+				inspectionSubjectY = ((inspectionSubjectY - translationY) / alphaScale) + translationY;
+			} else {
+				inspectionSubjectX = ((inspectionSubjectX - translationX) * alphaScale) + translationX;
+				inspectionSubjectY = ((inspectionSubjectY - translationY) * alphaScale) + translationY;
+			}
+		}
+	}
 
 	private void drawTools() {
 
@@ -137,6 +177,10 @@ public class SimulationViewProcessing extends PApplet {
 	private void drawWelcome() {
 		textSize(25);
 		text("Mensagem de boas vindas aqui!", 291, 291);
+	}
+	
+	private void updateLastScale(){
+		lastScale = scale;
 	}
 	
 	private void drawCell(UnidimensionalCell c) {
@@ -162,8 +206,12 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	public void reset(){
-		translationX = 0;
-		translationY = 0;
+		translationX = 0.0F;
+		translationY = 0.0F;
+		scale = minScale;
+		lastScale = scale;
+		deltaScale = 0.0F;
+		transitionInspector = false;
 		refresh();
 	}
 	
@@ -179,17 +227,37 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	public void mouseReleased(){
-		translationX = translationX + (mouseX - mousePressedX);
-		translationY = translationY + (mouseY - mousePressedY);
+		if(transitionInspector){
+			inspectionSubjectX = mousePressedX;
+			inspectionSubjectY = mousePressedY;
+		} else {
+			translationX = translationX + (mouseX - mousePressedX);
+			translationY = translationY + (mouseY - mousePressedY);
+			inspectionSubjectX = inspectionSubjectX + (mouseX - mousePressedX);
+			inspectionSubjectY = inspectionSubjectY + (mouseY - mousePressedY);
+		}
 		refresh();
 	}
 	
 	public void keyPressed(){
-		if(key == '1' && scale > 0.01){
-			scale = scale / 2;
-		} else if (key == '2' && scale < 0.64){
-			scale = scale * 2;
+		if(key == '1' && scale > minScale){
+			lastScale = scale;
+			double pow = --deltaScale;
+			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+			updateInspectionSubject();
+			refresh();
+		} else if (key == '2' && scale < maxScale){
+			lastScale = scale;
+			double pow = ++deltaScale;
+			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+			updateInspectionSubject();
+			refresh();
+		} else if (key == '3') {
+			if(transitionInspector){
+				transitionInspector = false;
+			} else {
+				transitionInspector = true;
+			}
 		}
-		refresh();
 	}
 }
