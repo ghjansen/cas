@@ -51,6 +51,7 @@ public class SimulationViewProcessing extends PApplet {
 	private boolean transitionInspector = false;
 	private float inspectionSubjectX;
 	private float inspectionSubjectY;
+	private boolean resetControl = true;
 
 	public void setup() {
 		size(width, height);
@@ -66,6 +67,7 @@ public class SimulationViewProcessing extends PApplet {
 			drawWelcome();
 		}
 		updateLastScale();
+		updateResetControl();
 	}
 	
 	private boolean isSpaceAvailable(){
@@ -74,6 +76,8 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawSpace(){
 		pushMatrix();
+		centralizeTranslation();
+		updateInspectionSubject();
 		translate(translationX, translationY);
 		scale(scale);
 		strokeControl();
@@ -86,6 +90,37 @@ public class SimulationViewProcessing extends PApplet {
 		}
 		drawInspector();
 		popMatrix();
+	}
+	
+	private void centralizeTranslation(){
+		if(resetControl){
+			float emptySpaceX = width - universe.getTime().getRelative().get(0).getLimit();
+			if(emptySpaceX > 0){
+				translationX = emptySpaceX / 2;
+			}
+			float emptySpaceY = height - universe.getTime().getLimit();
+			if(emptySpaceY > 0){
+				translationY = emptySpaceY / 2;
+			}
+		} else if (lastScale != scale){
+			float centralShiftX;
+			float centralShiftY;
+			if(lastScale > scale){
+				centralShiftX = ((width / 2) - translationX) / 2;
+				centralShiftY = ((height / 2) - translationY) / 2;
+				translationX = translationX + centralShiftX;
+				translationY = translationY + centralShiftY;
+				inspectionSubjectX = inspectionSubjectX + centralShiftX;
+				inspectionSubjectY = inspectionSubjectY + centralShiftY;
+			} else {
+				centralShiftX = (((width / 2) - translationX));
+				centralShiftY = (((height / 2) - translationY));
+				translationX = translationX - centralShiftX;
+				translationY = translationY - centralShiftY;
+				inspectionSubjectX = inspectionSubjectX - centralShiftX;
+				inspectionSubjectY = inspectionSubjectY - centralShiftY;				
+			}
+		}
 	}
 	
 	private void drawInitialCondition(){
@@ -106,6 +141,7 @@ public class SimulationViewProcessing extends PApplet {
 			stroke(background);
 			strokeWeight(1);
 		} else {
+			strokeWeight(0);
 			noStroke();
 		}
 	}
@@ -155,6 +191,8 @@ public class SimulationViewProcessing extends PApplet {
 			strokeWeight(squareSize/10);
 			noFill();
 			rect(iCellX * squareSize, iCellY * squareSize, squareSize, squareSize);
+		} else {
+			noStroke();
 		}
 	}
 	
@@ -181,6 +219,10 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void updateLastScale(){
 		lastScale = scale;
+	}
+	
+	private void updateResetControl(){
+		resetControl = false;
 	}
 	
 	private void drawCell(UnidimensionalCell c) {
@@ -212,6 +254,7 @@ public class SimulationViewProcessing extends PApplet {
 		lastScale = scale;
 		deltaScale = 0.0F;
 		transitionInspector = false;
+		resetControl = true;
 		refresh();
 	}
 	
@@ -244,13 +287,11 @@ public class SimulationViewProcessing extends PApplet {
 			lastScale = scale;
 			double pow = --deltaScale;
 			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-			updateInspectionSubject();
 			refresh();
 		} else if (key == '2' && scale < maxScale){
 			lastScale = scale;
 			double pow = ++deltaScale;
 			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-			updateInspectionSubject();
 			refresh();
 		} else if (key == '3') {
 			if(transitionInspector){
