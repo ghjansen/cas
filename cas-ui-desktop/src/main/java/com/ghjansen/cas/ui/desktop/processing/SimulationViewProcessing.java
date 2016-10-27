@@ -48,7 +48,7 @@ public class SimulationViewProcessing extends PApplet {
 	private float lastScale = scale; 
 	private float mousePressedX;
 	private float mousePressedY;
-	private boolean transitionInspector = false;
+	private boolean cellInspector = false;
 	private float inspectionSubjectX;
 	private float inspectionSubjectY;
 	private boolean resetControl = true;
@@ -181,18 +181,122 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private void drawInspector(){
-		if(transitionInspector){
+		if(cellInspector){
+			cursor(CROSS);
 			float scaledSquareSize = scale * squareSize;
-			float fCellX = (inspectionSubjectX - translationX) / scaledSquareSize;
-			float fCellY = (inspectionSubjectY - translationY) / scaledSquareSize;
-			int iCellX = (int) fCellX;
-			int iCellY = (int) fCellY;
+			float floatCellX = (inspectionSubjectX - translationX) / scaledSquareSize;
+			float floatCellY = (inspectionSubjectY - translationY) / scaledSquareSize;
+			int intCellX = (int) floatCellX;
+			int intCellY = (int) floatCellY;
+			drawInspectorBorders(intCellX, intCellY);
+		} else {
+			cursor(MOVE);
+		}
+	}
+	
+	private void drawInspectorBorders(int xCell, int yCell){
+		System.out.println("xCell: "+ xCell + " yCell:"+yCell);
+		int absoluteTimeLimit = universe.getTime().getLimit();
+		int relativeTimeLimit = universe.getTime().getRelative().get(0).getLimit();
+		if(xCell >= 0 && xCell < relativeTimeLimit && 
+				yCell > 0 && yCell < absoluteTimeLimit + 1){
+			
 			stroke(255.0F, 0.0F, 0.0F);
 			strokeWeight(squareSize/10);
+			strokeCap(ROUND);
 			noFill();
-			rect(iCellX * squareSize, iCellY * squareSize, squareSize, squareSize);
-		} else {
-			noStroke();
+			
+			float cx = xCell * squareSize;
+			float cy = yCell * squareSize;
+			float p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y, p5x, p5y, p6x, p6y, p7x, p7y, p8x, p8y, p9x, p9y, p10x, p10y;
+			
+			/**
+			 * P1---P2---P3---P4
+			 * |    |    |    |
+			 * P10--P9---P6---P5
+			 *      |    |
+			 *      P8---P7
+			 */
+			
+			p2x = cx;
+			p2y = cy - squareSize;
+			p3x = cx + squareSize;
+			p3y = cy - squareSize;
+			p6x = cx + squareSize;
+			p6y = cy;
+			p7x = cx + squareSize;
+			p7y = cy + squareSize;
+			p8x = cx;
+			p8y = cy + squareSize;
+			p9x = cx;
+			p9y = cy;
+			
+			
+			if(xCell == 0){ 
+				// extreme left, include combination cell from right side
+				p1x = cx + (squareSize * relativeTimeLimit) - squareSize; //different
+				p1y = cy - squareSize;
+				p4x = cx + (squareSize * 2);
+				p4y = cy - squareSize;
+				p5x = cx + (squareSize * 2);
+				p5y = cy;
+				p10x = cx + (squareSize * relativeTimeLimit) - squareSize; //different
+				p10y = cy;
+				line(p1x, p1y, p1x + squareSize, p2y); //different
+				line(p2x, p2y, p3x, p3y);
+				line(p3x, p3y, p4x, p4y);
+				line(p4x, p4y, p5x, p5y);
+				line(p5x, p5y, p6x, p6y);
+				line(p6x, p6y, p7x, p7y);
+				line(p7x, p7y, p8x, p8y);
+				line(p8x, p8y, p9x, p9y);
+				line(p10x, p10y, p10x + squareSize, p10y); //different
+				line(p10x, p10y, p1x, p1y);
+				
+			} else if (xCell == relativeTimeLimit - 1){
+				// extreme right, include combination cell from left side
+				p1x = cx - squareSize;
+				p1y = cy - squareSize;
+				p4x = squareSize; //different
+				p4y = cy - squareSize;
+				p5x = squareSize; //different
+				p5y = cy;
+				p10x = cx - squareSize;
+				p10y = cy;
+				line(p1x, p1y, p2x, p2y);
+				line(p2x, p2y, p3x, p3y);
+				line(0, p4y, p4x, p4y); //different
+				line(p4x, p4y, p5x, p5y);
+				line(p5x, p5y, 0, p5y); //different
+				line(p6x, p6y, p7x, p7y);
+				line(p7x, p7y, p8x, p8y);
+				line(p8x, p8y, p9x, p9y);
+				line(p9x, p9y, p10x, p10y);
+				line(p10x, p10y, p1x, p1y);
+			} else {
+				// regular mid location, draw borders normally
+				p1x = cx - squareSize;
+				p1y = cy - squareSize;
+				p4x = cx + (squareSize * 2);
+				p4y = cy - squareSize;
+				p5x = cx + (squareSize * 2);
+				p5y = cy;
+				p10x = cx - squareSize;
+				p10y = cy;
+				line(p1x, p1y, p2x, p2y);
+				line(p2x, p2y, p3x, p3y);
+				line(p3x, p3y, p4x, p4y);
+				line(p4x, p4y, p5x, p5y);
+				line(p5x, p5y, p6x, p6y);
+				line(p6x, p6y, p7x, p7y);
+				line(p7x, p7y, p8x, p8y);
+				line(p8x, p8y, p9x, p9y);
+				line(p9x, p9y, p10x, p10y);
+				line(p10x, p10y, p1x, p1y);
+			}
+			
+			
+			
 		}
 	}
 	
@@ -253,7 +357,7 @@ public class SimulationViewProcessing extends PApplet {
 		scale = minScale;
 		lastScale = scale;
 		deltaScale = 0.0F;
-		transitionInspector = false;
+		cellInspector = false;
 		resetControl = true;
 		refresh();
 	}
@@ -270,7 +374,7 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	public void mouseReleased(){
-		if(transitionInspector){
+		if(cellInspector){
 			inspectionSubjectX = mousePressedX;
 			inspectionSubjectY = mousePressedY;
 		} else {
@@ -294,10 +398,11 @@ public class SimulationViewProcessing extends PApplet {
 			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
 			refresh();
 		} else if (key == '3') {
-			if(transitionInspector){
-				transitionInspector = false;
+			if(cellInspector){
+				cellInspector = false;
+				refresh();
 			} else {
-				transitionInspector = true;
+				cellInspector = true;
 			}
 		}
 	}
