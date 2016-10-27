@@ -59,7 +59,7 @@ public class EventManager {
 	
 	
 	public void executeComplete(){
-		int[] s = main.ruleTransitions.getStates();
+		int[] s = main.transitionsView.getStates();
 		int iterations = Integer.valueOf(main.txtIterations.getText());
 		int cells = Integer.valueOf(main.txtCells.getText());
 		UnidimensionalRuleTypeParameter ruleType = new UnidimensionalRuleTypeParameter(true);
@@ -97,7 +97,7 @@ public class EventManager {
 	}
 	
 	public void transitionsEvent(){
-		int[] states = main.ruleTransitions.getStates();
+		int[] states = main.transitionsView.getStates();
 		int result = 0;
 		for(int i = 0; i < states.length; i++){
 			result = (int) (result + (states[i] == 1 ? Math.pow(2, i) : 0));
@@ -122,7 +122,7 @@ public class EventManager {
 					states[i] = 0;
 				}
 			}
-			main.ruleTransitions.setStates(states);
+			main.transitionsView.setStates(states);
 		}
 	}
 	

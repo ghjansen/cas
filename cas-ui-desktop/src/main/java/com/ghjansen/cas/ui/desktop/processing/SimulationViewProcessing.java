@@ -31,6 +31,8 @@ import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 public class SimulationViewProcessing extends PApplet {
 
 	private UnidimensionalUniverse universe;
+	private TransitionsViewProcessing transitions;
+	private ViewCommonsProcessing commons;
 	private int width = 582;
 	private int height = 582;
 	private int background = 204;
@@ -52,6 +54,11 @@ public class SimulationViewProcessing extends PApplet {
 	private float inspectionSubjectX;
 	private float inspectionSubjectY;
 	private boolean resetControl = true;
+	
+	public SimulationViewProcessing(ViewCommonsProcessing commons, TransitionsViewProcessing transitions){
+		this.commons = commons;
+		this.transitions = transitions;
+	}
 
 	public void setup() {
 		size(width, height);
@@ -201,8 +208,9 @@ public class SimulationViewProcessing extends PApplet {
 		if(xCell >= 0 && xCell < relativeTimeLimit && 
 				yCell > 0 && yCell < absoluteTimeLimit + 1){
 			
-			stroke(255.0F, 0.0F, 0.0F);
-			strokeWeight(squareSize/10);
+			commons.glowControl();
+			stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
+			strokeWeight(squareSize/5);
 			strokeCap(ROUND);
 			noFill();
 			

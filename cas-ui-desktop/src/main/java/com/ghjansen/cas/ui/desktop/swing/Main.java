@@ -53,8 +53,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
-import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
+import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
+import com.ghjansen.cas.ui.desktop.processing.ViewCommonsProcessing;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -65,7 +66,8 @@ import java.awt.event.FocusEvent;
 public class Main {
 	
 	private EventManager em;
-	public RuleTransitionsProcessing ruleTransitions;
+	private ViewCommonsProcessing viewCommons;
+	public TransitionsViewProcessing transitionsView;
 	public SimulationViewProcessing simulationView;
 
 	private JFrame frame;
@@ -101,8 +103,9 @@ public class Main {
 
 	private void initialize() {
 		em = new EventManager(this);
-		ruleTransitions = new RuleTransitionsProcessing(em);
-		simulationView = new SimulationViewProcessing();
+		viewCommons = new ViewCommonsProcessing();
+		transitionsView = new TransitionsViewProcessing(viewCommons, em);
+		simulationView = new SimulationViewProcessing(viewCommons, transitionsView);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 947, 665);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -187,22 +190,22 @@ public class Main {
 		txtRuleNumber.getDocument().addDocumentListener(new RuleNumberDocumentListener(this.em));
 		
 		
-		RuleTransitionsPanel pnlRuleTransitions = new RuleTransitionsPanel(ruleTransitions);
-		pnlRuleTransitions.setBounds(11, 23, 302, 35);
-		GroupLayout gl_pnlRuleTransitionsProcessing = new GroupLayout(pnlRuleTransitions);
-		gl_pnlRuleTransitionsProcessing.setHorizontalGroup(
-			gl_pnlRuleTransitionsProcessing.createParallelGroup(Alignment.LEADING)
+		TransitionsViewPanel pnlTransitionsView = new TransitionsViewPanel(transitionsView);
+		pnlTransitionsView.setBounds(11, 23, 302, 35);
+		GroupLayout gl_pnlTransitionsViewProcessing = new GroupLayout(pnlTransitionsView);
+		gl_pnlTransitionsViewProcessing.setHorizontalGroup(
+			gl_pnlTransitionsViewProcessing.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 293, Short.MAX_VALUE)
 		);
-		gl_pnlRuleTransitionsProcessing.setVerticalGroup(
-			gl_pnlRuleTransitionsProcessing.createParallelGroup(Alignment.LEADING)
+		gl_pnlTransitionsViewProcessing.setVerticalGroup(
+			gl_pnlTransitionsViewProcessing.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 37, Short.MAX_VALUE)
 		);
-		pnlRuleTransitions.setLayout(gl_pnlRuleTransitionsProcessing);
+		pnlTransitionsView.setLayout(gl_pnlTransitionsViewProcessing);
 		pnlRuleConfig.setLayout(null);
 		pnlRuleConfig.add(lblRuleNumber);
 		pnlRuleConfig.add(txtRuleNumber);
-		pnlRuleConfig.add(pnlRuleTransitions);
+		pnlRuleConfig.add(pnlTransitionsView);
 		
 		JPanel pnlLimits = new JPanel();
 		pnlLimits.setBounds(6, 187, 325, 95);

@@ -21,14 +21,19 @@ package com.ghjansen.cas.ui.desktop.processing;
 import processing.core.PApplet;
 
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class RuleTransitionsProcessing extends PApplet {
+public class TransitionsViewProcessing extends PApplet {
 	
+	private EventManager em;
+	private UnidimensionalTransition transitionHighlight;
+	private ViewCommonsProcessing commons;
 	private int width = 301;
 	private int height = 34;
+	private int background = 255;
 	private float transitionSquareWidth = 37.6F;
 	private int transitionSquareHeight = 33;
 	private int stateSize = 8;
@@ -38,15 +43,16 @@ public class RuleTransitionsProcessing extends PApplet {
 	private int combinationPosition = 9;
 	private int nextStatePosition = 17;
 	private int[] states;
-	private EventManager em;
+	private boolean highlight = false;
 	
-	public RuleTransitionsProcessing(EventManager em){
+	public TransitionsViewProcessing(ViewCommonsProcessing commons, EventManager em){
+		this.commons = commons;
 		this.em = em;
 	}
 
 	public void setup() {
 		size(width, height);
-		background(255);
+		background(background);
 		states = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 	}
 
@@ -55,8 +61,10 @@ public class RuleTransitionsProcessing extends PApplet {
 	}
 	
 	private void drawElementaryTransitions(){
+		background(background);
 		drawTransitionBorders();
 		drawStates();
+		drawHighlight();
 	}
 	
 	private void drawTransitionBorders(){
@@ -103,6 +111,12 @@ public class RuleTransitionsProcessing extends PApplet {
 			rect(transitionSquareWidth * i + referenceMargin, nextStatePosition, stateSize, stateSize);
 		}
 		stroke(204);
+	}
+	
+	private void drawHighlight(){
+		if(highlight){
+			
+		}
 	}
 	
 	@Override
@@ -155,6 +169,15 @@ public class RuleTransitionsProcessing extends PApplet {
 	
 	public void setStates(int[] states){
 		this.states = states;
+	}
+	
+	public void showHighlight(UnidimensionalTransition transition){
+		highlight = true;
+		transitionHighlight = transition;
+	}
+	
+	public void hideHighlight(){
+		highlight = false;
 	}
 
 }

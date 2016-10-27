@@ -16,20 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.ui.desktop.swing;
-
-import javax.swing.JPanel;
-
-import com.ghjansen.cas.ui.desktop.processing.RuleTransitionsProcessing;
+package com.ghjansen.cas.ui.desktop.processing;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class RuleTransitionsPanel extends JPanel {
-
-	public RuleTransitionsPanel(RuleTransitionsProcessing ruleTransitionsProcessing) {
-		add(ruleTransitionsProcessing);
-		ruleTransitionsProcessing.init();
+public class ViewCommonsProcessing {
+	
+	public boolean glowControl = true;
+	public float glowIntensity = 0.0F;
+	
+	public void glowControl(){
+		if(glowControl){
+			if(glowIntensity < 255.0F){
+				glowIntensity = glowIntensity +20;
+			} else {
+				glowControl = false;
+			}
+		} else {
+			if(glowIntensity > 0.0F){
+				glowIntensity = glowIntensity -20;
+			} else {
+				glowControl = true;
+			}
+		}
 	}
 
 }
