@@ -377,7 +377,40 @@ public class SimulationViewProcessing extends PApplet {
 	}
 
 	private void drawTools() {
-
+		drawHelpButton();
+		drawInspectionButton();
+		drawZoomSlider();
+	}
+	
+	private void drawHelpButton(){
+		
+	}
+	
+	private void drawInspectionButton(){
+		
+	}
+	
+	private void drawZoomSlider(){
+		int zoomX = width - 50;
+		int zoomY = 150;
+		int zoomWidth = 26;
+		int zoomHeight = 210 + 20;
+		noStroke();
+		fill(255);
+		rect(zoomX, zoomY, zoomWidth, zoomHeight);
+		arc(zoomX+13, zoomY+1, zoomWidth, zoomWidth, radians(180), radians(360));
+		arc(zoomX+13, zoomY+zoomHeight, zoomWidth, zoomWidth, radians(0), radians(180));
+		stroke(255.0F, 0.0F, 0.0F);
+		strokeWeight(1);
+		rect(zoomX+1, zoomY, zoomWidth-3, zoomHeight);
+		arc(zoomX+13, zoomY+1, zoomWidth-3, zoomWidth-3, radians(180), radians(360));
+		arc(zoomX+13, zoomY+zoomHeight, zoomWidth-3, zoomWidth-3, radians(0), radians(180));
+		stroke(255.0F, 150.0F, 150.0F);
+		line(zoomX+13, zoomY+5, zoomX+13, zoomY + zoomHeight-5);
+		for(int i = 1; i < 9; i++){
+			line(zoomX+10, zoomY+(30*i)-20, zoomX+16, zoomY+(30*i)-20);
+		}
+		
 	}
 
 	private void drawWelcome() {
