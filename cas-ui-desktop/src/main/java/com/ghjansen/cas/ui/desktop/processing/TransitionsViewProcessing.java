@@ -58,17 +58,17 @@ public class TransitionsViewProcessing extends PApplet {
 
 	public void draw() {
 		drawElementaryTransitions();
+		drawHighlight();
 	}
 	
-	private void drawElementaryTransitions(){
-		background(background);
+	private void drawElementaryTransitions() {
 		drawTransitionBorders();
 		drawStates();
-		drawHighlight();
 	}
 	
 	private void drawTransitionBorders(){
 		stroke(204);
+		strokeWeight(1);
 		fill(255);
 		for(int i = 0; i < 8; i++){
 			rect(transitionSquareWidth * i, 0, transitionSquareWidth, transitionSquareHeight);
@@ -115,7 +115,34 @@ public class TransitionsViewProcessing extends PApplet {
 	
 	private void drawHighlight(){
 		if(highlight){
-			
+			int transition = -1;
+			int leftState = transitionHighlight.getCombination().getNeighborhood().get(0).getValue();
+			int referenceState = transitionHighlight.getCombination().getReferenceState().getValue();
+			int rightState = transitionHighlight.getCombination().getNeighborhood().get(1).getValue();
+			if(leftState == 1 && referenceState == 1 && rightState == 1){
+				transition = 0;
+			} else if (leftState == 1 && referenceState == 1 && rightState == 0){
+				transition = 1;
+			} else if (leftState == 1 && referenceState == 0 && rightState == 1){
+				transition = 2;
+			} else if (leftState == 1 && referenceState == 0 && rightState == 0){
+				transition = 3;
+			} else if (leftState == 0 && referenceState == 1 && rightState == 1){
+				transition = 4;
+			} else if (leftState == 0 && referenceState == 1 && rightState == 0){
+				transition = 5;
+			} else if (leftState == 0 && referenceState == 0 && rightState == 1){
+				transition = 6;
+			} else if (leftState == 0 && referenceState == 0 && rightState == 0){
+				transition = 7;
+			}
+			if(transition != -1){
+				stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
+				strokeWeight(5);
+				strokeCap(ROUND);
+				noFill();
+				rect(transitionSquareWidth * transition, 2, transitionSquareWidth, transitionSquareHeight-4);
+			}
 		}
 	}
 	

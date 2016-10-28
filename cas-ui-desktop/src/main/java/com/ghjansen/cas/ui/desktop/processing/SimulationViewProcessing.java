@@ -22,6 +22,7 @@ import java.util.List;
 
 import processing.core.PApplet;
 
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 
@@ -210,7 +211,7 @@ public class SimulationViewProcessing extends PApplet {
 			
 			commons.glowControl();
 			stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
-			strokeWeight(squareSize/5);
+			strokeWeight(squareSize/10);
 			strokeCap(ROUND);
 			noFill();
 			
@@ -302,9 +303,18 @@ public class SimulationViewProcessing extends PApplet {
 				line(p9x, p9y, p10x, p10y);
 				line(p10x, p10y, p1x, p1y);
 			}
-			
-			
-			
+			UnidimensionalCell inspectedCell = getInspectedCell(xCell, yCell);
+			transitions.showHighlight((UnidimensionalTransition) inspectedCell.getTransition());
+		} else {
+			transitions.hideHighlight();
+		}
+	}
+	
+	private UnidimensionalCell getInspectedCell(int xCell, int yCell){
+		if(yCell == universe.getTime().getLimit()){
+			return (UnidimensionalCell) universe.getSpace().getCurrent().get(xCell);
+		} else {
+			return (UnidimensionalCell) universe.getSpace().getHistory().get(--yCell).get(xCell);
 		}
 	}
 	
