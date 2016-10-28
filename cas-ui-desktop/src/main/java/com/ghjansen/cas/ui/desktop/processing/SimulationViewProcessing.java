@@ -199,6 +199,7 @@ public class SimulationViewProcessing extends PApplet {
 			drawInspectorBorders(intCellX, intCellY);
 		} else {
 			cursor(MOVE);
+			transitions.hideHighlight();
 		}
 	}
 	
@@ -305,8 +306,6 @@ public class SimulationViewProcessing extends PApplet {
 			}
 			UnidimensionalCell inspectedCell = getInspectedCell(xCell, yCell);
 			transitions.showHighlight((UnidimensionalTransition) inspectedCell.getTransition());
-		} else {
-			transitions.hideHighlight();
 		}
 	}
 	
@@ -421,6 +420,11 @@ public class SimulationViewProcessing extends PApplet {
 				refresh();
 			} else {
 				cellInspector = true;
+			}
+		} else if (key == ESC) {
+			if(cellInspector){
+				cellInspector = false;
+				refresh();
 			}
 		}
 	}

@@ -77,6 +77,8 @@ public class TransitionsViewProcessing extends PApplet {
 	
 	private void drawStates(){
 		stroke(127);
+		strokeWeight(1);
+		fill(255);
 		// Left neighbor
 		for(int i = 0; i < 8; i++){
 			if(i < 4){
@@ -114,7 +116,7 @@ public class TransitionsViewProcessing extends PApplet {
 	}
 	
 	private void drawHighlight(){
-		if(highlight){
+		if(highlight && transitionHighlight != null){
 			int transition = -1;
 			int leftState = transitionHighlight.getCombination().getNeighborhood().get(0).getValue();
 			int referenceState = transitionHighlight.getCombination().getReferenceState().getValue();
@@ -141,7 +143,7 @@ public class TransitionsViewProcessing extends PApplet {
 				strokeWeight(5);
 				strokeCap(ROUND);
 				noFill();
-				rect(transitionSquareWidth * transition, 2, transitionSquareWidth, transitionSquareHeight-4);
+				rect(transitionSquareWidth * transition, 3, transitionSquareWidth, transitionSquareHeight-6);
 			}
 		}
 	}
