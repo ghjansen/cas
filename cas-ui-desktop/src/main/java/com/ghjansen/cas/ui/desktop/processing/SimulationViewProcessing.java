@@ -84,7 +84,7 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawSpace(){
 		pushMatrix();
-		centralizeTranslation();
+		calibrateScaleAndTranslation();
 		updateInspectionSubject();
 		translate(translationX, translationY);
 		scale(scale);
@@ -100,22 +100,70 @@ public class SimulationViewProcessing extends PApplet {
 		popMatrix();
 	}
 	
-	private void centralizeTranslation(){
+	private void calibrateScaleAndTranslation(){
 		if(resetControl){
+			// calibrate initial scale
 			float emptySpaceX = width - universe.getTime().getRelative().get(0).getLimit();
+			float emptySpaceY = height - universe.getTime().getLimit();
+			double deltaScaleLimitX = 0;
+			double deltaScaleLimitY = 0;
+			float newScale = 0.0F;
+			// verify horizontal limit
+			if(emptySpaceX > 0){
+				float horizontalSize = universe.getTime().getRelative().get(0).getLimit() * squareSize;
+				float potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
+				while(horizontalSize * potentialScale < width ){
+					deltaScaleLimitX++;
+					potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
+				}
+				if(horizontalSize * potentialScale > width){
+					deltaScaleLimitX--;
+				}
+			}
+			// verify vertical limit
+			if(emptySpaceY > 0){
+				float verticalSize = universe.getTime().getLimit() * squareSize;
+				float potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
+				while(verticalSize * potentialScale < height ){
+					deltaScaleLimitY++;
+					potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
+				}
+				if(verticalSize * potentialScale > height){
+					deltaScaleLimitY--;
+				}
+			}
+			// use smallest limit
+			if((deltaScaleLimitX < deltaScaleLimitY) || deltaScaleLimitX == deltaScaleLimitY){
+				newScale = (float) minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
+				deltaScale = (float) deltaScaleLimitX;
+			} else if(deltaScaleLimitY < deltaScaleLimitX){
+				newScale = (float) minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
+				deltaScale = (float) deltaScaleLimitY;
+			}
+			// if smallest limit is greater than maxScale, assume maxScale, otherwise use smallest
+			if(newScale > maxScale){
+				scale = maxScale;
+				deltaScale = (float) commons.logOfBase((int)alphaScale, (int) (maxScale * squareSize));
+			} else {
+				scale = newScale;
+			}
+			// recalculate emptySpace
+			emptySpaceX = width - (universe.getTime().getRelative().get(0).getLimit() * (scale * squareSize));
+			emptySpaceY = height - (universe.getTime().getLimit() * (scale * squareSize));
+			// calibrate initial translation
 			if(emptySpaceX > 0){
 				translationX = emptySpaceX / 2;
 			}
-			float emptySpaceY = height - universe.getTime().getLimit();
 			if(emptySpaceY > 0){
 				translationY = emptySpaceY / 2;
 			}
 		} else if (lastScale != scale){
+			// hold center when zooming in or out
 			float centralShiftX;
 			float centralShiftY;
 			if(lastScale > scale){
-				centralShiftX = ((width / 2) - translationX) / 2;
-				centralShiftY = ((height / 2) - translationY) / 2;
+				centralShiftX = ((width / 2) - translationX) / (lastScale / scale);
+				centralShiftY = ((height / 2) - translationY) / (lastScale / scale);
 				translationX = translationX + centralShiftX;
 				translationY = translationY + centralShiftY;
 				inspectionSubjectX = inspectionSubjectX + centralShiftX;
@@ -204,7 +252,6 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private void drawInspectorBorders(int xCell, int yCell){
-		System.out.println("xCell: "+ xCell + " yCell:"+yCell);
 		int absoluteTimeLimit = universe.getTime().getLimit();
 		int relativeTimeLimit = universe.getTime().getRelative().get(0).getLimit();
 		if(xCell >= 0 && xCell < relativeTimeLimit && 
@@ -385,6 +432,36 @@ public class SimulationViewProcessing extends PApplet {
 		background(background);
 	}
 	
+	private void zoomIn(){
+		lastScale = scale;
+		double pow = ++deltaScale;
+		scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+		refresh();
+	}
+	
+	private void zoomOut(){
+		lastScale = scale;
+		double pow = --deltaScale;
+		scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+		refresh();
+	}
+	
+	private void switchInspector(){
+		if(cellInspector){
+			cellInspector = false;
+			refresh();
+		} else {
+			cellInspector = true;
+		}
+	}
+	
+	private void disableInspector(){
+		if(cellInspector){
+			cellInspector = false;
+			refresh();
+		}
+	}
+	
 	public void mousePressed(){
 		mousePressedX = mouseX;
 		mousePressedY = mouseY;
@@ -405,27 +482,13 @@ public class SimulationViewProcessing extends PApplet {
 	
 	public void keyPressed(){
 		if(key == '1' && scale > minScale){
-			lastScale = scale;
-			double pow = --deltaScale;
-			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-			refresh();
+			zoomOut();
 		} else if (key == '2' && scale < maxScale){
-			lastScale = scale;
-			double pow = ++deltaScale;
-			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-			refresh();
+			zoomIn();
 		} else if (key == '3') {
-			if(cellInspector){
-				cellInspector = false;
-				refresh();
-			} else {
-				cellInspector = true;
-			}
+			switchInspector();
 		} else if (key == ESC) {
-			if(cellInspector){
-				cellInspector = false;
-				refresh();
-			}
+			disableInspector();
 		}
 	}
 }

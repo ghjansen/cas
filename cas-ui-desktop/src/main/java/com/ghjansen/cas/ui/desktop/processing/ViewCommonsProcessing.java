@@ -41,5 +41,10 @@ public class ViewCommonsProcessing {
 			}
 		}
 	}
+	
+	public double logOfBase(int base, int num) {
+		// thanks to http://blog.dreasgrech.com/2010/02/finding-logarithm-of-any-base-in-java.html
+	    return Math.log(num) / Math.log(base);
+	}
 
 }
