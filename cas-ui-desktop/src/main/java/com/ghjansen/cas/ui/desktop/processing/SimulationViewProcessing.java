@@ -55,6 +55,20 @@ public class SimulationViewProcessing extends PApplet {
 	private float inspectionSubjectX;
 	private float inspectionSubjectY;
 	private boolean resetControl = true;
+	private float toolsX = width - 50;
+	private float toolsY = 50;
+	private float helpButtonX = toolsX + 15;
+	private float helpButtonY = toolsY;
+	private float inspectionButtonX = toolsX + 15;
+	private float inspectionButtonY = toolsY + 50;
+	private float zoomSliderX = toolsX + 3;
+	private float zoomSliderY = toolsY + 100;
+	private boolean overHelp = false;
+	private boolean overInspector = false;
+	private boolean overSlider = false;
+	private boolean overPlus = false;
+	private boolean overMinus = false;
+	private boolean draggingSlider = false;
 	
 	public SimulationViewProcessing(ViewCommonsProcessing commons, TransitionsViewProcessing transitions){
 		this.commons = commons;
@@ -238,7 +252,6 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawInspector(){
 		if(cellInspector){
-			cursor(CROSS);
 			float scaledSquareSize = scale * squareSize;
 			float floatCellX = (inspectionSubjectX - translationX) / scaledSquareSize;
 			float floatCellY = (inspectionSubjectY - translationY) / scaledSquareSize;
@@ -246,7 +259,6 @@ public class SimulationViewProcessing extends PApplet {
 			int intCellY = (int) floatCellY;
 			drawInspectorBorders(intCellX, intCellY);
 		} else {
-			cursor(MOVE);
 			transitions.hideHighlight();
 		}
 	}
@@ -382,35 +394,93 @@ public class SimulationViewProcessing extends PApplet {
 		drawZoomSlider();
 	}
 	
-	private void drawHelpButton(){
-		
+	private void drawHelpButton() {
+		int helpRadius = 23;
+		textSize(18);
+		float fillCircle = 255.0F;
+		float fillText = 0.0F;
+		if (overHelp) {
+			fillCircle = 0.0F;
+			fillText = 255.0F;
+		}
+		fill(255.0F, fillCircle, fillCircle);
+		stroke(255.0F, 0.0F, 0.0F);
+		strokeWeight(1);
+		ellipse(helpButtonX, helpButtonY, helpRadius, helpRadius);
+		fill(255.0F, fillText, fillText);
+		text("?", helpButtonX + 1, toolsY + 7);
+
 	}
 	
 	private void drawInspectionButton(){
-		
+		int inspecRadius = 23;
+		float fillCircle = 255.0F;
+		float fillContent = 0.0F;
+		if(overInspector || cellInspector){
+			fillCircle = 0.0F;
+			fillContent = 255.0F;
+		}
+		fill(255.0F, fillCircle, fillCircle);
+		stroke(255.0F, 0.0F, 0.0F);
+		ellipse(toolsX+15, toolsY+50, inspecRadius, inspecRadius);
+		strokeWeight(1);
+		stroke(255.0F, fillContent, fillContent);
+		//eye
+//		ellipse(toolsX+15, toolsY+50, inspecRadius-4, inspecRadius-15);
+//		arc(toolsX+15, toolsY+48, inspecRadius-15, inspecRadius-15, radians(0), radians(180));
+//		stroke(255.0F, fillContent, fillContent);
+//		strokeWeight(2);
+//		point(toolsX+15, toolsY+48);
+		//cross
+		line(toolsX+15, toolsY+43, toolsX+15, toolsY+57);
+		line(toolsX+8, toolsY+50, toolsX+22, toolsY+50);
+		noFill();
+		rect(toolsX+12, toolsY+47, 6, 6);
 	}
 	
 	private void drawZoomSlider(){
-		int zoomX = width - 50;
-		int zoomY = 150;
-		int zoomWidth = 26;
-		int zoomHeight = 210 + 20;
-		noStroke();
+		int zoomWidth = 23;
+		int zoomHeight = 250;
+		textSize(18);
 		fill(255);
-		rect(zoomX, zoomY, zoomWidth, zoomHeight);
-		arc(zoomX+13, zoomY+1, zoomWidth, zoomWidth, radians(180), radians(360));
-		arc(zoomX+13, zoomY+zoomHeight, zoomWidth, zoomWidth, radians(0), radians(180));
 		stroke(255.0F, 0.0F, 0.0F);
 		strokeWeight(1);
-		rect(zoomX+1, zoomY, zoomWidth-3, zoomHeight);
-		arc(zoomX+13, zoomY+1, zoomWidth-3, zoomWidth-3, radians(180), radians(360));
-		arc(zoomX+13, zoomY+zoomHeight, zoomWidth-3, zoomWidth-3, radians(0), radians(180));
+		rect(zoomSliderX, zoomSliderY, zoomWidth, zoomHeight+4);
+		arc(zoomSliderX+12, zoomSliderY+1, zoomWidth, zoomWidth, radians(180), radians(360));
+		arc(zoomSliderX+12, zoomSliderY+zoomHeight, zoomWidth, zoomWidth, radians(0), radians(180));
 		stroke(255.0F, 150.0F, 150.0F);
-		line(zoomX+13, zoomY+5, zoomX+13, zoomY + zoomHeight-5);
+		line(zoomSliderX+12, zoomSliderY+15, zoomSliderX+12, zoomSliderY+234);
 		for(int i = 1; i < 9; i++){
-			line(zoomX+10, zoomY+(30*i)-20, zoomX+16, zoomY+(30*i)-20);
+			line(zoomSliderX+9, zoomSliderY-10+(30*i), zoomSliderX+15, zoomSliderY-10+(30*i));
 		}
-		
+		if(overPlus){
+			stroke(255.0F, 0.0F, 0.0F);
+			fill(255.0F, 0.0F, 0.0F);
+			ellipse(zoomSliderX+12, zoomSliderY+3, 15, 15);
+			fill(255);
+			text("+", zoomSliderX+12, zoomSliderY+8);
+		} else {
+			fill(255.0F, 0.0F, 0.0F);
+			text("+", zoomSliderX+12, zoomSliderY+8);
+		}
+		if(overMinus){
+			stroke(255.0F, 0.0F, 0.0F);
+			stroke(255.0F, 0.0F, 0.0F);
+			ellipse(zoomSliderX+12, zoomSliderY + zoomHeight, 15, 15);
+			fill(255);
+			text("-", zoomSliderX+12, zoomSliderY + zoomHeight+5);
+		} else {
+			fill(255.0F, 0.0F, 0.0F);
+			text("-", zoomSliderX+12, zoomSliderY + zoomHeight+5);
+		}
+		if(overSlider){
+			stroke(255.0F, 0.0F, 0.0F);
+			fill(255.0F, 0.0F, 0.0F);
+		} else {
+			stroke(255.0F, 150.0F, 150.0F);
+			fill(255.0F, 150.0F, 150.0F);
+		}
+		rect(zoomSliderX+4, zoomSliderY+zoomHeight-(30*deltaScale)-25, 16, 9);
 	}
 
 	private void drawWelcome() {
@@ -466,62 +536,163 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private void zoomIn(){
-		lastScale = scale;
-		double pow = ++deltaScale;
-		scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-		refresh();
+		if(scale < maxScale){
+			lastScale = scale;
+			double pow = ++deltaScale;
+			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+			refresh();
+		}
 	}
 	
 	private void zoomOut(){
-		lastScale = scale;
-		double pow = --deltaScale;
-		scale = minScale * (float) Math.pow( (double) alphaScale, pow);
-		refresh();
+		if(scale > minScale){
+			lastScale = scale;
+			double pow = --deltaScale;
+			scale = minScale * (float) Math.pow( (double) alphaScale, pow);
+			refresh();
+		}
 	}
 	
 	private void switchInspector(){
 		if(cellInspector){
-			cellInspector = false;
-			refresh();
+			disableInspector();
 		} else {
 			cellInspector = true;
 		}
 	}
 	
-	private void disableInspector(){
-		if(cellInspector){
-			cellInspector = false;
-			refresh();
-		}
-	}
-	
-	public void mousePressed(){
-		mousePressedX = mouseX;
-		mousePressedY = mouseY;
-	}
-	
-	public void mouseReleased(){
-		if(cellInspector){
-			inspectionSubjectX = mousePressedX;
-			inspectionSubjectY = mousePressedY;
-		} else {
-			translationX = translationX + (mouseX - mousePressedX);
-			translationY = translationY + (mouseY - mousePressedY);
-			inspectionSubjectX = inspectionSubjectX + (mouseX - mousePressedX);
-			inspectionSubjectY = inspectionSubjectY + (mouseY - mousePressedY);
+	private void disableInspector() {
+		cellInspector = false;
+		if(!isOverInspectorButton()){
+			overInspector = false;
 		}
 		refresh();
 	}
 	
-	public void keyPressed(){
-		if(key == '1' && scale > minScale){
+	private boolean isOverHelpButton() {
+		if (mouseX > helpButtonX - 11 && mouseX < helpButtonX + 11 
+				&& mouseY > helpButtonY - 11 && mouseY < helpButtonY + 11) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isOverInspectorButton(){
+		if (mouseX > inspectionButtonX - 11 && mouseX < inspectionButtonX + 11 
+				&& mouseY > inspectionButtonY - 11 && mouseY < inspectionButtonY + 11) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isOverPlus(){
+		if (mouseX > zoomSliderX && mouseX < zoomSliderX + 23 
+				&& mouseY > zoomSliderY - 11 && mouseY < zoomSliderY + 11) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isOverMinus(){
+		if (mouseX > zoomSliderX && mouseX < zoomSliderX + 20 
+				&& mouseY > zoomSliderY + 242 && mouseY < zoomSliderY + 261) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isOverSlider(){
+		float zoomY = zoomSliderY+250-(30*deltaScale)-25;
+		if (mouseX > zoomSliderX+4 && mouseX < zoomSliderX + 20 
+				&& mouseY > zoomY && mouseY < zoomY + 14) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void mousePressed(){
+		if(overHelp){
+			// show help frame
+		} else if (overInspector){
+			switchInspector();
+		} else if (overPlus) {
+			zoomIn();
+		} else if (overMinus){
 			zoomOut();
-		} else if (key == '2' && scale < maxScale){
+		} else if(overSlider){
+			draggingSlider = true;
+		} else {
+			mousePressedX = mouseX;
+			mousePressedY = mouseY;
+		}
+	}
+	
+	public void mouseDragged(){
+		if(draggingSlider){
+			float delta = mouseY - (zoomSliderY+225-(30*deltaScale));
+			if(delta > 35){
+				zoomOut();
+			} else if (delta < -20){
+				zoomIn();
+			}
+		}
+	}
+	
+	public void mouseReleased(){
+		if(overHelp == overInspector == overMinus == overPlus == overSlider == false){
+			if(cellInspector){
+				inspectionSubjectX = mousePressedX;
+				inspectionSubjectY = mousePressedY;
+				refresh();
+			} else if (!draggingSlider) {
+				translationX = translationX + (mouseX - mousePressedX);
+				translationY = translationY + (mouseY - mousePressedY);
+				inspectionSubjectX = inspectionSubjectX + (mouseX - mousePressedX);
+				inspectionSubjectY = inspectionSubjectY + (mouseY - mousePressedY);
+				refresh();
+			}
+		}
+		draggingSlider = false;
+	}
+	
+	public void mouseMoved(){
+		if (isOverHelpButton()) {
+			overHelp = true;
+			overInspector = overMinus = overPlus = overSlider = false;
+		} else if (isOverInspectorButton()) {
+			overInspector = true;
+			overHelp = overMinus = overPlus = overSlider = false;
+		} else if (isOverPlus()) {
+			overPlus = true;
+			overHelp = overMinus = overInspector = overSlider = false;
+		} else if (isOverMinus()) {
+			overMinus = true;
+			overHelp = overPlus = overInspector = overSlider = false;
+		} else if (isOverSlider()) {
+			overSlider = true;
+			overHelp = overPlus = overInspector = overMinus = false;
+		} else {
+			overHelp = overInspector = overMinus = overPlus = overSlider = false;
+		}
+		if(overHelp || overInspector || overMinus || overPlus || overSlider){
+			cursor(ARROW);
+		} else if (cellInspector){
+			cursor(CROSS);
+		} else {
+			cursor(MOVE);
+		}
+	}
+	
+	public void keyPressed(){
+		if(key == '1'){
+			zoomOut();
+		} else if (key == '2'){
 			zoomIn();
 		} else if (key == '3') {
 			switchInspector();
 		} else if (key == ESC) {
 			disableInspector();
+			key = 0;
 		}
 	}
 }
