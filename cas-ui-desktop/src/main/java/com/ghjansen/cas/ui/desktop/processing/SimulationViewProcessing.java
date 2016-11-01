@@ -166,10 +166,10 @@ public class SimulationViewProcessing extends PApplet {
 			emptySpaceY = height - (universe.getTime().getLimit() * (scale * squareSize));
 			// calibrate initial translation
 			if(emptySpaceX > 0){
-				translationX = emptySpaceX / 2;
+				translationX = (float) Math.floor((double) emptySpaceX / 2);
 			}
 			if(emptySpaceY > 0){
-				translationY = emptySpaceY / 2;
+				translationY = (float) Math.floor((double) emptySpaceY / 2);
 			}
 		} else if (lastScale != scale){
 			// hold center when zooming in or out
@@ -178,15 +178,15 @@ public class SimulationViewProcessing extends PApplet {
 			if(lastScale > scale){
 				centralShiftX = ((width / 2) - translationX) / (lastScale / scale);
 				centralShiftY = ((height / 2) - translationY) / (lastScale / scale);
-				translationX = translationX + centralShiftX;
-				translationY = translationY + centralShiftY;
+				translationX = (float) Math.floor((double) translationX + centralShiftX);
+				translationY = (float) Math.floor((double) translationY + centralShiftY);
 				inspectionSubjectX = inspectionSubjectX + centralShiftX;
 				inspectionSubjectY = inspectionSubjectY + centralShiftY;
 			} else {
 				centralShiftX = (((width / 2) - translationX));
 				centralShiftY = (((height / 2) - translationY));
-				translationX = translationX - centralShiftX;
-				translationY = translationY - centralShiftY;
+				translationX = (float) Math.floor((double) translationX - centralShiftX);
+				translationY = (float) Math.floor((double) translationY - centralShiftY);
 				inspectionSubjectX = inspectionSubjectX - centralShiftX;
 				inspectionSubjectY = inspectionSubjectY - centralShiftY;				
 			}
@@ -218,7 +218,6 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawHistory() {
 		List<List> history = universe.getSpace().getHistory();
-		// Draw all complete lines
 		int iterations = 0;
 		while (history.size() > y && iterations < feedbackRate) {
 			while (history.get(y).size() - 1 > x) {
@@ -227,13 +226,6 @@ public class SimulationViewProcessing extends PApplet {
 			}
 			nextLine();
 			iterations++;
-		}
-		// Draw incomplete or last line
-		if (history.size() - 1 == y && history.size() - 1 > y) {
-			while (history.get(y).size() - 1 > x) {
-				nextColumn();
-				drawCell((UnidimensionalCell) history.get(y).get(x));
-			}
 		}
 	}
 	
@@ -388,6 +380,17 @@ public class SimulationViewProcessing extends PApplet {
 		}
 	}
 
+	private void drawCell(UnidimensionalCell c) {
+		if (c.getState().getValue() == 0) {
+			fill(255);
+		} else if (c.getState().getValue() == 1) {
+			fill(0);
+		}
+		int sX = (int) squareSize * x;
+		int sY = (int) squareSize * (y + 1);
+		rect((float) sX, (float) sY, squareSize, squareSize);
+	}
+	
 	private void drawTools() {
 		drawHelpButton();
 		drawInspectionButton();
@@ -494,15 +497,6 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void updateResetControl(){
 		resetControl = false;
-	}
-	
-	private void drawCell(UnidimensionalCell c) {
-		if (c.getState().getValue() == 0) {
-			fill(255);
-		} else if (c.getState().getValue() == 1) {
-			fill(0);
-		}
-		rect(squareSize * x, squareSize * (y + 1), squareSize, squareSize);
 	}
 
 	private void nextColumn() {
