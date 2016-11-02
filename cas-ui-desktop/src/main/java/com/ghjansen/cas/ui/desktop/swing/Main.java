@@ -70,7 +70,7 @@ public class Main {
 	public TransitionsViewProcessing transitionsView;
 	public SimulationViewProcessing simulationView;
 
-	private JFrame frame;
+	public JFrame frame;
 	public JTextField txtRuleNumber;
 	public JTextField txtCells;
 	public JTextField txtIterations;
@@ -410,12 +410,18 @@ public class Main {
 		progressBar.setValue(0);
 		
 		JButton btnOpen = new JButton("Abrir");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				em.openEvent();
+			}
+		});
 		btnOpen.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		JButton btnSave = new JButton("Salvar");
 		btnSave.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				em.saveEvent();
 			}
 		});
 		

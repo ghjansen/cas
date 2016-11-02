@@ -109,8 +109,8 @@ public class TransitionsViewProcessing extends PApplet {
 		// Next state
 		fill(255);
 		for(int i = 0; i < 8; i++){
-			fill(getFillForStateValue(states[states.length - 1 - i]));
-			rect(transitionSquareWidth * i + referenceMargin, nextStatePosition, stateSize, stateSize);
+			fill(getFillForStateValue(states[i]));
+			rect(transitionSquareWidth * (7-i) + referenceMargin, nextStatePosition, stateSize, stateSize);
 		}
 		stroke(204);
 	}
@@ -122,28 +122,28 @@ public class TransitionsViewProcessing extends PApplet {
 			int referenceState = transitionHighlight.getCombination().getReferenceState().getValue();
 			int rightState = transitionHighlight.getCombination().getNeighborhood().get(1).getValue();
 			if(leftState == 1 && referenceState == 1 && rightState == 1){
-				transition = 0;
-			} else if (leftState == 1 && referenceState == 1 && rightState == 0){
-				transition = 1;
-			} else if (leftState == 1 && referenceState == 0 && rightState == 1){
-				transition = 2;
-			} else if (leftState == 1 && referenceState == 0 && rightState == 0){
-				transition = 3;
-			} else if (leftState == 0 && referenceState == 1 && rightState == 1){
-				transition = 4;
-			} else if (leftState == 0 && referenceState == 1 && rightState == 0){
-				transition = 5;
-			} else if (leftState == 0 && referenceState == 0 && rightState == 1){
-				transition = 6;
-			} else if (leftState == 0 && referenceState == 0 && rightState == 0){
 				transition = 7;
+			} else if (leftState == 1 && referenceState == 1 && rightState == 0){
+				transition = 6;
+			} else if (leftState == 1 && referenceState == 0 && rightState == 1){
+				transition = 5;
+			} else if (leftState == 1 && referenceState == 0 && rightState == 0){
+				transition = 4;
+			} else if (leftState == 0 && referenceState == 1 && rightState == 1){
+				transition = 3;
+			} else if (leftState == 0 && referenceState == 1 && rightState == 0){
+				transition = 2;
+			} else if (leftState == 0 && referenceState == 0 && rightState == 1){
+				transition = 1;
+			} else if (leftState == 0 && referenceState == 0 && rightState == 0){
+				transition = 0;
 			}
 			if(transition != -1){
 				stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
 				strokeWeight(5);
 				strokeCap(ROUND);
 				noFill();
-				rect(transitionSquareWidth * transition, 3, transitionSquareWidth, transitionSquareHeight-6);
+				rect(transitionSquareWidth * (7-transition), 3, transitionSquareWidth, transitionSquareHeight-6);
 			}
 		}
 	}
