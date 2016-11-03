@@ -426,6 +426,11 @@ public class Main {
 		});
 		
 		JButton btnExport = new JButton("Exportar");
+		btnExport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				em.exportEvent();
+			}
+		});
 		btnExport.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlControl = new GroupLayout(pnlControl);
 		gl_pnlControl.setHorizontalGroup(

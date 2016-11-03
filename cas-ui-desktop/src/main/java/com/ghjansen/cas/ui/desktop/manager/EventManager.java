@@ -20,12 +20,16 @@ package com.ghjansen.cas.ui.desktop.manager;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -33,8 +37,8 @@ import com.ghjansen.cas.control.exception.InvalidSimulationParameterException;
 import com.ghjansen.cas.control.exception.SimulationAlreadyActiveException;
 import com.ghjansen.cas.control.exception.SimulationBuilderException;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
-import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
 import com.ghjansen.cas.ui.desktop.swing.Main;
+import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalLimitsParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalRuleConfigurationParameter;
@@ -43,6 +47,7 @@ import com.ghjansen.cas.unidimensional.control.UnidimensionalSequenceParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationBuilder;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationController;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationParameter;
+import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,8 +61,9 @@ public class EventManager {
 	private boolean skipRuleNumberEvent;
 	private Color invalidFieldColor;
 	private GUIValidator validator;
-	private UnidimensionalSimulationParameter simulationParameter;
 	private Gson gson;
+	private UnidimensionalSimulationParameter simulationParameter;
+	private UnidimensionalSimulationController simulationController;
 
 	public EventManager(Main main) {
 		this.main = main;
@@ -90,7 +96,7 @@ public class EventManager {
 				createSimulationParameter();
 			}
 			UnidimensionalSimulationBuilder simulationBuilder = new UnidimensionalSimulationBuilder(this.simulationParameter);
-			UnidimensionalSimulationController simulationController = new UnidimensionalSimulationController(simulationBuilder);
+			simulationController = new UnidimensionalSimulationController(simulationBuilder);
 			main.simulationView.setUniverse((UnidimensionalUniverse) simulationController.getSimulation().getUniverse());
 			main.simulationView.reset();
 			simulationController.startCompleteTask();
@@ -253,6 +259,54 @@ public class EventManager {
 		transitionsEvent();
 		main.txtCells.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getCells()));
 		main.txtIterations.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getIterations()));
+	}
+	
+	public void exportEvent(){
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setSelectedFile(fc.getCurrentDirectory() );
+		fc.setDialogTitle("Exportar arquivo");
+		fc.setMultiSelectionEnabled(false);
+		fc.setFileFilter(new FileNameExtensionFilter("Arquivo PNG (*.png)", "png"));
+		int result = fc.showSaveDialog(main.frame);
+		if(result == JFileChooser.APPROVE_OPTION){
+			
+			String fileName = String.valueOf(fc.getSelectedFile());
+			if(!fileName.endsWith(".png")){
+				fileName = fileName + ".png";
+			}
+			int width = simulationController.getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
+			int height = simulationController.getSimulation().getUniverse().getTime().getLimit() + 1;
+			BufferedImage buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			// initial condition
+			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
+				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
+				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
+				buffer.setRGB(i, 0, color.getRGB());
+			}
+			// history
+			for(int j = 0; j < simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
+				List<UnidimensionalCell> cells = simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
+				for(int i = 0; i < cells.size(); i++){
+					UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
+					Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
+					buffer.setRGB(i, j+1, color.getRGB());
+				}
+			}
+			// current/last
+			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
+				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
+				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
+				buffer.setRGB(i, height-1, color.getRGB());
+			}
+			File f = new File(fileName);
+			try {
+				ImageIO.write(buffer, "PNG", f);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
