@@ -21,6 +21,7 @@ package com.ghjansen.cas.ui.desktop.processing;
 import java.util.List;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
@@ -34,6 +35,7 @@ public class SimulationViewProcessing extends PApplet {
 	private UnidimensionalUniverse universe;
 	private TransitionsViewProcessing transitions;
 	private ViewCommonsProcessing commons;
+	private PImage img;
 	private int width = 582;
 	private int height = 582;
 	private int background = 204;
@@ -77,11 +79,16 @@ public class SimulationViewProcessing extends PApplet {
 
 	public void setup() {
 		size(width, height);
+		img = loadImage(SimulationViewProcessing.class.getResource("welcome-pt-br.png").toString());
 		textAlign(CENTER);
 		background(background);
 	}
 
 	public void draw() {
+		if(resetControl){
+			background(background);
+			delay(feedbackRate);
+		}
 		if (isSpaceAvailable()) {
 			drawSpace();
 			drawTools();
@@ -487,8 +494,7 @@ public class SimulationViewProcessing extends PApplet {
 	}
 
 	private void drawWelcome() {
-		textSize(25);
-		text("Mensagem de boas vindas aqui!", 291, 291);
+		image(img, 0, 0);
 	}
 	
 	private void updateLastScale(){
