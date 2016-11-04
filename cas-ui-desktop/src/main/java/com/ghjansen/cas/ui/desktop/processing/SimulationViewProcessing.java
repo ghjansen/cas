@@ -23,6 +23,7 @@ import java.util.List;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import com.ghjansen.cas.ui.desktop.swing.HelpFrame;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
@@ -36,6 +37,7 @@ public class SimulationViewProcessing extends PApplet {
 	private TransitionsViewProcessing transitions;
 	private ViewCommonsProcessing commons;
 	private PImage img;
+	private HelpFrame helpFrame;
 	private int width = 582;
 	private int height = 582;
 	private int background = 204;
@@ -80,6 +82,7 @@ public class SimulationViewProcessing extends PApplet {
 	public void setup() {
 		size(width, height);
 		img = loadImage(SimulationViewProcessing.class.getResource("welcome-pt-br.png").toString());
+		helpFrame = new HelpFrame();
 		textAlign(CENTER);
 		background(background);
 	}
@@ -612,7 +615,7 @@ public class SimulationViewProcessing extends PApplet {
 	
 	public void mousePressed(){
 		if(overHelp){
-			// show help frame
+			helpFrame.setVisible(true);
 		} else if (overInspector){
 			switchInspector();
 		} else if (overPlus) {
