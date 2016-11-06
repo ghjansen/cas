@@ -44,6 +44,7 @@ public class TransitionsViewProcessing extends PApplet {
 	private int nextStatePosition = 17;
 	private int[] states;
 	private boolean highlight = false;
+	private boolean mouseEnabled = true;
 	
 	public TransitionsViewProcessing(ViewCommonsProcessing commons, EventManager em){
 		this.commons = commons;
@@ -151,25 +152,27 @@ public class TransitionsViewProcessing extends PApplet {
 	@Override
 	public void mousePressed() {
 		super.mousePressed();
-		float n = mouseX / transitionSquareWidth;
-		if(n >= 0 && n < 1){
-			states[7] = getNextState(states[7]);
-		} else if (n >= 1 && n < 2){
-			states[6] = getNextState(states[6]);
-		} else if (n >= 2 && n < 3){
-			states[5] = getNextState(states[5]);
-		} else if (n >= 3 && n < 4){
-			states[4] = getNextState(states[4]);
-		} else if (n >= 4 && n < 5){
-			states[3] = getNextState(states[3]);
-		} else if (n >= 5 && n < 6){
-			states[2] = getNextState(states[2]);
-		} else if (n >= 6 && n < 7){
-			states[1] = getNextState(states[1]);
-		} else if (n >= 7){
-			states[0] = getNextState(states[0]);
+		if(mouseEnabled){
+			float n = mouseX / transitionSquareWidth;
+			if(n >= 0 && n < 1){
+				states[7] = getNextState(states[7]);
+			} else if (n >= 1 && n < 2){
+				states[6] = getNextState(states[6]);
+			} else if (n >= 2 && n < 3){
+				states[5] = getNextState(states[5]);
+			} else if (n >= 3 && n < 4){
+				states[4] = getNextState(states[4]);
+			} else if (n >= 4 && n < 5){
+				states[3] = getNextState(states[3]);
+			} else if (n >= 5 && n < 6){
+				states[2] = getNextState(states[2]);
+			} else if (n >= 6 && n < 7){
+				states[1] = getNextState(states[1]);
+			} else if (n >= 7){
+				states[0] = getNextState(states[0]);
+			}
+			em.transitionsEvent();
 		}
-		em.transitionsEvent();
 	}
 	
 	private int getNextState(int currentState){
@@ -207,6 +210,14 @@ public class TransitionsViewProcessing extends PApplet {
 	
 	public void hideHighlight(){
 		highlight = false;
+	}
+
+	public boolean isMouseEnabled() {
+		return mouseEnabled;
+	}
+
+	public void setMouseEnabled(boolean mouseEnabled) {
+		this.mouseEnabled = mouseEnabled;
 	}
 
 }

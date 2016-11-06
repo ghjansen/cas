@@ -16,20 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.control;
-
-import com.ghjansen.cas.control.exception.SimulationBuilderException;
-import com.ghjansen.cas.control.simulation.SimulationBuilder;
-import com.ghjansen.cas.control.simulation.SimulationController;
-import com.ghjansen.cas.control.task.TaskNotification;
+package com.ghjansen.cas.control.task;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalSimulationController extends SimulationController {
-
-	public UnidimensionalSimulationController(SimulationBuilder simulationBuilder, TaskNotification notification) throws SimulationBuilderException {
-		super(simulationBuilder, notification);
-	}
+public interface TaskNotification {
+	
+	public void timeLimitReached(Throwable e);
+	public void generic(Throwable e);
 
 }

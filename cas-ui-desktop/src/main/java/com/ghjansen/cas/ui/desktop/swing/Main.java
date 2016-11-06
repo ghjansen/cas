@@ -59,6 +59,8 @@ import com.ghjansen.cas.ui.desktop.processing.ViewCommonsProcessing;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -79,9 +81,17 @@ public class Main {
 	public JTable table;
 	public JLabel lblStatus;
 	public JScrollPane scrollPane;
-	public JButton btnAdicionar;
-	public JButton btnRemover;
-	public JButton btnNewButton;
+	public JButton btnAdd;
+	public JButton btnRemove;
+	public JButton btnClean;
+	public JButton btnDiscard;
+	public JButton btnSimulateComplete;
+	public JButton btnSimulateIteration;
+	public JButton btnOpen;
+	public JButton btnSave;
+	public JButton btnExport;
+	public JProgressBar progressBar;
+	public JPanel pnlControl;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -99,6 +109,7 @@ public class Main {
 
 	public Main() {
 		initialize();
+		em.setActivityState(ActivityState.CONFIGURING_RULE);
 	}
 
 	private void initialize() {
@@ -122,6 +133,7 @@ public class Main {
 		pnlRuleType.setBorder(new TitledBorder(null, "1. Tipo de regra", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		JRadioButton rdbtnElementary = new JRadioButton("Elementar");
+		rdbtnElementary.setEnabled(false);
 		rdbtnElementary.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -134,6 +146,7 @@ public class Main {
 		rdbtnElementary.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		JRadioButton rdbtnTotalistic = new JRadioButton("Totalista");
+		rdbtnTotalistic.setEnabled(false);
 		rdbtnTotalistic.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -212,7 +225,7 @@ public class Main {
 		pnlUnidimensional.add(pnlLimits);
 		pnlLimits.setBorder(new TitledBorder(null, "3. Limites", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JLabel lblCells = new JLabel("Células no universo:");
+		JLabel lblCells = new JLabel("Células no espaço:");
 		lblCells.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtCells = new JTextField();
@@ -234,7 +247,7 @@ public class Main {
 			}
 		});
 		
-		JLabel lblIterations = new JLabel("Iterações do universo:");
+		JLabel lblIterations = new JLabel("Iterações do espaço:");
 		lblIterations.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtIterations = new JTextField();
@@ -285,11 +298,12 @@ public class Main {
 		pnlLimits.setLayout(gl_pnlLimits);
 		
 		JPanel pnlInitialCondition = new JPanel();
-		pnlInitialCondition.setBounds(6, 294, 325, 182);
+		pnlInitialCondition.setBounds(6, 294, 325, 54);
 		pnlUnidimensional.add(pnlInitialCondition);
 		pnlInitialCondition.setBorder(new TitledBorder(null, "4. Condi\u00E7\u00E3o inicial ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		JRadioButton rdbtnUniqueCell = new JRadioButton("Célula única de cor preta");
+		rdbtnUniqueCell.setEnabled(false);
 		rdbtnUniqueCell.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -302,6 +316,7 @@ public class Main {
 		rdbtnUniqueCell.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		JRadioButton rdbtnInformPattern = new JRadioButton("Informar padrão:");
+		rdbtnInformPattern.setEnabled(false);
 		rdbtnInformPattern.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -311,6 +326,7 @@ public class Main {
 		});
 		grpInitialCondition.add(rdbtnInformPattern);
 		rdbtnInformPattern.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		rdbtnInformPattern.setVisible(false);
 		
 		Object[][] tabledata = {
 				{ "inicio", "fim", "Cor" },
@@ -326,21 +342,26 @@ public class Main {
 		table.setPreferredScrollableViewportSize(new Dimension(100, 50));
 		table.setBackground(Color.WHITE);
 		table.setTableHeader(null);
+		table.setVisible(false);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setEnabled(false);
 		scrollPane.getViewport().setBackground(SystemColor.window);
+		scrollPane.setVisible(false);
 		
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setEnabled(false);
-		btnAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnAdd = new JButton("Adicionar");
+		btnAdd.setEnabled(false);
+		btnAdd.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnAdd.setVisible(false);
 		
-		btnRemover = new JButton("Remover");
-		btnRemover.setEnabled(false);
-		btnRemover.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnRemove = new JButton("Remover");
+		btnRemove.setEnabled(false);
+		btnRemove.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnRemove.setVisible(false);
 		
-		btnNewButton = new JButton("Limpar");
-		btnNewButton.setEnabled(false);
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnClean = new JButton("Limpar");
+		btnClean.setEnabled(false);
+		btnClean.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnClean.setVisible(false);
 		GroupLayout gl_pnlInitialCondition = new GroupLayout(pnlInitialCondition);
 		gl_pnlInitialCondition.setHorizontalGroup(
 			gl_pnlInitialCondition.createParallelGroup(Alignment.LEADING)
@@ -351,11 +372,11 @@ public class Main {
 						.addComponent(rdbtnUniqueCell)
 						.addComponent(rdbtnInformPattern)
 						.addGroup(gl_pnlInitialCondition.createSequentialGroup()
-							.addComponent(btnAdicionar)
+							.addComponent(btnAdd)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnRemover)
+							.addComponent(btnRemove)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)))
+							.addComponent(btnClean, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_pnlInitialCondition.setVerticalGroup(
@@ -369,28 +390,29 @@ public class Main {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_pnlInitialCondition.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAdicionar)
-						.addComponent(btnNewButton)
-						.addComponent(btnRemover))
+						.addComponent(btnAdd)
+						.addComponent(btnClean)
+						.addComponent(btnRemove))
 					.addContainerGap(62, Short.MAX_VALUE))
 		);
 		
 		pnlInitialCondition.setLayout(gl_pnlInitialCondition);
 		
-		JPanel pnlControl = new JPanel();
-		pnlControl.setBounds(6, 488, 325, 124);
+		pnlControl = new JPanel();
+		pnlControl.setBounds(6, 360, 325, 124);
 		pnlUnidimensional.add(pnlControl);
 		pnlControl.setBorder(new TitledBorder(null, "5. Controle", TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JButton btnNew = new JButton("");
-		btnNew.setIcon(new ImageIcon(Main.class.getResource("fa-file-o.png")));
-		btnNew.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		btnNew.addActionListener(new ActionListener() {
+		btnDiscard = new JButton("");
+		btnDiscard.setIcon(new ImageIcon(Main.class.getResource("fa-trash.png")));
+		btnDiscard.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		btnDiscard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				em.discardEvent();
 			}
 		});
 		
-		JButton btnSimulateComplete = new JButton("");
+		btnSimulateComplete = new JButton("");
 		btnSimulateComplete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				em.executeComplete();
@@ -398,18 +420,20 @@ public class Main {
 		});
 		btnSimulateComplete.setIcon(new ImageIcon(Main.class.getResource("fa-play.png")));
 		
-		JButton btnSimulateIteration = new JButton("");
+		btnSimulateIteration = new JButton("");
+		btnSimulateIteration.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				em.executeIterationEvent();
+			}
+		});
 		btnSimulateIteration.setEnabled(false);
 		btnSimulateIteration.setIcon(new ImageIcon(Main.class.getResource("fa-step-forward.png")));
 		
-		JButton btnSimulateUnit = new JButton("");
-		btnSimulateUnit.setEnabled(false);
-		btnSimulateUnit.setIcon(new ImageIcon(Main.class.getResource("fa-forward.png")));
-		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setValue(0);
+		progressBar.setEnabled(true);
 		
-		JButton btnOpen = new JButton("Abrir");
+		btnOpen = new JButton("Abrir");
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				em.openEvent();
@@ -417,7 +441,7 @@ public class Main {
 		});
 		btnOpen.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		JButton btnSave = new JButton("Salvar");
+		btnSave = new JButton("Salvar");
 		btnSave.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -425,7 +449,7 @@ public class Main {
 			}
 		});
 		
-		JButton btnExport = new JButton("Exportar");
+		btnExport = new JButton("Exportar");
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				em.exportEvent();
@@ -438,15 +462,13 @@ public class Main {
 				.addGroup(gl_pnlControl.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_pnlControl.createParallelGroup(Alignment.LEADING)
-						.addComponent(progressBar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_pnlControl.createSequentialGroup()
-							.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+						.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+						.addGroup(gl_pnlControl.createSequentialGroup()
+							.addComponent(btnDiscard, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSimulateComplete, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnSimulateComplete, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSimulateUnit, GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSimulateIteration, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnSimulateIteration, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
 						.addGroup(gl_pnlControl.createSequentialGroup()
 							.addComponent(btnOpen, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -460,10 +482,9 @@ public class Main {
 				.addGroup(gl_pnlControl.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_pnlControl.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNew)
-						.addComponent(btnSimulateComplete)
+						.addComponent(btnDiscard)
 						.addComponent(btnSimulateIteration)
-						.addComponent(btnSimulateUnit))
+						.addComponent(btnSimulateComplete))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -531,6 +552,7 @@ public class Main {
 		icons.put("Ingles", new ImageIcon(Main.class.getResource("en.png")));
 		
 		JComboBox comboBox = new JComboBox(new Object[] {"Portugues", "Ingles"});
+		comboBox.setEnabled(false);
 		comboBox.setRenderer(new IconListRenderer(icons));
 		comboBox.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		comboBox.setBounds(809, 613, 138, 27);

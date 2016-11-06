@@ -28,6 +28,7 @@ public class GUIValidator {
 	
 	private Main main;
 	private Color invalidFieldColor;
+	private boolean activityLocked = false;
 
 	public GUIValidator(Main main, Color invalidFieldColor) {
 		this.main = main;
@@ -39,8 +40,10 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > -1 && Integer.valueOf(value) < 256){
 			main.txtRuleNumber.setBackground(SystemColor.text);
 			updateStatus();
+			releaseActivity();
 			return true;
 		} else {
+			lockActivity();
 			main.txtRuleNumber.setBackground(invalidFieldColor);
 			updateStatus();
 			return false;
@@ -52,8 +55,10 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
 			main.txtCells.setBackground(SystemColor.text);
 			updateStatus();
+			releaseActivity();
 			return true;
 		} else {
+			lockActivity();
 			main.txtCells.setBackground(invalidFieldColor);
 			updateStatus();
 			return false;
@@ -65,8 +70,10 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
 			main.txtIterations.setBackground(SystemColor.text);
 			updateStatus();
+			releaseActivity();
 			return true;
 		} else {
+			lockActivity();
 			main.txtIterations.setBackground(invalidFieldColor);
 			updateStatus();
 			return false;
@@ -105,6 +112,24 @@ public class GUIValidator {
 	public void setNormalStatus(String message){
 		main.lblStatus.setText(message);
 		main.lblStatus.setForeground(SystemColor.textText);
+	}
+	
+	private void lockActivity(){
+		this.activityLocked = true;
+		main.btnSimulateComplete.setEnabled(false);
+		main.btnSimulateIteration.setEnabled(false);
+		main.btnSave.setEnabled(false);
+	}
+	
+	private void releaseActivity(){
+		this.activityLocked = false;
+		main.btnSimulateComplete.setEnabled(true);
+		main.btnSimulateIteration.setEnabled(true);
+		main.btnSave.setEnabled(true);
+	}
+	
+	public boolean isActivityLocked(){
+		return this.activityLocked;
 	}
 
 }

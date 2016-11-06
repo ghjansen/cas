@@ -18,18 +18,11 @@
 
 package com.ghjansen.cas.unidimensional.control;
 
-import com.ghjansen.cas.control.exception.SimulationBuilderException;
-import com.ghjansen.cas.control.simulation.SimulationBuilder;
-import com.ghjansen.cas.control.simulation.SimulationController;
 import com.ghjansen.cas.control.task.TaskNotification;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalSimulationController extends SimulationController {
-
-	public UnidimensionalSimulationController(SimulationBuilder simulationBuilder, TaskNotification notification) throws SimulationBuilderException {
-		super(simulationBuilder, notification);
-	}
+public interface UnidimensionalTaskNotification extends TaskNotification {
 
 }

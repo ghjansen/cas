@@ -18,11 +18,15 @@
 
 package com.ghjansen.cas.ui.desktop.processing;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JProgressBar;
 
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.HelpFrame;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
@@ -73,6 +77,9 @@ public class SimulationViewProcessing extends PApplet {
 	private boolean overPlus = false;
 	private boolean overMinus = false;
 	private boolean draggingSlider = false;
+	private JProgressBar progress;
+	private GUIValidator validator;
+	private boolean finished = false;
 	
 	public SimulationViewProcessing(ViewCommonsProcessing commons, TransitionsViewProcessing transitions){
 		this.commons = commons;
@@ -85,6 +92,7 @@ public class SimulationViewProcessing extends PApplet {
 		helpFrame = new HelpFrame();
 		textAlign(CENTER);
 		background(background);
+		frameRate(30);
 	}
 
 	public void draw() {
@@ -114,10 +122,10 @@ public class SimulationViewProcessing extends PApplet {
 		scale(scale);
 		strokeControl();
 		drawInitialCondition();
-		if(universe.getSpace().getHistory().size() > 0){
+		if(universe != null && universe.getSpace().getHistory().size() > 0){
 			drawHistory();
 		}
-		if(universe.getSpace().getCurrent().size() > 0){
+		if(universe != null && universe.getSpace().getCurrent().size() > 0){
 			drawCurrent();
 		}
 		drawInspector();
@@ -236,19 +244,32 @@ public class SimulationViewProcessing extends PApplet {
 			}
 			nextLine();
 			iterations++;
+			if(progress != null && progress.getValue() < y){
+				progress.setValue(y);
+			}
 		}
 	}
 	
 	private void drawCurrent(){
-		List<?> current = universe.getSpace().getCurrent();
-		for(int i = 0; i < current.size(); i++){
-			UnidimensionalCell c = (UnidimensionalCell) current.get(i);
-			if (c.getState().getValue() == 0) {
-				fill(255);
-			} else if (c.getState().getValue() == 1) {
-				fill(0);
+		List<?> current = (List<?>) ((ArrayList) universe.getSpace().getCurrent()).clone();
+		List<?> last = (List<?>) ((ArrayList) universe.getSpace().getLast()).clone();
+		if(!current.equals(last)){
+			for(int i = 0; i < current.size(); i++){
+				UnidimensionalCell c = (UnidimensionalCell) current.get(i);
+				if (c.getState().getValue() == 0) {
+					fill(255);
+				} else if (c.getState().getValue() == 1) {
+					fill(0);
+				}
+				rect(squareSize * i, squareSize * (y + 1), squareSize, squareSize);
+				if(progress != null && progress.getValue() < y+1){
+					progress.setValue(y+1);
+				}
+				if(!finished && y+1 == universe.getTime().getLimit()){
+					this.validator.setNormalStatus("Simulação executada com sucesso. Renderização concluída.");
+					finished = true;
+				}
 			}
-			rect(squareSize * i, squareSize * (y + 1), squareSize, squareSize);
 		}
 	}
 	
@@ -497,6 +518,7 @@ public class SimulationViewProcessing extends PApplet {
 	}
 
 	private void drawWelcome() {
+		helpFrame.setVisible(false);
 		image(img, 0, 0);
 	}
 	
@@ -529,6 +551,7 @@ public class SimulationViewProcessing extends PApplet {
 		deltaScale = 0.0F;
 		cellInspector = false;
 		resetControl = true;
+		finished = false;
 		refresh();
 	}
 	
@@ -697,5 +720,13 @@ public class SimulationViewProcessing extends PApplet {
 			disableInspector();
 			key = 0;
 		}
+	}
+	
+	public void setProgressBar(JProgressBar progress){
+		this.progress = progress;
+	}
+	
+	public void setValidator(GUIValidator validator){
+		this.validator = validator;
 	}
 }

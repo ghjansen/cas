@@ -18,12 +18,17 @@
 
 package com.ghjansen.cas.control.simulation;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.ghjansen.cas.control.exception.SimulationAlreadyActiveException;
 import com.ghjansen.cas.control.exception.SimulationBuilderException;
 import com.ghjansen.cas.control.task.CompleteTask;
 import com.ghjansen.cas.control.task.IterationTask;
 import com.ghjansen.cas.control.task.Task;
+import com.ghjansen.cas.control.task.TaskNotification;
 import com.ghjansen.cas.control.task.UnitTask;
+import com.ghjansen.cas.core.exception.TimeLimitReachedException;
 import com.ghjansen.cas.core.simulation.Simulation;
 
 /**
@@ -32,29 +37,33 @@ import com.ghjansen.cas.core.simulation.Simulation;
 public abstract class SimulationController {
 
 	private final Simulation simulation;
+	private final ExecutorService executor;
 	private final Task completeTask;
 	private final Task iterationTask;
 	private final Task unitTask;
+	private final TaskNotification notification;
 
-	public SimulationController(SimulationBuilder simulationBuilder) throws SimulationBuilderException {
+	public SimulationController(SimulationBuilder simulationBuilder, TaskNotification notification) throws SimulationBuilderException {
 		this.simulation = simulationBuilder.build();
 		this.completeTask = new CompleteTask(this);
 		this.iterationTask = new IterationTask(this);
 		this.unitTask = new UnitTask(this);
+		this.notification = notification;
+		this.executor = Executors.newCachedThreadPool();
 	}
 
 	public void startCompleteTask() throws SimulationAlreadyActiveException {
 		if (this.simulation.isActive()) {
 			throw new SimulationAlreadyActiveException();
 		}
-		this.completeTask.run();
+		executor.execute(this.completeTask);
 	}
 
 	public void startIterationTask() throws SimulationAlreadyActiveException {
 		if (this.simulation.isActive()) {
 			throw new SimulationAlreadyActiveException();
 		}
-		this.iterationTask.run();
+		executor.execute(this.iterationTask);
 	}
 
 	public void startUnitTask() throws SimulationAlreadyActiveException {
@@ -73,9 +82,13 @@ public abstract class SimulationController {
 	}
 
 	public void processThreadInterruption(Throwable e) {
-		// TODO create observer agent to interact with ui interface when the
-		// simulation finishes or something bad happens
-		System.out.println(e);
+		if(notification != null){
+			if(e.getClass().equals(TimeLimitReachedException.class)){
+				notification.timeLimitReached(e);
+			} else {
+				notification.generic(e);
+			}
+		}
 	}
 
 }

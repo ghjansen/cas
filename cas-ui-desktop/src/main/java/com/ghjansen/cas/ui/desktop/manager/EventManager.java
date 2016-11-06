@@ -30,12 +30,15 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.ghjansen.cas.control.exception.InvalidSimulationParameterException;
-import com.ghjansen.cas.control.exception.SimulationAlreadyActiveException;
 import com.ghjansen.cas.control.exception.SimulationBuilderException;
+import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.Main;
 import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
@@ -60,10 +63,13 @@ public class EventManager {
 	private Main main;
 	private boolean skipRuleNumberEvent;
 	private Color invalidFieldColor;
-	private GUIValidator validator;
+	public GUIValidator validator;
 	private Gson gson;
 	private UnidimensionalSimulationParameter simulationParameter;
 	private UnidimensionalSimulationController simulationController;
+	private ActivityState activityState;
+	private Notification notification;
+	private boolean omitDiscardConfirmation = false;
 
 	public EventManager(Main main) {
 		this.main = main;
@@ -74,6 +80,7 @@ public class EventManager {
 		gsonBuilder.registerTypeAdapter(UnidimensionalSimulationParameter.class, new SimulationParameterJsonAdapter<UnidimensionalSimulationParameter>());
 		gsonBuilder.setPrettyPrinting();
 		this.gson = gsonBuilder.create();
+		this.notification = new Notification(this);
 	}
 	
 	private void createSimulationParameter() throws InvalidSimulationParameterException, SimulationBuilderException{
@@ -90,25 +97,45 @@ public class EventManager {
 		this.simulationParameter = new UnidimensionalSimulationParameter(ruleType, ruleConfiguration, limits, initialCondition);
 	}
 	
+	private void createSimulationController() throws SimulationBuilderException{
+		UnidimensionalSimulationBuilder simulationBuilder = new UnidimensionalSimulationBuilder(this.simulationParameter);
+		simulationController = new UnidimensionalSimulationController(simulationBuilder, notification);
+		main.simulationView.setUniverse((UnidimensionalUniverse) simulationController.getSimulation().getUniverse());
+		main.simulationView.reset();
+		main.progressBar.setMaximum(simulationParameter.getLimitsParameter().getIterations());
+		main.progressBar.setValue(0);
+		main.simulationView.setProgressBar(main.progressBar);
+		main.simulationView.setValidator(validator);
+	}
+	
 	public void executeComplete(){
 		try {
+			setActivityState(ActivityState.EXECUTING_RULE);
 			if(this.simulationParameter == null){
 				createSimulationParameter();
 			}
-			UnidimensionalSimulationBuilder simulationBuilder = new UnidimensionalSimulationBuilder(this.simulationParameter);
-			simulationController = new UnidimensionalSimulationController(simulationBuilder);
-			main.simulationView.setUniverse((UnidimensionalUniverse) simulationController.getSimulation().getUniverse());
-			main.simulationView.reset();
+			if(this.simulationController == null){
+				createSimulationController();
+			}
 			simulationController.startCompleteTask();
-		} catch (InvalidSimulationParameterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SimulationBuilderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SimulationAlreadyActiveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Throwable e) {
+			validator.setErrorStatus("Ocorreu um erro ao executar a simulação: "+e);
+		}
+	}
+	
+	public void executeIterationEvent(){
+		try {
+			setActivityState(ActivityState.EXECUTING_RULE);
+			this.validator.setNormalStatus("Simulação em progresso ...");
+			if(this.simulationParameter == null){
+				createSimulationParameter();
+			}
+			if(this.simulationController == null){
+				createSimulationController();
+			}
+			simulationController.startIterationTask();
+		} catch (Throwable e) {
+			validator.setErrorStatus("Ocorreu um erro ao executar a simulação: "+e);
 		}
 	}
 	
@@ -116,9 +143,11 @@ public class EventManager {
 		
 	}
 	
+	
 	public void totalisticRuleTypeEvent(){
 		
 	}
+	
 	
 	public void transitionsEvent(){
 		int[] states = main.transitionsView.getStates();
@@ -132,6 +161,7 @@ public class EventManager {
 		validator.updateStatus();
 		this.skipRuleNumberEvent = false;
 	}
+	
 	
 	public void ruleNumberEvent(){
 		if(validator.isRuleNumberValid()){
@@ -150,37 +180,86 @@ public class EventManager {
 		}
 	}
 	
+	
 	public void cellsEvent(){
 		validator.isCellsValid();
 	}
+	
 	
 	public void iterationsEvent(){
 		validator.isIterationsValid();
 	}
 	
+	
 	public void uniqueCellEvent(){
 		if(main.scrollPane != null){
 			main.scrollPane.setEnabled(false);
 			main.table.setEnabled(false);
-			main.btnAdicionar.setEnabled(false);
-			main.btnRemover.setEnabled(false);
-			main.btnNewButton.setEnabled(false);
+			main.btnAdd.setEnabled(false);
+			main.btnRemove.setEnabled(false);
+			main.btnClean.setEnabled(false);
 		}
 	}
+	
 	
 	public void informPatternCellEvent(){
 		main.scrollPane.setEnabled(true);
 		main.table.setEnabled(true);
-		main.btnAdicionar.setEnabled(true);
-		main.btnRemover.setEnabled(true);
-		main.btnNewButton.setEnabled(true);
+		main.btnAdd.setEnabled(true);
+		main.btnRemove.setEnabled(true);
+		main.btnClean.setEnabled(true);
 	}
+	
 	
 	public boolean isSkipRuleNumberEvent(){
 		return this.skipRuleNumberEvent;
 	}
 	
+	
+	public void discardEvent(){
+		int result;
+		if(!omitDiscardConfirmation){
+			JCheckBox checkbox = new JCheckBox("Não perguntar novamente");
+			String message = "Você deseja descartar a simulação atual?";
+			Object[] params = {message, checkbox};
+			result = JOptionPane.showConfirmDialog(main.frame, params, null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			if(checkbox.isSelected()){
+				omitDiscardConfirmation = true;
+			}
+		} else {
+			result = JOptionPane.YES_OPTION;
+		}
+		if(result == JOptionPane.YES_OPTION){
+			simulationController.getSimulation().setActive(false);
+			main.simulationView.setUniverse(null);
+			simulationController = null;
+			simulationParameter = null;
+			main.txtRuleNumber.setText("0");
+			main.txtCells.setText("1");
+			main.txtIterations.setText("1");
+			main.transitionsView.hideHighlight();
+			main.progressBar.setValue(0);
+			validator.updateStatus();
+			setActivityState(ActivityState.CONFIGURING_RULE);
+		}
+	}
+	
+	private void resetSimulation(){
+		simulationController.getSimulation().setActive(false);
+		main.simulationView.setUniverse(null);
+		simulationController = null;
+		simulationParameter = null;
+		main.txtRuleNumber.setText("0");
+		main.txtCells.setText("1");
+		main.txtIterations.setText("1");
+		main.transitionsView.hideHighlight();
+		main.progressBar.setValue(0);
+	}
+	
+	
 	public void saveEvent(){
+		ActivityState previous = activityState;
+		setActivityState(ActivityState.SAVING_FILE);
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
@@ -210,6 +289,8 @@ public class EventManager {
 				fw = new FileWriter(fileName);
 				fw.write(content);
 				fw.close();
+				validator.setNormalStatus("Arquivo salvo com sucesso.");
+				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -217,7 +298,9 @@ public class EventManager {
 		}
 	}
 	
+	
 	public void openEvent(){
+		setActivityState(ActivityState.OPENING_FILE);
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
@@ -237,17 +320,24 @@ public class EventManager {
 	    		if(content.length() > 0){
 	    			this.simulationParameter = gson.fromJson(content.toString(), UnidimensionalSimulationParameter.class);
 	    			updateVisualParameters();
+	    			validator.updateStatus();
+	    			if(!validator.isActivityLocked()){
+	    				simulationController = null;
+	    				simulationParameter = null;
+	    				main.transitionsView.hideHighlight();
+	    				main.progressBar.setValue(0);
+	    				executeComplete();
+	    			}
 	    		} else {
-	    			// arquivo invalido ou vazio
+	    			validator.setErrorStatus("Erro ao abrir arquivo: arquivo vazio ou inválido.");
 	    		}
-	    	} catch (FileNotFoundException e) {
+	    	} catch (Exception e) {
 	    		e.printStackTrace();
-	    	} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	    		validator.setErrorStatus("Erro ao abrir arquivo: "+e);
+	    	}
 		}
 	}
+	
 	
 	private void updateVisualParameters(){
 		int[] statesParameter = this.simulationParameter.getRuleConfigurationParameter().getStateValues();
@@ -261,7 +351,10 @@ public class EventManager {
 		main.txtIterations.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getIterations()));
 	}
 	
+	
 	public void exportEvent(){
+		ActivityState previous = activityState;
+		setActivityState(ActivityState.EXPORTING_FILE);
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
@@ -302,10 +395,68 @@ public class EventManager {
 			File f = new File(fileName);
 			try {
 				ImageIO.write(buffer, "PNG", f);
+				validator.setNormalStatus("Arquivo exportado com sucesso.");
+				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	
+	public void setActivityState(ActivityState state){
+		switch(state){
+		case CONFIGURING_RULE:
+			main.transitionsView.setMouseEnabled(true);
+			main.txtRuleNumber.setEnabled(true);
+			main.txtCells.setEnabled(true);
+			main.txtIterations.setEnabled(true);
+			main.btnDiscard.setEnabled(false);
+			main.btnSimulateComplete.setEnabled(true);
+			main.btnSimulateIteration.setEnabled(true);
+			main.btnOpen.setEnabled(true);
+			main.btnSave.setEnabled(true);
+			main.btnExport.setEnabled(false);
+			main.progressBar.setStringPainted(false);
+			this.activityState = state;
+			break;
+		case EXECUTING_RULE:
+			main.transitionsView.setMouseEnabled(false);
+			main.txtRuleNumber.setEnabled(false);
+			main.txtCells.setEnabled(false);
+			main.txtIterations.setEnabled(false);
+			main.btnDiscard.setEnabled(true);
+			main.btnSimulateComplete.setEnabled(true);
+			main.btnSimulateIteration.setEnabled(true);
+			main.btnOpen.setEnabled(false);
+			main.btnSave.setEnabled(true);
+			main.btnExport.setEnabled(false);
+			main.progressBar.setStringPainted(true);
+			this.activityState = state;
+			break;
+		case ANALYSING:
+			main.transitionsView.setMouseEnabled(false);
+			main.txtRuleNumber.setEnabled(false);
+			main.txtCells.setEnabled(false);
+			main.txtIterations.setEnabled(false);
+			main.btnDiscard.setEnabled(true);
+			main.btnSimulateComplete.setEnabled(false);
+			main.btnSimulateIteration.setEnabled(false);
+			main.btnOpen.setEnabled(true);
+			main.btnSave.setEnabled(true);
+			main.btnExport.setEnabled(true);
+			main.progressBar.setStringPainted(true);
+			this.activityState = state;
+			break;
+		case EXPORTING_FILE:
+			break;
+		case OPENING_FILE:
+			break;
+		case SAVING_FILE:
+			break;
+		default:
+			break;
 		}
 	}
 	

@@ -16,20 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.unidimensional.control;
+package com.ghjansen.cas.ui.desktop.manager;
 
-import com.ghjansen.cas.control.exception.SimulationBuilderException;
-import com.ghjansen.cas.control.simulation.SimulationBuilder;
-import com.ghjansen.cas.control.simulation.SimulationController;
-import com.ghjansen.cas.control.task.TaskNotification;
+import com.ghjansen.cas.ui.desktop.swing.ActivityState;
+import com.ghjansen.cas.unidimensional.control.UnidimensionalTaskNotification;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class UnidimensionalSimulationController extends SimulationController {
+public class Notification implements UnidimensionalTaskNotification {
+	
+	private EventManager em;
+	
+	public Notification(EventManager em){
+		this.em = em;
+	}
 
-	public UnidimensionalSimulationController(SimulationBuilder simulationBuilder, TaskNotification notification) throws SimulationBuilderException {
-		super(simulationBuilder, notification);
+	public void timeLimitReached(Throwable e) {
+		em.validator.setNormalStatus("Simulação executada com sucesso. Aguardando renderização...");
+		em.setActivityState(ActivityState.ANALYSING);
+	}
+
+	public void generic(Throwable e) {
+		em.validator.setErrorStatus("Ocorreu um erro durante a simulação: "+e);
 	}
 
 }
