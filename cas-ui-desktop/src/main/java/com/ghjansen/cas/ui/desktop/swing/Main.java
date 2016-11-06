@@ -118,6 +118,7 @@ public class Main {
 		transitionsView = new TransitionsViewProcessing(viewCommons, em);
 		simulationView = new SimulationViewProcessing(viewCommons, transitionsView);
 		frame = new JFrame();
+		frame.setTitle("CAS");
 		frame.setBounds(100, 100, 947, 665);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
