@@ -33,18 +33,15 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.ghjansen.cas.ui.desktop.swing.Main</mainClass>
-						</manifest>
-					</archive>
 					<finalName>cas-${project.version}</finalName>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
 					<execution>
 						<id>make-assembly</id>
@@ -52,16 +49,32 @@
 						<goals>
 							<goal>single</goal>
 						</goals>
+						<configuration>
+							<finalName>cas-${project.version}</finalName>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>com.ghjansen.cas.ui.desktop.swing.Main</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+					<execution>
+						<id>dist</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>cas-${project.version}</finalName>
+							<descriptors>
+								<descriptor>src/main/assembly/descriptor.xml</descriptor>
+							</descriptors>
+						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<finalName>cas-${project.version}</finalName>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
