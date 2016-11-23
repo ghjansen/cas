@@ -90,11 +90,32 @@ public class EventManager {
 		UnidimensionalRuleTypeParameter ruleType = new UnidimensionalRuleTypeParameter(true);
 		UnidimensionalRuleConfigurationParameter ruleConfiguration = new UnidimensionalRuleConfigurationParameter(s[7],s[6],s[5],s[4],s[3],s[2],s[1],s[0]);
 		UnidimensionalLimitsParameter limits = new UnidimensionalLimitsParameter(cells, iterations);
-		UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, cells/2, 0);
-		UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter((cells/2)+1, (cells/2)+1, 1);
-		UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter((cells/2)+2, cells, 0);
-		UnidimensionalInitialConditionParameter initialCondition = new UnidimensionalInitialConditionParameter(sequence1, sequence2, sequence3);
+//		UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, cells/2, 0);
+//		UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter((cells/2)+1, (cells/2)+1, 1);
+//		UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter((cells/2)+2, cells, 0);
+		UnidimensionalInitialConditionParameter initialCondition = new UnidimensionalInitialConditionParameter(getSequences(cells));
 		this.simulationParameter = new UnidimensionalSimulationParameter(ruleType, ruleConfiguration, limits, initialCondition);
+	}
+	
+	private UnidimensionalSequenceParameter[] getSequences(int totalCells){
+		if(totalCells == 1){
+			return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1)};
+		} else if (totalCells == 2){
+			return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1), new UnidimensionalSequenceParameter(2, 2, 0)};
+		} else if (totalCells >= 3){
+			int centralCell = getCentralCell(totalCells);
+			UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, centralCell-1, 0);
+			UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter(centralCell, centralCell, 1);
+			UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter(centralCell+1, totalCells, 0);
+			return new UnidimensionalSequenceParameter[]{sequence1, sequence2, sequence3};
+		}
+		return null;
+	}
+	
+	private int getCentralCell(int totalCells){
+		if(totalCells > 1){
+			return (int) Math.ceil((double) totalCells / 2);
+		} else return 1;
 	}
 	
 	private void createSimulationController() throws SimulationBuilderException{
@@ -323,7 +344,6 @@ public class EventManager {
 	    			validator.updateStatus();
 	    			if(!validator.isActivityLocked()){
 	    				simulationController = null;
-	    				simulationParameter = null;
 	    				main.transitionsView.hideHighlight();
 	    				main.progressBar.setValue(0);
 	    				executeComplete();

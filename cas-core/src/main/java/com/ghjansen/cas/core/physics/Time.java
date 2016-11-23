@@ -88,7 +88,7 @@ public abstract class Time implements Cloneable {
 	 * - d = amount of dimensions (or relative times)
 	 * - lim(d-1) = the iteration to get the limit of each dimension (relative
 	 * time) 
-	 * LaTeX formula: ${lim(t)\displaystyle \left(\prod_{i=1}^{d} lim(d-1)\right)-1}$
+	 * LaTeX formula: T = ${lim(t)\displaystyle \left(\prod_{i=1}^{d} lim(d-1)\right)-1}$
 	 * 
 	 * @throws TimeLimitReachedException
 	 */

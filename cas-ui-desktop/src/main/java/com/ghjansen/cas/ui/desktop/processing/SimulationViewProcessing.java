@@ -252,7 +252,10 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void drawCurrent(){
 		List<?> current = (List<?>) ((ArrayList) universe.getSpace().getCurrent()).clone();
-		List<?> last = (List<?>) ((ArrayList) universe.getSpace().getLast()).clone();
+		List<?> last = null;
+		if(universe.getSpace().getLast() != null){
+			last = (List<?>) ((ArrayList) universe.getSpace().getLast()).clone();
+		}
 		if(!current.equals(last)){
 			for(int i = 0; i < current.size(); i++){
 				UnidimensionalCell c = (UnidimensionalCell) current.get(i);
