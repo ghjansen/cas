@@ -84,11 +84,10 @@ public abstract class Time implements Cloneable {
 	 * Removing one is necessary since the initial time (0) is used. Without
 	 * removing one, we have the formula that calculates the amount of times
 	 * the rule will be executed to reach complete evolution.
-	 * - lim(t) = limit of absolute time
+	 * - lim(a) = limit of absolute time
 	 * - d = amount of dimensions (or relative times)
-	 * - lim(d-1) = the iteration to get the limit of each dimension (relative
-	 * time) 
-	 * LaTeX formula: T = ${lim(t)\displaystyle \left(\prod_{i=1}^{d} lim(d-1)\right)-1}$
+	 * - lim(ri) = limit of a relative time i
+	 * LaTeX formula: T = ${lim(a)\displaystyle \left(\prod_{i=1}^{d} lim(r_{i})\right)-1}$
 	 * 
 	 * @throws TimeLimitReachedException
 	 */
