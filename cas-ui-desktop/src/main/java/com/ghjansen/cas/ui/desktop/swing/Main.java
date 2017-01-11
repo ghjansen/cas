@@ -52,6 +52,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 
+import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
@@ -92,6 +93,19 @@ public class Main {
 	public JButton btnExport;
 	public JProgressBar progressBar;
 	public JPanel pnlControl;
+	public JComboBox langCombo;
+
+	public JPanel pnlRuleType;
+	public JRadioButton rdbtnElementary;
+	public JRadioButton rdbtnTotalistic;
+	public JPanel pnlRuleConfig;
+	public JLabel lblRuleNumber;
+	public JPanel pnlLimits;
+	public JLabel lblCells;
+	public JLabel lblIterations;
+	public JPanel pnlInitialCondition;
+	public JRadioButton rdbtnUniqueCell;
+	public JPanel pnlView;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -129,12 +143,12 @@ public class Main {
 		frame.getContentPane().add(pnlUnidimensional);
 		pnlUnidimensional.setLayout(null);
 		
-		JPanel pnlRuleType = new JPanel();
+		pnlRuleType = new JPanel();
 		pnlRuleType.setBounds(6, 6, 325, 54);
 		pnlUnidimensional.add(pnlRuleType);
-		pnlRuleType.setBorder(new TitledBorder(null, "1. Tipo de regra", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlRuleType.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlRuleType"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JRadioButton rdbtnElementary = new JRadioButton("Elementar");
+		rdbtnElementary = new JRadioButton(Translator.getInstance().get("rdbtnElementary"));
 		rdbtnElementary.setEnabled(false);
 		rdbtnElementary.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -147,7 +161,7 @@ public class Main {
 		rdbtnElementary.setSelected(true);
 		rdbtnElementary.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		JRadioButton rdbtnTotalistic = new JRadioButton("Totalista");
+		rdbtnTotalistic = new JRadioButton(Translator.getInstance().get("rdbtnTotalistic"));
 		rdbtnTotalistic.setEnabled(false);
 		rdbtnTotalistic.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -178,12 +192,12 @@ public class Main {
 		);
 		pnlRuleType.setLayout(gl_pnlRuleType);
 		
-		JPanel pnlRuleConfig = new JPanel();
+		pnlRuleConfig = new JPanel();
 		pnlRuleConfig.setBounds(6, 72, 325, 103);
 		pnlUnidimensional.add(pnlRuleConfig);
-		pnlRuleConfig.setBorder(new TitledBorder(null, "2. Configura\u00E7\u00E3o da regra", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlRuleConfig.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlRuleConfig"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JLabel lblRuleNumber = new JLabel("Número da regra:");
+		lblRuleNumber = new JLabel(Translator.getInstance().get("lblRuleNumber"));
 		lblRuleNumber.setBounds(12, 70, 104, 15);
 		lblRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
@@ -222,12 +236,12 @@ public class Main {
 		pnlRuleConfig.add(txtRuleNumber);
 		pnlRuleConfig.add(pnlTransitionsView);
 		
-		JPanel pnlLimits = new JPanel();
+		pnlLimits = new JPanel();
 		pnlLimits.setBounds(6, 187, 325, 95);
 		pnlUnidimensional.add(pnlLimits);
-		pnlLimits.setBorder(new TitledBorder(null, "3. Limites", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlLimits.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlLimits"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JLabel lblCells = new JLabel("Células no espaço:");
+		lblCells = new JLabel(Translator.getInstance().get("lblCells"));
 		lblCells.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtCells = new JTextField();
@@ -249,7 +263,7 @@ public class Main {
 			}
 		});
 		
-		JLabel lblIterations = new JLabel("Iterações do espaço:");
+		lblIterations = new JLabel(Translator.getInstance().get("lblIterations"));
 		lblIterations.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtIterations = new JTextField();
@@ -299,12 +313,12 @@ public class Main {
 		);
 		pnlLimits.setLayout(gl_pnlLimits);
 		
-		JPanel pnlInitialCondition = new JPanel();
+		pnlInitialCondition = new JPanel();
 		pnlInitialCondition.setBounds(6, 294, 325, 54);
 		pnlUnidimensional.add(pnlInitialCondition);
-		pnlInitialCondition.setBorder(new TitledBorder(null, "4. Condi\u00E7\u00E3o inicial ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlInitialCondition.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlInitialCondition"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
-		JRadioButton rdbtnUniqueCell = new JRadioButton("Célula única de cor preta");
+		rdbtnUniqueCell = new JRadioButton(Translator.getInstance().get("rdbtnUniqueCell"));
 		rdbtnUniqueCell.setEnabled(false);
 		rdbtnUniqueCell.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -403,7 +417,7 @@ public class Main {
 		pnlControl = new JPanel();
 		pnlControl.setBounds(6, 360, 325, 124);
 		pnlUnidimensional.add(pnlControl);
-		pnlControl.setBorder(new TitledBorder(null, "5. Controle", TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlControl.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlControl"), TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		btnDiscard = new JButton("");
 		btnDiscard.setIcon(new ImageIcon(Main.class.getResource("fa-trash.png")));
@@ -435,7 +449,7 @@ public class Main {
 		progressBar.setValue(0);
 		progressBar.setEnabled(true);
 		
-		btnOpen = new JButton("Abrir");
+		btnOpen = new JButton(Translator.getInstance().get("btnOpen"));
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				em.openEvent();
@@ -443,7 +457,7 @@ public class Main {
 		});
 		btnOpen.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
-		btnSave = new JButton("Salvar");
+		btnSave = new JButton(Translator.getInstance().get("btnSave"));
 		btnSave.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -451,7 +465,7 @@ public class Main {
 			}
 		});
 		
-		btnExport = new JButton("Exportar");
+		btnExport = new JButton(Translator.getInstance().get("btnExport"));
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				em.exportEvent();
@@ -502,7 +516,7 @@ public class Main {
 		pnlStatus.setBounds(6, 613, 791, 27);
 		pnlUnidimensional.add(pnlStatus);
 		
-		lblStatus = new JLabel("Pronto.");
+		lblStatus = new JLabel(Translator.getInstance().get("lblStatus"));
 		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlStatus = new GroupLayout(pnlStatus);
 		gl_pnlStatus.setHorizontalGroup(
@@ -517,10 +531,10 @@ public class Main {
 		);
 		pnlStatus.setLayout(gl_pnlStatus);
 		
-		JPanel pnlView = new JPanel();
+		pnlView = new JPanel();
 		pnlView.setBounds(336, 6, 606, 606);
 		pnlUnidimensional.add(pnlView);
-		pnlView.setBorder(new TitledBorder(null, "6. Visualiza\u00E7\u00E3o", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		pnlView.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlView"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		SimulationViewPanel pnlSimulationView = new SimulationViewPanel(simulationView);
 		GroupLayout gl_pnlView = new GroupLayout(pnlView);
@@ -550,14 +564,20 @@ public class Main {
 		pnlView.setLayout(gl_pnlView);
 		
 		Map<Object, Icon> icons = new HashMap<Object, Icon>();
-		icons.put("Portugues", new ImageIcon(Main.class.getResource("br.png")));
-		icons.put("Ingles", new ImageIcon(Main.class.getResource("en.png")));
+		icons.put(Translator.getInstance().get("langCombo0"), new ImageIcon(Main.class.getResource("br.png")));
+		icons.put(Translator.getInstance().get("langCombo1"), new ImageIcon(Main.class.getResource("en.png")));
 		
-		JComboBox comboBox = new JComboBox(new Object[] {"Portugues", "Ingles"});
-		comboBox.setEnabled(false);
-		comboBox.setRenderer(new IconListRenderer(icons));
-		comboBox.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		comboBox.setBounds(809, 613, 138, 27);
-		pnlUnidimensional.add(comboBox);
+		langCombo = new JComboBox(new Object[] {Translator.getInstance().get("langCombo0"), Translator.getInstance().get("langCombo1")});
+		langCombo.setEnabled(true);
+		langCombo.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        em.languageEvent();
+		    }
+		});
+		langCombo.setSelectedIndex(0);
+		langCombo.setRenderer(new IconListRenderer(icons));
+		langCombo.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		langCombo.setBounds(809, 613, 138, 27);
+		pnlUnidimensional.add(langCombo);
 	}
 }

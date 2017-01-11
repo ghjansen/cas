@@ -26,6 +26,7 @@ import javax.swing.JProgressBar;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.HelpFrame;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
@@ -269,7 +270,7 @@ public class SimulationViewProcessing extends PApplet {
 					progress.setValue(y+1);
 				}
 				if(!finished && y+1 == universe.getTime().getLimit()){
-					this.validator.setNormalStatus("Simulação executada com sucesso. Renderização concluída.");
+					this.validator.setNormalStatus(Translator.getInstance().get("msgRenderingSuccess"));
 					finished = true;
 				}
 			}

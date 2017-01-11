@@ -16,30 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.ui.desktop.manager;
-
-import com.ghjansen.cas.ui.desktop.i18n.Translator;
-import com.ghjansen.cas.ui.desktop.swing.ActivityState;
-import com.ghjansen.cas.unidimensional.control.UnidimensionalTaskNotification;
+package com.ghjansen.cas.ui.desktop.i18n;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class Notification implements UnidimensionalTaskNotification {
+public enum Language {
 	
-	private EventManager em;
+	PORTUGUESE_BRAZIL("pt-BR"),
+	ENGLISH_UNITED_KINGDOM("en-GB");
 	
-	public Notification(EventManager em){
-		this.em = em;
+	private String langtag;
+
+	private Language(String langtag) {
+		this.langtag = langtag;
 	}
 
-	public void timeLimitReached(Throwable e) {
-		em.validator.setNormalStatus(Translator.getInstance().get("msgSimulationSuccessWaiting"));
-		em.setActivityState(ActivityState.ANALYSING);
+	public String getLangtag() {
+		return langtag;
 	}
-
-	public void generic(Throwable e) {
-		em.validator.setErrorStatus(Translator.getInstance().get("errSimulation")+e);
-	}
-
+	
 }

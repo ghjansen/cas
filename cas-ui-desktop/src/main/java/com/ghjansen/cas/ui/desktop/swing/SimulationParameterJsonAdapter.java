@@ -113,28 +113,4 @@ public class SimulationParameterJsonAdapter<T>
         return null;
     }
 
-//    private Type typeForName(final JsonElement typeElem) 
-//    {
-//        try 
-//        {
-//            return Class.forName(typeElem.getAsString());
-//        } 
-//        catch (ClassNotFoundException e) 
-//        {
-//            throw new JsonParseException(e);
-//        }
-//    }
-//
-//    private JsonElement get(final JsonObject wrapper, final String memberName) 
-//    {
-//        final JsonElement elem = wrapper.get(memberName);
-//
-//        if (elem == null) 
-//        {
-//            throw new JsonParseException(
-//                "no '" + memberName + "' member found in json file.");
-//        }
-//        return elem;
-//    }
-
 }

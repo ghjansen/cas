@@ -19,6 +19,7 @@
 package com.ghjansen.cas.ui.desktop.manager;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -27,17 +28,26 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.ghjansen.cas.control.exception.InvalidSimulationParameterException;
 import com.ghjansen.cas.control.exception.SimulationBuilderException;
+import com.ghjansen.cas.ui.desktop.i18n.Language;
+import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.Main;
@@ -132,6 +142,7 @@ public class EventManager {
 	public void executeComplete(){
 		try {
 			setActivityState(ActivityState.EXECUTING_RULE);
+			this.validator.setNormalStatus(Translator.getInstance().get("msgSimulationInProgress"));
 			if(this.simulationParameter == null){
 				createSimulationParameter();
 			}
@@ -140,14 +151,14 @@ public class EventManager {
 			}
 			simulationController.startCompleteTask();
 		} catch (Throwable e) {
-			validator.setErrorStatus("Ocorreu um erro ao executar a simulação: "+e);
+			validator.setErrorStatus(Translator.getInstance().get("errSimulationExecution")+e);
 		}
 	}
 	
 	public void executeIterationEvent(){
 		try {
 			setActivityState(ActivityState.EXECUTING_RULE);
-			this.validator.setNormalStatus("Simulação em progresso ...");
+			this.validator.setNormalStatus(Translator.getInstance().get("msgSimulationInProgress"));
 			if(this.simulationParameter == null){
 				createSimulationParameter();
 			}
@@ -156,7 +167,7 @@ public class EventManager {
 			}
 			simulationController.startIterationTask();
 		} catch (Throwable e) {
-			validator.setErrorStatus("Ocorreu um erro ao executar a simulação: "+e);
+			validator.setErrorStatus(Translator.getInstance().get("errSimulationExecution")+e);
 		}
 	}
 	
@@ -240,8 +251,8 @@ public class EventManager {
 	public void discardEvent(){
 		int result;
 		if(!omitDiscardConfirmation){
-			JCheckBox checkbox = new JCheckBox("Não perguntar novamente");
-			String message = "Você deseja descartar a simulação atual?";
+			JCheckBox checkbox = new JCheckBox(Translator.getInstance().get("msgCheckDiscard"));
+			String message = Translator.getInstance().get("msgConfirmDialog");
 			Object[] params = {message, checkbox};
 			result = JOptionPane.showConfirmDialog(main.frame, params, null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if(checkbox.isSelected()){
@@ -284,9 +295,9 @@ public class EventManager {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
-		fc.setDialogTitle("Salvar arquivo");
+		fc.setDialogTitle(Translator.getInstance().get("msgSaveDialogTitle"));
 		fc.setMultiSelectionEnabled(false);
-		fc.setFileFilter(new FileNameExtensionFilter("Arquivo CAS (*.cas)", "cas"));
+		fc.setFileFilter(new FileNameExtensionFilter(Translator.getInstance().get("casFileExtension"), "cas"));
 		int result = fc.showSaveDialog(main.frame);
 		if(result == JFileChooser.APPROVE_OPTION){
 			if(this.simulationParameter == null){
@@ -310,7 +321,7 @@ public class EventManager {
 				fw = new FileWriter(fileName);
 				fw.write(content);
 				fw.close();
-				validator.setNormalStatus("Arquivo salvo com sucesso.");
+				validator.setNormalStatus(Translator.getInstance().get("msgSaveSuccess"));
 				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -325,9 +336,9 @@ public class EventManager {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
-		fc.setDialogTitle("Abrir arquivo");
+		fc.setDialogTitle(Translator.getInstance().get("msgOpenDialogTitle"));
 		fc.setMultiSelectionEnabled(false);
-		fc.setFileFilter(new FileNameExtensionFilter("Arquivo CAS (*.cas)", "cas"));
+		fc.setFileFilter(new FileNameExtensionFilter(Translator.getInstance().get("casFileExtension"), "cas"));
 		int result = fc.showOpenDialog(main.frame);
 		if(result == JFileChooser.APPROVE_OPTION){
 			BufferedReader br = null;
@@ -349,11 +360,11 @@ public class EventManager {
 	    				executeComplete();
 	    			}
 	    		} else {
-	    			validator.setErrorStatus("Erro ao abrir arquivo: arquivo vazio ou inválido.");
+	    			validator.setErrorStatus(Translator.getInstance().get("errOpenFileInvalid"));
 	    		}
 	    	} catch (Exception e) {
 	    		e.printStackTrace();
-	    		validator.setErrorStatus("Erro ao abrir arquivo: "+e);
+	    		validator.setErrorStatus(Translator.getInstance().get("errOpenFileGeneric")+e);
 	    	}
 		}
 	}
@@ -378,9 +389,9 @@ public class EventManager {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setSelectedFile(fc.getCurrentDirectory() );
-		fc.setDialogTitle("Exportar arquivo");
+		fc.setDialogTitle(Translator.getInstance().get("msgExportDialogTitle"));
 		fc.setMultiSelectionEnabled(false);
-		fc.setFileFilter(new FileNameExtensionFilter("Arquivo PNG (*.png)", "png"));
+		fc.setFileFilter(new FileNameExtensionFilter(Translator.getInstance().get("pngFileExtension"), "png"));
 		int result = fc.showSaveDialog(main.frame);
 		if(result == JFileChooser.APPROVE_OPTION){
 			
@@ -415,12 +426,48 @@ public class EventManager {
 			File f = new File(fileName);
 			try {
 				ImageIO.write(buffer, "PNG", f);
-				validator.setNormalStatus("Arquivo exportado com sucesso.");
+				validator.setNormalStatus(Translator.getInstance().get("msgExportSuccess"));
 				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void languageEvent(){
+		if(main.langCombo.getSelectedIndex() == 0){
+			Translator.getInstance().setLanguage(Language.PORTUGUESE_BRAZIL);
+		} else if (main.langCombo.getSelectedIndex() == 1){
+			Translator.getInstance().setLanguage(Language.ENGLISH_UNITED_KINGDOM);
+		}
+		updateComponentsLanguage();
+	}
+	
+	private void updateComponentsLanguage(){
+		main.pnlRuleType.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlRuleType"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.rdbtnElementary.setText(Translator.getInstance().get("rdbtnElementary"));
+		main.rdbtnTotalistic.setText(Translator.getInstance().get("rdbtnTotalistic"));
+		main.pnlRuleConfig.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlRuleConfig"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.lblRuleNumber.setText(Translator.getInstance().get("lblRuleNumber"));
+		main.pnlLimits.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlLimits"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.lblCells.setText(Translator.getInstance().get("lblCells"));
+		main.lblIterations.setText(Translator.getInstance().get("lblIterations"));
+		main.pnlInitialCondition.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlInitialCondition"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.rdbtnUniqueCell.setText(Translator.getInstance().get("rdbtnUniqueCell"));
+		main.pnlControl.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlControl"), TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.btnOpen.setText(Translator.getInstance().get("btnOpen"));
+		main.btnSave.setText(Translator.getInstance().get("btnSave"));
+		main.btnExport.setText(Translator.getInstance().get("btnExport"));
+		main.lblStatus.setText(Translator.getInstance().get("lblStatus"));
+		main.pnlView.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlView"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		main.langCombo.removeAllItems();
+		Map<Object, Icon> icons = new HashMap<Object, Icon>();
+		icons.put(Translator.getInstance().get("langCombo0"), new ImageIcon(Main.class.getResource("br.png")));
+		icons.put(Translator.getInstance().get("langCombo1"), new ImageIcon(Main.class.getResource("en.png")));
+		Iterator it = icons.keySet().iterator();
+		while(it.hasNext()){
+			main.langCombo.addItem(icons.get(it.next()));
 		}
 	}
 	
@@ -439,6 +486,7 @@ public class EventManager {
 			main.btnSave.setEnabled(true);
 			main.btnExport.setEnabled(false);
 			main.progressBar.setStringPainted(false);
+			main.langCombo.setEnabled(true);
 			this.activityState = state;
 			break;
 		case EXECUTING_RULE:
@@ -453,6 +501,7 @@ public class EventManager {
 			main.btnSave.setEnabled(true);
 			main.btnExport.setEnabled(false);
 			main.progressBar.setStringPainted(true);
+			main.langCombo.setEnabled(false);
 			this.activityState = state;
 			break;
 		case ANALYSING:
@@ -467,6 +516,7 @@ public class EventManager {
 			main.btnSave.setEnabled(true);
 			main.btnExport.setEnabled(true);
 			main.progressBar.setStringPainted(true);
+			main.langCombo.setEnabled(false);
 			this.activityState = state;
 			break;
 		case EXPORTING_FILE:

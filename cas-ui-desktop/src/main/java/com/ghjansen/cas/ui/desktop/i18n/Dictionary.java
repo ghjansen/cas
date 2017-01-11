@@ -16,30 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.ui.desktop.manager;
+package com.ghjansen.cas.ui.desktop.i18n;
 
-import com.ghjansen.cas.ui.desktop.i18n.Translator;
-import com.ghjansen.cas.ui.desktop.swing.ActivityState;
-import com.ghjansen.cas.unidimensional.control.UnidimensionalTaskNotification;
+import java.util.HashMap;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class Notification implements UnidimensionalTaskNotification {
+public class Dictionary {
 	
-	private EventManager em;
+	private HashMap<String,String> dictionary;
 	
-	public Notification(EventManager em){
-		this.em = em;
-	}
-
-	public void timeLimitReached(Throwable e) {
-		em.validator.setNormalStatus(Translator.getInstance().get("msgSimulationSuccessWaiting"));
-		em.setActivityState(ActivityState.ANALYSING);
-	}
-
-	public void generic(Throwable e) {
-		em.validator.setErrorStatus(Translator.getInstance().get("errSimulation")+e);
-	}
+	
 
 }

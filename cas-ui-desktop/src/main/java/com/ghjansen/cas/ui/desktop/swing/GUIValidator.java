@@ -21,6 +21,8 @@ package com.ghjansen.cas.ui.desktop.swing;
 import java.awt.Color;
 import java.awt.SystemColor;
 
+import com.ghjansen.cas.ui.desktop.i18n.Translator;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -94,13 +96,13 @@ public class GUIValidator {
 	
 	public void updateStatus(){
 		if(main.txtRuleNumber.getBackground().equals(invalidFieldColor)){
-			setErrorStatus("O numero da regra deve ser um numero inteiro maior ou igual a 0 e menor ou igual a 255");
+			setErrorStatus(Translator.getInstance().get("errRuleNumber"));
 		} else if (main.txtCells.getBackground().equals(invalidFieldColor)) {
-			setErrorStatus("A quantidade de células deve ser um numero inteiro maior ou igual a 1");
+			setErrorStatus(Translator.getInstance().get("errCells"));
 		} else if (main.txtIterations.getBackground().equals(invalidFieldColor)){
-			setErrorStatus("A quantidade de iterações deve ser um numero inteiro maior ou igual a 1");
+			setErrorStatus(Translator.getInstance().get("errIterations"));
 		} else {
-			setNormalStatus("Pronto.");
+			setNormalStatus(Translator.getInstance().get("lblStatus"));
 		}
 	}
 	
