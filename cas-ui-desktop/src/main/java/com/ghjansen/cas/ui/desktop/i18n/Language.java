@@ -23,17 +23,23 @@ package com.ghjansen.cas.ui.desktop.i18n;
  */
 public enum Language {
 	
-	PORTUGUESE_BRAZIL("pt-BR"),
-	ENGLISH_UNITED_KINGDOM("en-GB");
+	PORTUGUESE_BRAZIL(0, "pt-BR"),
+	ENGLISH_UNITED_KINGDOM(1, "en-GB");
 	
+	private int id;
 	private String langtag;
 
-	private Language(String langtag) {
+	private Language(int id, String langtag) {
+		this.id = id;
 		this.langtag = langtag;
 	}
 
 	public String getLangtag() {
 		return langtag;
+	}
+	
+	public int getId(){
+		return id;
 	}
 	
 }

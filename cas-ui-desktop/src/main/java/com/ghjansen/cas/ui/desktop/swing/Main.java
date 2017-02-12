@@ -25,6 +25,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashMap;
@@ -52,16 +54,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 
+import com.ghjansen.cas.ui.desktop.i18n.Language;
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
-import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
+import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.ViewCommonsProcessing;
-
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -123,6 +121,7 @@ public class Main {
 	}
 
 	public Main() {
+		Translator.getInstance().setLanguage(Language.ENGLISH_UNITED_KINGDOM);
 		initialize();
 		em.setActivityState(ActivityState.CONFIGURING_RULE);
 	}
@@ -569,15 +568,15 @@ public class Main {
 		
 		langCombo = new JComboBox(new Object[] {Translator.getInstance().get("langCombo0"), Translator.getInstance().get("langCombo1")});
 		langCombo.setEnabled(true);
-		langCombo.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        em.languageEvent();
-		    }
-		});
-		langCombo.setSelectedIndex(0);
+		langCombo.setSelectedIndex(1);
 		langCombo.setRenderer(new IconListRenderer(icons));
 		langCombo.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		langCombo.setBounds(809, 613, 138, 27);
+		langCombo.addActionListener (new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				em.languageEvent();
+			}
+		});
 		pnlUnidimensional.add(langCombo);
 	}
 }

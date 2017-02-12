@@ -18,15 +18,20 @@
 
 package com.ghjansen.cas.ui.desktop.i18n;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class Dictionary {
-	
-	private HashMap<String,String> dictionary;
-	
-	
 
+	private Map<String, String> dictionary;
+
+	public void setDictionary(Map<String, String> dictionary) {
+		this.dictionary = dictionary;
+	}
+
+	public Map<String, String> getDictionary() {
+		return dictionary;
+	}
 }

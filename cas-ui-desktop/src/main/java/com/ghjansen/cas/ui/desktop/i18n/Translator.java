@@ -18,44 +18,64 @@
 
 package com.ghjansen.cas.ui.desktop.i18n;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class Translator {
-	
+
 	private static Translator instance;
 	private static Gson gson;
 	private static GsonBuilder gsonBuilder = new GsonBuilder();
-	
-	public static Translator getInstance(){
-		if(instance == null){
+	private Dictionary dictionary = new Dictionary();
+	private Language language;
+
+	public static Translator getInstance() {
+		if (instance == null) {
 			instance = new Translator();
+			gson = gsonBuilder.create();
 		}
 		return instance;
 	}
-	
-	public static void main(String[] args) {
-		HashMap<String,String> dictionary = new HashMap<String,String>();
-		dictionary.put("test1", "value1");
-		dictionary.put("test2", "value2");
-		gsonBuilder.setPrettyPrinting();
-		gson = gsonBuilder.create();
-		String result = gson.toJson(dictionary);
-		System.out.println(result);
-	}
-	
-	public void setLanguage(Language language){
+
+	public void setLanguage(Language language) {
+		this.language = language;
 		String filename = language.getLangtag() + ".json";
+		StringBuilder content = new StringBuilder();
+		String line = null;
+		InputStream is = null;
+		BufferedReader br = null;
+		try {
+			is = this.getClass().getResourceAsStream(filename);
+			br = new BufferedReader(new InputStreamReader(is));
+			while ((line = br.readLine()) != null) {
+				content.append(line);
+			}
+			Type type = new TypeToken<Map<String, String>>() {
+			}.getType();
+			Map<String, String> map = gson.fromJson(content.toString(), type);
+			dictionary.setDictionary(map);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public String get(String key){
-		
-		return null;
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public String get(String key) {
+		return dictionary.getDictionary().get(key);
 	}
 
 }

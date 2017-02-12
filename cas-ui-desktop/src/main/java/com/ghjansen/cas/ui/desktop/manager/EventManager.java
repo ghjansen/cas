@@ -24,7 +24,6 @@ import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,13 +33,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -50,6 +47,7 @@ import com.ghjansen.cas.ui.desktop.i18n.Language;
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
+import com.ghjansen.cas.ui.desktop.swing.IconListRenderer;
 import com.ghjansen.cas.ui.desktop.swing.Main;
 import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
@@ -466,9 +464,10 @@ public class EventManager {
 		icons.put(Translator.getInstance().get("langCombo0"), new ImageIcon(Main.class.getResource("br.png")));
 		icons.put(Translator.getInstance().get("langCombo1"), new ImageIcon(Main.class.getResource("en.png")));
 		Iterator it = icons.keySet().iterator();
-		while(it.hasNext()){
-			main.langCombo.addItem(icons.get(it.next()));
-		}
+		main.langCombo.addItem(Translator.getInstance().get("langCombo0"));
+		main.langCombo.addItem(Translator.getInstance().get("langCombo1"));
+		main.langCombo.setRenderer(new IconListRenderer(icons));
+		main.langCombo.setSelectedIndex(Translator.getInstance().getLanguage().getId());
 	}
 	
 	
