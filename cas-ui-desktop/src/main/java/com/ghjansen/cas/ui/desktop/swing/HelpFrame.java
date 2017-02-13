@@ -35,6 +35,7 @@ public class HelpFrame extends JFrame {
 		helpPanel.setBounds(0, 0, 582, 582);
 		getContentPane().add(helpPanel);
 		helpPanel.setLayout(null);
+		this.setResizable(false);
 	}
 
 }

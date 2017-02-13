@@ -104,6 +104,7 @@ public class Main {
 	public JPanel pnlInitialCondition;
 	public JRadioButton rdbtnUniqueCell;
 	public JPanel pnlView;
+	private String lastStatusKey;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -131,9 +132,17 @@ public class Main {
 		viewCommons = new ViewCommonsProcessing();
 		transitionsView = new TransitionsViewProcessing(viewCommons, em);
 		simulationView = new SimulationViewProcessing(viewCommons, transitionsView);
+		String os = System.getProperty("os.name").toLowerCase();
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setTitle("CAS");
-		frame.setBounds(100, 100, 947, 665);
+		if(os.indexOf("win") >= 0){
+			frame.setBounds(100, 100, 952, 667); //frame size for windows
+		} else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0 ){ 
+			frame.setBounds(100, 100, 947, 647); //frame size for linux
+		} else {
+			frame.setBounds(100, 100, 947, 665); //frame size for mac and others
+		}
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -197,7 +206,6 @@ public class Main {
 		pnlRuleConfig.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlRuleConfig"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		lblRuleNumber = new JLabel(Translator.getInstance().get("lblRuleNumber"));
-		lblRuleNumber.setBounds(12, 70, 104, 15);
 		lblRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		txtRuleNumber = new JTextField();
@@ -211,7 +219,6 @@ public class Main {
 				em.transitionsEvent();
 			}
 		});
-		txtRuleNumber.setBounds(144, 64, 169, 27);
 		txtRuleNumber.setText("0");
 		txtRuleNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		txtRuleNumber.setColumns(10);
@@ -219,7 +226,6 @@ public class Main {
 		
 		
 		TransitionsViewPanel pnlTransitionsView = new TransitionsViewPanel(transitionsView);
-		pnlTransitionsView.setBounds(11, 23, 302, 35);
 		GroupLayout gl_pnlTransitionsViewProcessing = new GroupLayout(pnlTransitionsView);
 		gl_pnlTransitionsViewProcessing.setHorizontalGroup(
 			gl_pnlTransitionsViewProcessing.createParallelGroup(Alignment.LEADING)
@@ -230,10 +236,36 @@ public class Main {
 				.addGap(0, 37, Short.MAX_VALUE)
 		);
 		pnlTransitionsView.setLayout(gl_pnlTransitionsViewProcessing);
-		pnlRuleConfig.setLayout(null);
-		pnlRuleConfig.add(lblRuleNumber);
-		pnlRuleConfig.add(txtRuleNumber);
-		pnlRuleConfig.add(pnlTransitionsView);
+		GroupLayout gl_pnlRuleConfig = new GroupLayout(pnlRuleConfig);
+		gl_pnlRuleConfig.setHorizontalGroup(
+			gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlRuleConfig.createSequentialGroup()
+					.addGap(5)
+					.addComponent(pnlTransitionsView, GroupLayout.PREFERRED_SIZE, 302, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_pnlRuleConfig.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)	
+							.addComponent(lblRuleNumber))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
+							.addComponent(txtRuleNumber, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+				.addContainerGap())
+		);
+		gl_pnlRuleConfig.setVerticalGroup(
+			gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlRuleConfig.createSequentialGroup()
+					.addGap(6)
+					.addComponent(pnlTransitionsView, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_pnlRuleConfig.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlRuleConfig.createSequentialGroup()
+							.addGap(12)
+							.addComponent(lblRuleNumber))
+						.addGroup(gl_pnlRuleConfig.createSequentialGroup()
+							.addGap(6)
+							.addComponent(txtRuleNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(12, Short.MAX_VALUE))
+		);
+		pnlRuleConfig.setLayout(gl_pnlRuleConfig);
 		
 		pnlLimits = new JPanel();
 		pnlLimits.setBounds(6, 187, 325, 95);
@@ -515,7 +547,8 @@ public class Main {
 		pnlStatus.setBounds(6, 613, 791, 27);
 		pnlUnidimensional.add(pnlStatus);
 		
-		lblStatus = new JLabel(Translator.getInstance().get("lblStatus"));
+		lblStatus = new JLabel();
+		setStatus("lblStatus", "");
 		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		GroupLayout gl_pnlStatus = new GroupLayout(pnlStatus);
 		gl_pnlStatus.setHorizontalGroup(
@@ -578,5 +611,14 @@ public class Main {
 			}
 		});
 		pnlUnidimensional.add(langCombo);
+	}
+	
+	public void setStatus(String key, String info){
+		lastStatusKey = key;
+		lblStatus.setText(Translator.getInstance().get(key) + info);
+	}
+	
+	public String getLastStatusKey(){
+		return lastStatusKey;
 	}
 }

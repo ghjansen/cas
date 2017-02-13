@@ -140,7 +140,7 @@ public class EventManager {
 	public void executeComplete(){
 		try {
 			setActivityState(ActivityState.EXECUTING_RULE);
-			this.validator.setNormalStatus(Translator.getInstance().get("msgSimulationInProgress"));
+			this.validator.setNormalStatus("msgSimulationInProgress");
 			if(this.simulationParameter == null){
 				createSimulationParameter();
 			}
@@ -149,14 +149,14 @@ public class EventManager {
 			}
 			simulationController.startCompleteTask();
 		} catch (Throwable e) {
-			validator.setErrorStatus(Translator.getInstance().get("errSimulationExecution")+e);
+			validator.setErrorStatus("errSimulationExecution", e.toString());
 		}
 	}
 	
 	public void executeIterationEvent(){
 		try {
 			setActivityState(ActivityState.EXECUTING_RULE);
-			this.validator.setNormalStatus(Translator.getInstance().get("msgSimulationInProgress"));
+			this.validator.setNormalStatus("msgSimulationInProgress");
 			if(this.simulationParameter == null){
 				createSimulationParameter();
 			}
@@ -165,7 +165,7 @@ public class EventManager {
 			}
 			simulationController.startIterationTask();
 		} catch (Throwable e) {
-			validator.setErrorStatus(Translator.getInstance().get("errSimulationExecution")+e);
+			validator.setErrorStatus("errSimulationExecution", e.toString());
 		}
 	}
 	
@@ -319,7 +319,7 @@ public class EventManager {
 				fw = new FileWriter(fileName);
 				fw.write(content);
 				fw.close();
-				validator.setNormalStatus(Translator.getInstance().get("msgSaveSuccess"));
+				validator.setNormalStatus("msgSaveSuccess");
 				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -358,11 +358,11 @@ public class EventManager {
 	    				executeComplete();
 	    			}
 	    		} else {
-	    			validator.setErrorStatus(Translator.getInstance().get("errOpenFileInvalid"));
+	    			validator.setErrorStatus("errOpenFileInvalid", "");
 	    		}
 	    	} catch (Exception e) {
 	    		e.printStackTrace();
-	    		validator.setErrorStatus(Translator.getInstance().get("errOpenFileGeneric")+e);
+	    		validator.setErrorStatus("errOpenFileGeneric", e.toString());
 	    	}
 		}
 	}
@@ -424,7 +424,7 @@ public class EventManager {
 			File f = new File(fileName);
 			try {
 				ImageIO.write(buffer, "PNG", f);
-				validator.setNormalStatus(Translator.getInstance().get("msgExportSuccess"));
+				validator.setNormalStatus("msgExportSuccess");
 				setActivityState(previous);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -457,7 +457,7 @@ public class EventManager {
 		main.btnOpen.setText(Translator.getInstance().get("btnOpen"));
 		main.btnSave.setText(Translator.getInstance().get("btnSave"));
 		main.btnExport.setText(Translator.getInstance().get("btnExport"));
-		main.lblStatus.setText(Translator.getInstance().get("lblStatus"));
+		main.lblStatus.setText(Translator.getInstance().get(main.getLastStatusKey()));
 		main.pnlView.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlView"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		main.langCombo.removeAllItems();
 		Map<Object, Icon> icons = new HashMap<Object, Icon>();

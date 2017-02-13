@@ -34,12 +34,12 @@ public class Notification implements UnidimensionalTaskNotification {
 	}
 
 	public void timeLimitReached(Throwable e) {
-		em.validator.setNormalStatus(Translator.getInstance().get("msgSimulationSuccessWaiting"));
+		em.validator.setNormalStatus("msgSimulationSuccessWaiting");
 		em.setActivityState(ActivityState.ANALYSING);
 	}
 
 	public void generic(Throwable e) {
-		em.validator.setErrorStatus(Translator.getInstance().get("errSimulation")+e);
+		em.validator.setErrorStatus("errSimulation", e.toString());
 	}
 
 }

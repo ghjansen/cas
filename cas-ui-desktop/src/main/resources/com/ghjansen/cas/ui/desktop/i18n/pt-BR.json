@@ -15,7 +15,7 @@
   "btnExport": "Exportar",
   "lblStatus": "Pronto.",
   "pnlView": "6. Visualização",
-  "langCombo0": "Portugues",
+  "langCombo0": "Português",
   "langCombo1": "Inglês",
   "msgSimulationInProgress": "Simulação em progresso ...",
   "msgCheckDiscard": "Não perguntar novamente",
@@ -33,7 +33,7 @@
   "errOpenFileInvalid": "Erro ao abrir arquivo: arquivo vazio ou inválido.",
   "errOpenFileGeneric": "Erro ao abrir arquivo: ",
   "errSimulation": "Ocorreu um erro durante a simulação: ",
-  "errRuleNumber": "O numero da regra deve ser um numero inteiro maior ou igual a 0 e menor ou igual a 255",
-  "errCells": "A quantidade de células deve ser um numero inteiro maior ou igual a 1",
-  "errIterations": "A quantidade de iterações deve ser um numero inteiro maior ou igual a 1"
+  "errRuleNumber": "O numero da regra deve ser um número inteiro maior ou igual a 0 e menor ou igual a 255",
+  "errCells": "A quantidade de células deve ser um número inteiro maior ou igual a 1",
+  "errIterations": "A quantidade de iterações deve ser um número inteiro maior ou igual a 1"
 }

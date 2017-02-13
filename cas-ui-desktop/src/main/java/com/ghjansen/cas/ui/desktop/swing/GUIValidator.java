@@ -42,7 +42,6 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > -1 && Integer.valueOf(value) < 256){
 			main.txtRuleNumber.setBackground(SystemColor.text);
 			updateStatus();
-			releaseActivity();
 			return true;
 		} else {
 			lockActivity();
@@ -57,7 +56,6 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
 			main.txtCells.setBackground(SystemColor.text);
 			updateStatus();
-			releaseActivity();
 			return true;
 		} else {
 			lockActivity();
@@ -72,7 +70,6 @@ public class GUIValidator {
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
 			main.txtIterations.setBackground(SystemColor.text);
 			updateStatus();
-			releaseActivity();
 			return true;
 		} else {
 			lockActivity();
@@ -96,23 +93,24 @@ public class GUIValidator {
 	
 	public void updateStatus(){
 		if(main.txtRuleNumber.getBackground().equals(invalidFieldColor)){
-			setErrorStatus(Translator.getInstance().get("errRuleNumber"));
+			setErrorStatus("errRuleNumber", "");
 		} else if (main.txtCells.getBackground().equals(invalidFieldColor)) {
-			setErrorStatus(Translator.getInstance().get("errCells"));
+			setErrorStatus("errCells", "");
 		} else if (main.txtIterations.getBackground().equals(invalidFieldColor)){
-			setErrorStatus(Translator.getInstance().get("errIterations"));
+			setErrorStatus("errIterations", "");
 		} else {
-			setNormalStatus(Translator.getInstance().get("lblStatus"));
+			setNormalStatus("lblStatus");
+			releaseActivity();
 		}
 	}
 	
-	public void setErrorStatus(String message){
-		main.lblStatus.setText(message);
+	public void setErrorStatus(String key, String info){
+		main.setStatus(key, info);
 		main.lblStatus.setForeground(invalidFieldColor);
 	}
 	
-	public void setNormalStatus(String message){
-		main.lblStatus.setText(message);
+	public void setNormalStatus(String key){
+		main.setStatus(key, "");
 		main.lblStatus.setForeground(SystemColor.textText);
 	}
 	

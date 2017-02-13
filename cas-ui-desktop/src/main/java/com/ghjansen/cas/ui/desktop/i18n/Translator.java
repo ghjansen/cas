@@ -57,7 +57,7 @@ public class Translator {
 		BufferedReader br = null;
 		try {
 			is = this.getClass().getResourceAsStream(filename);
-			br = new BufferedReader(new InputStreamReader(is));
+			br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 			while ((line = br.readLine()) != null) {
 				content.append(line);
 			}

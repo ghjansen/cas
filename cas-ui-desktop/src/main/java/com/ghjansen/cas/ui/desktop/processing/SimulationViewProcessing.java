@@ -26,6 +26,7 @@ import javax.swing.JProgressBar;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import com.ghjansen.cas.ui.desktop.i18n.Language;
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.HelpFrame;
@@ -41,7 +42,7 @@ public class SimulationViewProcessing extends PApplet {
 	private UnidimensionalUniverse universe;
 	private TransitionsViewProcessing transitions;
 	private ViewCommonsProcessing commons;
-	private PImage img;
+	private PImage welcomeImgs[] = new PImage[2];;
 	private HelpFrame helpFrame;
 	private int width = 582;
 	private int height = 582;
@@ -89,7 +90,10 @@ public class SimulationViewProcessing extends PApplet {
 
 	public void setup() {
 		size(width, height);
-		img = loadImage(SimulationViewProcessing.class.getResource("welcome-pt-br.png").toString());
+		String welcomeFile0 = "welcome-"+Language.PORTUGUESE_BRAZIL.getLangtag().toLowerCase()+".png";
+		String welcomeFile1 = "welcome-"+Language.ENGLISH_UNITED_KINGDOM.getLangtag().toLowerCase()+".png";
+		welcomeImgs[0] = loadImage(SimulationViewProcessing.class.getResource(welcomeFile0).toString());
+		welcomeImgs[1] = loadImage(SimulationViewProcessing.class.getResource(welcomeFile1).toString());
 		helpFrame = new HelpFrame();
 		textAlign(CENTER);
 		background(background);
@@ -270,7 +274,7 @@ public class SimulationViewProcessing extends PApplet {
 					progress.setValue(y+1);
 				}
 				if(!finished && y+1 == universe.getTime().getLimit()){
-					this.validator.setNormalStatus(Translator.getInstance().get("msgRenderingSuccess"));
+					this.validator.setNormalStatus("msgRenderingSuccess");
 					finished = true;
 				}
 			}
@@ -523,7 +527,7 @@ public class SimulationViewProcessing extends PApplet {
 
 	private void drawWelcome() {
 		helpFrame.setVisible(false);
-		image(img, 0, 0);
+		image(welcomeImgs[Translator.getInstance().getLanguage().getId()], 0, 0);
 	}
 	
 	private void updateLastScale(){
