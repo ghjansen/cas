@@ -53,17 +53,17 @@ The [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) c
 
 ###CellularAutomaton
 The [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) class is the conceptual representation of the cellular automaton used in the simulation. The logic of this class uses other important classes like [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java), [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java), [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) and [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java). The algorithm executed by the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) is:
-1. Get the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) from the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) for the current [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java);
-2. Obtain the [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) from the [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java), corresponding to the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) identified in step **1**;
-3. Inform the [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java) of the new [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) to the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java), based on the current [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) and the [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) identified in step **2**;
-4. Increase [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java).
+- **1**. Get the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) from the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) for the current [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java);
+- **2**. Obtain the [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) from the [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java), corresponding to the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) identified in step **1**;
+- **3**. Inform the [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java) of the new [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) to the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java), based on the current [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) and the [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) identified in step **2**;
+- **4**. Increase [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java).
 
 The amount of times that the algorithm of the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) is executed can be represented by a mathematical ratio similar to [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) increasement formula, except that for the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) algorithm execution formula there is no subtraction of 1, as shown by the image below.
 
 ![](cas-docs/formulas/rule-execution.png)
 
 ##Contribute
-There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues or by the project itself, feel free to make contact through ![](cas-docs/text/contact.png).
+There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) and [all the projects](https://github.com/ghjansen/cas/projects) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues/projects or by CAS itself, feel free to make contact through ![](cas-docs/text/contact.png).
 
 
 
