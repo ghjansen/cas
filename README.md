@@ -6,7 +6,7 @@ The goal of this project is to assist the study of cellular automata by providin
 ![](cas-docs/screenshots/screenshots.png)
 
 ##Download
-Download the [latest release here](http://www). You can also see [all realeases here](https://github.com/ghjansen/cas/releases).
+Download the [latest release here](http://https://github.com/ghjansen/cas/releases/latest). You can also see [all realeases here](https://github.com/ghjansen/cas/releases).
 
 Before using CAS, please consider reading [this page](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html) from [Wolfram Research](http://www.wolfram.com) to ensure a good notion about elementary cellular automaton. If you know brazilian portuguese you can also read the [full monograph about CAS here](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
@@ -29,7 +29,7 @@ The data model located inside [`cas-core`](/cas-core) abstracts common character
 
 ![](cas-docs/diagrams/cas-core-datamodel.png)
 
-For a better understanding of the data model, the image below highlights some of the elements through a [elementary cellular automaton](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html) by using the representation commonly found in the literature. In image below you can see [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java) (A), [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) (B), [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) (C), [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java) (D), [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) (E) and [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) (F).
+For a better understanding of the data model, the image below highlights some of the elements through a [elementary cellular automaton](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html) by using the representation commonly found in the literature. In the image below you can see [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java) (A), [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) (B), [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) (C), [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java) (D), [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) (E) and [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) (F).
 
 ![](cas-docs/diagrams/cas-core-datamodel-representation.png)
 
@@ -38,7 +38,7 @@ From all elements of the data model, [`Time`](cas-core/src/main/java/com/ghjanse
 ###Time
 [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) and [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) are two concepts closely related by the dimensional aspect, that is, the number of dimensions used by the cellular automaton affects not only the cellular space but also the time. This feature is oriented to the sequential nature of the simulator, which updates the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) and [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) in an atomic operation consecutively until it reaches the parametrized limits for the simulation.
 
-To allow [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) to operate in a dimensional way, two approaches were created: absolute time and relative time. The absolute time is responsible for maintaining the amount of [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) iterations already processed by the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) and can be represented by an integer. The relative time informs the next [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) to be processed within the current iteration and is represented by a list of integers, where the number of elements in the list is equal to the number of dimensions of the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java).
+To allow [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) to operate in a dimensional way, two approaches were created: absolute time and relative time. The absolute time is responsible for maintaining the amount of [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) iterations already processed by the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) and is represented by an integer. The relative time informs the next [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) to be processed within the current iteration and is represented by a list of integers, where the number of elements in the list is equal to the number of dimensions of the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java).
 
 Thus, it is correct to state that the [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) class is a dynamic counter incremented from its lower limit (zero) acting on each of the dimensions (relative time) until it completely processes a [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) iteration (absolute time), repeating this cycle until it reaches the limits of [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java).
 
@@ -47,7 +47,7 @@ Thus, it is correct to state that the [`Time`](cas-core/src/main/java/com/ghjans
 ![](cas-docs/formulas/time-increasement.png)
 
 ###Space
-The [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) class is a dynamic array responsible for keeping all [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java)s from the initial condition defined for the simulation (`initial` attribute), the history of the iterations already processed (`history` attribute), the last iteration processed (`last` attribute) and the iteration that is being processed (`current` attribute). The `initial`, `last` and `current` attributes are lists of generic type in order to allow multidimensional structures, whereas the `history` attribute is a list of lists, since `history` stores copies of `current`. The image below shows a representation of the attributes `initial` (A),`history` (B), `last` (C) and `current` (D) through the computation of elementary rule 110.
+The [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) class is a dynamic array responsible for keeping all [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java)s from the initial condition defined for the simulation (`initial` attribute), the history of the iterations already processed (`history` attribute), the last iteration processed (`last` attribute) and the iteration that is being processed (`current` attribute). The `initial`, `last` and `current` attributes are lists of generic type in order to allow multidimensional structures, whereas the `history` attribute is a list of lists, since `history` stores copies of `current`. The image below shows a representation of the attributes `initial` (A), `history` (B), `last` (C) and `current` (D) through the computation of elementary rule 110.
 
 ![](cas-docs/diagrams/cas-core-space-representation.png)
 
@@ -63,7 +63,7 @@ The amount of times that the algorithm of the [`CellularAutomaton`](cas-core/src
 ![](cas-docs/formulas/rule-execution.png)
 
 ##Contribute
-There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) and [all the projects](https://github.com/ghjansen/cas/projects) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues/projects or by CAS itself, feel free to make contact through ![](cas-docs/text/contact.png).
+There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) and [all projects](https://github.com/ghjansen/cas/projects) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues/projects or by CAS itself, feel free to make contact through ![](cas-docs/text/contact.png).
 
 
 
