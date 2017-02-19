@@ -8,7 +8,7 @@
   "lblCells": "Cells in space:",
   "lblIterations": "Iterations of space:",
   "pnlInitialCondition": "4. Initial condition ",
-  "rdbtnUniqueCell": "Unique cell in black color",
+  "rdbtnUniqueCell": "Unique cell in black",
   "pnlControl": "5. Control",
   "btnOpen": "Open",
   "btnSave": "Save",
