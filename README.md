@@ -6,7 +6,7 @@ The project assists in the study of cellular automata by providing a simple plat
 ![](cas-docs/screenshots/screenshots.png)
 
 ##Download
-Download the [latest release here](http://https://github.com/ghjansen/cas/releases/latest). You can also check out [all previous releases here](https://github.com/ghjansen/cas/releases).
+Download the [latest release here](https://github.com/ghjansen/cas/releases/latest). You can also check out [all previous releases here](https://github.com/ghjansen/cas/releases).
 
 Before using CAS, please consider reading [this page](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html) from [Wolfram Research](http://www.wolfram.com) to ensure the basic understanding of Elementary Cellular Automaton. The monograph is also available in brazilian portuguese [here](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
