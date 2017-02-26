@@ -60,6 +60,7 @@ import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.ViewCommonsProcessing;
+import javax.swing.SwingConstants;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -611,6 +612,13 @@ public class Main {
 			}
 		});
 		pnlUnidimensional.add(langCombo);
+		
+		JLabel lblCopiright = new JLabel("Copyright \u00a9 2016  Guilherme Humberto Jansen");
+		lblCopiright.setForeground(Color.GRAY);
+		lblCopiright.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		lblCopiright.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCopiright.setBounds(6, 496, 325, 16);
+		pnlUnidimensional.add(lblCopiright);
 	}
 	
 	public void setStatus(String key, String info){
