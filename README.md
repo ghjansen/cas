@@ -1,18 +1,18 @@
-#CAS - Cellular Automata Simulator
+# CAS - Cellular Automata Simulator
 The Cellular Automata Simulator (CAS) is a project of didactic and scientific purposes, based on the publications of Stephen Wolfram and other great authors like Andrew Ilachinski, Harold V. McIntosh, Joel L. Schiff; also inspired by the ideas of Stanislaw Ulam and John von Neumann. See the full reference on page 65 of [the monograph](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
 The project assists in the study of cellular automata by providing a simple platform that allows for practical experience of the theoretical concepts.
 
 ![](cas-docs/screenshots/screenshots.png)
 
-##Download
+## Download
 Download the [latest release here](https://github.com/ghjansen/cas/releases/latest). You can also check out [all previous releases here](https://github.com/ghjansen/cas/releases).
 
 Before using CAS, please consider reading [this page](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html) from [Wolfram Research](http://www.wolfram.com) to ensure the basic understanding of Elementary Cellular Automaton. The monograph is also available in brazilian portuguese [here](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
 CAS is distributed under the [GNU Affero General Public Licence v3.0 (AGPLv3)](http://www.gnu.org/licenses/agpl-3.0.txt) and is compatible with Mac, Linux and Windows.
 
-##Structure
+## Structure
 CAS is currently organized in 5 modules: [`cas-core`](/cas-core), [`cas-control`](/cas-control), [`cas-unidimensional`](/cas-unidimensional), [`cas-ui-desktop`](/cas-ui-desktop) and [`cas-docs`](/cas-docs). The table below contains a summary of each one of the modules:
 
 Module name | Description
@@ -22,7 +22,7 @@ Module name | Description
 [`cas-unidimensional`](/cas-unidimensional) | One-dimensional implementation of the [`cas-core`](/cas-core) and [`cas-control`](/cas-control) modules, responsible for defining specific characteristics and controlling the simulation of one-dimensional cellular automata.
 [`cas-docs`](/cas-docs) | Documentation.
 
-##Core overview
+## Core overview
 Originally conceived to simulate [elementary cellular automaton](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html), CAS was designed to allow for the implementation of most kinds of cellular automata, independent of the amount of cells, dimensions, iterations, rules, etc.
 
 The data model in [`cas-core`](/cas-core) abstracts common characteristics of  cellular automata, forming a fundamental structure to simulate any cellular automaton. The set diagram below shows the composition between the elements of the data model, suppressing cardinality.
@@ -35,7 +35,7 @@ The image below highlights some of the elements of the data model through a [ele
 
 From all elements of the data model, [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java), [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) and [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) are the most important. More information about each one of these elements is detailed below.
 
-###Time
+### Time
 The number of dimensions used by the cellular automaton affects not only the cellular [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) but also  [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java). This feature is oriented to the sequential nature of the simulator, which updates the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) and [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) in an atomic operation until the end of the simulation.
 
 To allow for [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) to operate in a dimensional way, two approaches were created: absolute time and relative time. The absolute time is responsible for maintaining the amount of [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) iterations already processed by the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) and is represented by an integer. The relative time informs the next [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java) to be processed within the current iteration and is represented by a list of integers, where the number of elements in the list is equal to the number of dimensions of the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java).
@@ -46,12 +46,12 @@ The [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java) cla
 
 ![](cas-docs/formulas/time-increasement.png)
 
-###Space
+### Space
 The [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) class is a dynamic array responsible for keeping all [`Cell`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Cell.java)s from the initial condition defined for the simulation (`initial` attribute), the history of the iterations already processed (`history` attribute), the last iteration processed (`last` attribute) and the iteration that is being processed (`current` attribute). The `initial`, `last` and `current` attributes are lists of generic type in order to allow multidimensional structures, whereas the `history` attribute is a list of lists, since `history` stores copies of `current`. The image below shows a representation of the attributes `initial` (A), `history` (B), `last` (C) and `current` (D) through the computation of elementary rule 110.
 
 ![](cas-docs/diagrams/cas-core-space-representation.png)
 
-###CellularAutomaton
+### CellularAutomaton
 The [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) class is the conceptual representation of the cellular automaton used in the simulation. The logic of this class uses other classes like [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java), [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java), [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) and [`State`](cas-core/src/main/java/com/ghjansen/cas/core/ca/State.java). The algorithm executed by the [`CellularAutomaton`](cas-core/src/main/java/com/ghjansen/cas/core/ca/CellularAutomaton.java) is:
 - **1**. Get the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) from the [`Space`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Space.java) for the current [`Time`](cas-core/src/main/java/com/ghjansen/cas/core/physics/Time.java);
 - **2**. Obtain the [`Transition`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Transition.java) from the [`Rule`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Rule.java), corresponding to the [`Combination`](cas-core/src/main/java/com/ghjansen/cas/core/ca/Combination.java) identified in step **1**;
@@ -62,7 +62,7 @@ The amount of times that the algorithm of the [`CellularAutomaton`](cas-core/src
 
 ![](cas-docs/formulas/rule-execution.png)
 
-##Contribute
+## Contribute
 There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) and [all projects](https://github.com/ghjansen/cas/projects) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues/projects or by CAS itself, feel free to make contact through ![](cas-docs/text/contact.png).
 
 
