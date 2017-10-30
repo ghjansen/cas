@@ -1,0 +1,40 @@
+{
+  "ruleTypeParameter": {
+    "elementar": true
+  },
+  "ruleConfigurationParameter": {
+    "stateValues": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "limitsParameter": {
+    "cells": 540,
+    "iterations": 539
+  },
+  "initialConditionParameter": {
+    "sequences": [
+      {
+        "initialPosition": 1,
+        "finalPosition": 269,
+        "value": 0
+      },
+      {
+        "initialPosition": 270,
+        "finalPosition": 270,
+        "value": 1
+      },
+      {
+        "initialPosition": 271,
+        "finalPosition": 540,
+        "value": 0
+      }
+    ]
+  }
+}
