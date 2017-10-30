@@ -104,6 +104,7 @@ public class Main {
 	public JLabel lblIterations;
 	public JPanel pnlInitialCondition;
 	public JRadioButton rdbtnUniqueCell;
+	public JRadioButton rdbtnRandom;
 	public JPanel pnlView;
 	private String lastStatusKey;
 

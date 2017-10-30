@@ -107,17 +107,38 @@ public class EventManager {
 	
 	private UnidimensionalSequenceParameter[] getSequences(int totalCells){
 		if(totalCells == 1){
-			return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1)};
+			if(main.rdbtnRandom.isSelected()){
+				return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, getRandomBoolean()? 1 : 0)};
+			} else {
+				return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1)};
+			}
 		} else if (totalCells == 2){
-			return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1), new UnidimensionalSequenceParameter(2, 2, 0)};
+			if(main.rdbtnRandom.isSelected()){
+				return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, getRandomBoolean()? 1 : 0), new UnidimensionalSequenceParameter(2, 2, getRandomBoolean()? 1 : 0)};
+			} else {
+				return new UnidimensionalSequenceParameter[]{new UnidimensionalSequenceParameter(1, 1, 1), new UnidimensionalSequenceParameter(2, 2, 0)};
+			}
 		} else if (totalCells >= 3){
-			int centralCell = getCentralCell(totalCells);
-			UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, centralCell-1, 0);
-			UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter(centralCell, centralCell, 1);
-			UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter(centralCell+1, totalCells, 0);
-			return new UnidimensionalSequenceParameter[]{sequence1, sequence2, sequence3};
+			if(main.rdbtnRandom.isSelected()){
+				UnidimensionalSequenceParameter[] sequence = new UnidimensionalSequenceParameter[totalCells];
+				sequence[0] = new UnidimensionalSequenceParameter(1, 1, getRandomBoolean()? 1 : 0);
+				for(int i = 2; i <= totalCells; i++){
+					sequence[i-1] = new UnidimensionalSequenceParameter(i, i, getRandomBoolean()? 1 : 0);
+				}
+				return sequence;
+			} else {
+				int centralCell = getCentralCell(totalCells);
+				UnidimensionalSequenceParameter sequence1 = new UnidimensionalSequenceParameter(1, centralCell-1, 0);
+				UnidimensionalSequenceParameter sequence2 = new UnidimensionalSequenceParameter(centralCell, centralCell, 1);
+				UnidimensionalSequenceParameter sequence3 = new UnidimensionalSequenceParameter(centralCell+1, totalCells, 0);
+				return new UnidimensionalSequenceParameter[]{sequence1, sequence2, sequence3};
+			}
 		}
 		return null;
+	}
+
+	public static boolean getRandomBoolean() {
+		return Math.random() < 0.5;
 	}
 	
 	private int getCentralCell(int totalCells){
