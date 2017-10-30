@@ -9,6 +9,7 @@
   "lblIterations": "Iterations of space:",
   "pnlInitialCondition": "4. Initial condition ",
   "rdbtnUniqueCell": "Unique cell in black",
+  "rdbtnRandom": "Random",
   "pnlControl": "5. Control",
   "btnOpen": "Open",
   "btnSave": "Save",

@@ -72,12 +72,12 @@ public class EventManager {
 	private boolean skipRuleNumberEvent;
 	private Color invalidFieldColor;
 	public GUIValidator validator;
-	private Gson gson;
-	private UnidimensionalSimulationParameter simulationParameter;
-	private UnidimensionalSimulationController simulationController;
-	private ActivityState activityState;
+	public Gson gson;
+	public UnidimensionalSimulationParameter simulationParameter;
+	public UnidimensionalSimulationController simulationController;
+	public ActivityState activityState;
 	private Notification notification;
-	private boolean omitDiscardConfirmation = false;
+	public boolean omitDiscardConfirmation = false;
 
 	public EventManager(Main main) {
 		this.main = main;
@@ -91,7 +91,7 @@ public class EventManager {
 		this.notification = new Notification(this);
 	}
 	
-	private void createSimulationParameter() throws InvalidSimulationParameterException, SimulationBuilderException{
+	public void createSimulationParameter() throws InvalidSimulationParameterException, SimulationBuilderException{
 		int[] s = main.transitionsView.getStates();
 		int iterations = Integer.valueOf(main.txtIterations.getText());
 		int cells = Integer.valueOf(main.txtCells.getText());
@@ -171,6 +171,7 @@ public class EventManager {
 			simulationController.startCompleteTask();
 		} catch (Throwable e) {
 			validator.setErrorStatus("errSimulationExecution", e.toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -243,6 +244,7 @@ public class EventManager {
 	
 	
 	public void uniqueCellEvent(){
+		/*
 		if(main.scrollPane != null){
 			main.scrollPane.setEnabled(false);
 			main.table.setEnabled(false);
@@ -250,9 +252,21 @@ public class EventManager {
 			main.btnRemove.setEnabled(false);
 			main.btnClean.setEnabled(false);
 		}
+		*/
 	}
-	
-	
+
+	public void RandomEvent(){
+		/*
+		if(main.scrollPane != null){
+			main.scrollPane.setEnabled(false);
+			main.table.setEnabled(false);
+			main.btnAdd.setEnabled(false);
+			main.btnRemove.setEnabled(false);
+			main.btnClean.setEnabled(false);
+		}
+		*/
+	}
+
 	public void informPatternCellEvent(){
 		main.scrollPane.setEnabled(true);
 		main.table.setEnabled(true);
@@ -474,6 +488,7 @@ public class EventManager {
 		main.lblIterations.setText(Translator.getInstance().get("lblIterations"));
 		main.pnlInitialCondition.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlInitialCondition"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		main.rdbtnUniqueCell.setText(Translator.getInstance().get("rdbtnUniqueCell"));
+		main.rdbtnRandom.setText(Translator.getInstance().get("rdbtnRandom"));
 		main.pnlControl.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlControl"), TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		main.btnOpen.setText(Translator.getInstance().get("btnOpen"));
 		main.btnSave.setText(Translator.getInstance().get("btnSave"));

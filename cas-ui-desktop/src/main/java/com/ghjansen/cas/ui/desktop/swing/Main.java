@@ -67,7 +67,7 @@ import javax.swing.SwingConstants;
  */
 public class Main {
 	
-	private EventManager em;
+	public EventManager em;
 	private ViewCommonsProcessing viewCommons;
 	public TransitionsViewProcessing transitionsView;
 	public SimulationViewProcessing simulationView;
@@ -347,12 +347,12 @@ public class Main {
 		pnlLimits.setLayout(gl_pnlLimits);
 		
 		pnlInitialCondition = new JPanel();
-		pnlInitialCondition.setBounds(6, 294, 325, 54);
+		pnlInitialCondition.setBounds(6, 294, 325, 85);
 		pnlUnidimensional.add(pnlInitialCondition);
 		pnlInitialCondition.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlInitialCondition"), TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
 		rdbtnUniqueCell = new JRadioButton(Translator.getInstance().get("rdbtnUniqueCell"));
-		rdbtnUniqueCell.setEnabled(false);
+		rdbtnUniqueCell.setEnabled(true);
 		rdbtnUniqueCell.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -360,9 +360,21 @@ public class Main {
 				}
 			}
 		});
+		rdbtnRandom = new JRadioButton(Translator.getInstance().get("rdbtnRandom"));
+		rdbtnRandom.setEnabled(true);
+		rdbtnRandom.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					em.uniqueCellEvent();
+				}
+			}
+		});
 		grpInitialCondition.add(rdbtnUniqueCell);
+		grpInitialCondition.add(rdbtnRandom);
 		rdbtnUniqueCell.setSelected(true);
 		rdbtnUniqueCell.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		rdbtnRandom.setSelected(false);
+		rdbtnRandom.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 		
 		JRadioButton rdbtnInformPattern = new JRadioButton("Informar padrão:");
 		rdbtnInformPattern.setEnabled(false);
@@ -419,6 +431,7 @@ public class Main {
 					.addGroup(gl_pnlInitialCondition.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
 						.addComponent(rdbtnUniqueCell)
+						.addComponent(rdbtnRandom)
 						.addComponent(rdbtnInformPattern)
 						.addGroup(gl_pnlInitialCondition.createSequentialGroup()
 							.addComponent(btnAdd)
@@ -434,6 +447,8 @@ public class Main {
 					.addContainerGap()
 					.addComponent(rdbtnUniqueCell)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(rdbtnRandom)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(rdbtnInformPattern)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -448,7 +463,7 @@ public class Main {
 		pnlInitialCondition.setLayout(gl_pnlInitialCondition);
 		
 		pnlControl = new JPanel();
-		pnlControl.setBounds(6, 360, 325, 124);
+		pnlControl.setBounds(6, 391, 325, 124);
 		pnlUnidimensional.add(pnlControl);
 		pnlControl.setBorder(new TitledBorder(null, Translator.getInstance().get("pnlControl"), TitledBorder.LEADING, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
 		
@@ -618,7 +633,7 @@ public class Main {
 		lblCopiright.setForeground(Color.GRAY);
 		lblCopiright.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		lblCopiright.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCopiright.setBounds(6, 496, 325, 16);
+		lblCopiright.setBounds(6, 527, 325, 16);
 		pnlUnidimensional.add(lblCopiright);
 	}
 	
