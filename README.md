@@ -1,4 +1,7 @@
 # CAS - Cellular Automata Simulator
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc72f98cd80f447288731de2c49333e6)](https://www.codacy.com/app/contact.ghjansen/cas?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ghjansen/cas&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/ghjansen/cas.svg?branch=master)](https://travis-ci.com/ghjansen/cas)
+
 The Cellular Automata Simulator (CAS) is a project of didactic and scientific purposes, based on the publications of Stephen Wolfram and other great authors like Andrew Ilachinski, Harold V. McIntosh, Joel L. Schiff; also inspired by the ideas of Stanislaw Ulam and John von Neumann. See the full reference on page 65 of [the monograph](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
 The project assists in the study of cellular automata by providing a simple platform that allows for practical experience of the theoretical concepts.
@@ -64,11 +67,3 @@ The amount of times that the algorithm of the [`CellularAutomaton`](cas-core/src
 
 ## Contribute
 There is a lot to be improved and created. Check [the list of issues](https://github.com/ghjansen/cas/issues) and [all projects](https://github.com/ghjansen/cas/projects) to see what's happening, maybe including your suggestions or bugs found. If you feel inspired by one of the issues/projects or by CAS itself, feel free to make contact through ![](cas-docs/text/contact.png).
-
-
-
-
-
-
-
-
