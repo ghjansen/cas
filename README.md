@@ -1,4 +1,7 @@
 # CAS - Cellular Automata Simulator
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4d28791bcb664407aace87b4e0de2165)](https://app.codacy.com/app/contact.ghjansen/cas?utm_source=github.com&utm_medium=referral&utm_content=ghjansen/cas&utm_campaign=Badge_Grade_Dashboard)
+
 The Cellular Automata Simulator (CAS) is a project of didactic and scientific purposes, based on the publications of Stephen Wolfram and other great authors like Andrew Ilachinski, Harold V. McIntosh, Joel L. Schiff; also inspired by the ideas of Stanislaw Ulam and John von Neumann. See the full reference on page 65 of [the monograph](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
 The project assists in the study of cellular automata by providing a simple platform that allows for practical experience of the theoretical concepts.
