@@ -26,6 +26,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 
 /**
@@ -34,19 +35,24 @@ import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 public class HelpPanel extends JPanel {
 
 	private BufferedImage image;
-
-	public HelpPanel() {
+	private final String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
+	private final String fileNamePrefix = "welcome-";
+	private final String fileExtension = ".png";
+	
+	@Override
+    protected void paintComponent(Graphics g) {
+		loadImage();
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, null);            
+    }
+	
+	private void loadImage(){
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/com/ghjansen/cas/ui/desktop/processing/welcome-pt-br.png"));
+			String langTag = Translator.getInstance().getLanguage().getLangtag().toLowerCase();
+			image = ImageIO.read(getClass().getResourceAsStream(filePath + fileNamePrefix + langTag + fileExtension));
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
-	@Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, 0, 0, null);            
-    }
 
 }
