@@ -77,7 +77,7 @@ public class Main {
 	public JTextField txtCells;
 	public JTextField txtIterations;
 	private final ButtonGroup grpRuleType = new ButtonGroup();
-	private final ButtonGroup grpInitialCondition = new ButtonGroup();
+	public final ButtonGroup grpInitialCondition = new ButtonGroup();
 	public JTable table;
 	public JLabel lblStatus;
 	public JScrollPane scrollPane;

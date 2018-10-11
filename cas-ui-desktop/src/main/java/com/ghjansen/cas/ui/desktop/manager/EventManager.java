@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -365,6 +366,7 @@ public class EventManager {
 	
 	
 	public void openEvent(){
+		ButtonModel selected = main.grpInitialCondition.getSelection();
 		setActivityState(ActivityState.OPENING_FILE);
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -399,6 +401,8 @@ public class EventManager {
 	    		e.printStackTrace();
 	    		validator.setErrorStatus("errOpenFileGeneric", e.toString());
 	    	}
+		} else {
+			main.grpInitialCondition.setSelected(selected, true);
 		}
 	}
 	
@@ -523,6 +527,7 @@ public class EventManager {
 			main.progressBar.setStringPainted(false);
 			main.langCombo.setEnabled(true);
 			this.activityState = state;
+			main.rdbtnUniqueCell.setSelected(true);
 			break;
 		case EXECUTING_RULE:
 			main.transitionsView.setMouseEnabled(false);
@@ -557,6 +562,7 @@ public class EventManager {
 		case EXPORTING_FILE:
 			break;
 		case OPENING_FILE:
+			main.grpInitialCondition.clearSelection();
 			break;
 		case SAVING_FILE:
 			break;
