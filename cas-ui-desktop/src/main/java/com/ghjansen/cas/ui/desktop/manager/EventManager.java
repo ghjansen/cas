@@ -77,6 +77,7 @@ public class EventManager {
 	public UnidimensionalSimulationParameter simulationParameter;
 	public UnidimensionalSimulationController simulationController;
 	public ActivityState activityState;
+	private ActivityState previousActivityState;
 	private Notification notification;
 	public boolean omitDiscardConfirmation = false;
 
@@ -90,6 +91,7 @@ public class EventManager {
 		gsonBuilder.setPrettyPrinting();
 		this.gson = gsonBuilder.create();
 		this.notification = new Notification(this);
+		this.previousActivityState = null;
 	}
 	
 	public void createSimulationParameter() throws InvalidSimulationParameterException, SimulationBuilderException{
@@ -402,6 +404,7 @@ public class EventManager {
 	    		validator.setErrorStatus("errOpenFileGeneric", e.toString());
 	    	}
 		} else {
+			revertActivityState();
 			main.grpInitialCondition.setSelected(selected, true);
 		}
 	}
@@ -417,6 +420,8 @@ public class EventManager {
 		transitionsEvent();
 		main.txtCells.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getCells()));
 		main.txtIterations.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getIterations()));
+		main.rdbtnUniqueCell.setSelected(false);
+		main.rdbtnRandom.setSelected(false);
 	}
 	
 	
@@ -526,8 +531,10 @@ public class EventManager {
 			main.btnExport.setEnabled(false);
 			main.progressBar.setStringPainted(false);
 			main.langCombo.setEnabled(true);
-			this.activityState = state;
+			main.rdbtnUniqueCell.setEnabled(true);
 			main.rdbtnUniqueCell.setSelected(true);
+			main.rdbtnRandom.setEnabled(true);
+			changeActivityState(state);
 			break;
 		case EXECUTING_RULE:
 			main.transitionsView.setMouseEnabled(false);
@@ -542,7 +549,9 @@ public class EventManager {
 			main.btnExport.setEnabled(false);
 			main.progressBar.setStringPainted(true);
 			main.langCombo.setEnabled(false);
-			this.activityState = state;
+			main.rdbtnUniqueCell.setEnabled(false);
+			main.rdbtnRandom.setEnabled(false);
+			changeActivityState(state);
 			break;
 		case ANALYSING:
 			main.transitionsView.setMouseEnabled(false);
@@ -557,17 +566,34 @@ public class EventManager {
 			main.btnExport.setEnabled(true);
 			main.progressBar.setStringPainted(true);
 			main.langCombo.setEnabled(false);
-			this.activityState = state;
+			main.rdbtnUniqueCell.setEnabled(false);
+			main.rdbtnRandom.setEnabled(false);
+			changeActivityState(state);
 			break;
 		case EXPORTING_FILE:
+			changeActivityState(state);
 			break;
 		case OPENING_FILE:
 			main.grpInitialCondition.clearSelection();
+			changeActivityState(state);
 			break;
 		case SAVING_FILE:
+			changeActivityState(state);
 			break;
 		default:
 			break;
+		}
+	}
+	
+	private void changeActivityState(ActivityState newState){
+		this.previousActivityState = this.activityState;
+		this.activityState = newState;
+	}
+	
+	private void revertActivityState(){
+		if(this.previousActivityState != null){
+			this.activityState = null;
+			setActivityState(this.previousActivityState);
 		}
 	}
 	
