@@ -32,7 +32,7 @@ if [[ "$_java" ]]; then
         java -jar cas-*.jar
         echo "Stopped CAS."
     else         
-        echo "Java version is not compatible with CAS. Please install Java 1.5 or later, or update your Java version and try again."
+        echo "Java version is not compatible with CAS. Please install Java 1.6 or later, or update your Java version and try again."
         read -n1 -r -p "Press any key to exit..."
     fi
 fi
