@@ -4,27 +4,34 @@
 		<format>dir</format>
 		<format>zip</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
-	<files>
-		<file>
-			<source>target/cas-${project.version}-jar-with-dependencies.jar</source>
-			<destName>cas-${project.version}-jar-with-dependencies.jar</destName>
-		</file>
-		<file>
-			<source>src/main/assembly/run.bat</source>
-			<destName>run.bat</destName>
-		</file>
-		<file>
-			<source>src/main/assembly/run.sh</source>
-			<destName>run.sh</destName>
-		</file>
-		<file>
-			<source>${project.parent.basedir}/LICENSE</source>
-			<destName>LICENSE</destName>
-		</file>
-		<file>
-			<source>${project.parent.basedir}/README.md</source>
-			<destName>README.md</destName>
-		</file>
-	</files>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>cas-${project.version}-jar-with-dependencies.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/assembly/</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>run.sh</include>
+				<include>run.bat</include>
+			</includes>
+			<filtered>true</filtered>
+			<fileMode>0755</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>${project.parent.basedir}</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>LICENSE</include>
+				<include>README.md</include>
+			</includes>
+			<filtered>true</filtered>
+			<fileMode>0755</fileMode>
+		</fileSet>
+	</fileSets>
 </assembly>
