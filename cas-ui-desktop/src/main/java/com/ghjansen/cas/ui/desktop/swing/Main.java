@@ -629,7 +629,7 @@ public class Main {
 		});
 		pnlUnidimensional.add(langCombo);
 		
-		JLabel lblCopiright = new JLabel("Copyright \u00a9 2016  Guilherme Humberto Jansen");
+		JLabel lblCopiright = new JLabel("Copyright \u00a9 2019  Guilherme Humberto Jansen");
 		lblCopiright.setForeground(Color.GRAY);
 		lblCopiright.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		lblCopiright.setHorizontalAlignment(SwingConstants.CENTER);
