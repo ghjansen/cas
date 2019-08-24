@@ -426,6 +426,14 @@ public class EventManager {
 	
 	
 	public void exportEvent(){
+		if(main.keyMonitor.isCtrlPressed()){
+			main.exportFrame.setVisible(true);
+		} else {
+			exportSimulation();
+		}		
+	}
+	
+	public void exportSimulation(){
 		ActivityState previous = activityState;
 		setActivityState(ActivityState.EXPORTING_FILE);
 		JFileChooser fc = new JFileChooser();

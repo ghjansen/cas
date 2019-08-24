@@ -22,6 +22,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +31,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,6 +63,7 @@ import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.TransitionsViewProcessing;
 import com.ghjansen.cas.ui.desktop.processing.ViewCommonsProcessing;
+
 import javax.swing.SwingConstants;
 
 /**
@@ -107,6 +111,8 @@ public class Main {
 	public JRadioButton rdbtnRandom;
 	public JPanel pnlView;
 	private String lastStatusKey;
+	public KeyMonitor keyMonitor;
+	public ExportFrame exportFrame;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -130,6 +136,8 @@ public class Main {
 	}
 
 	private void initialize() {
+		keyMonitor = new KeyMonitor();
+		exportFrame = new ExportFrame();
 		em = new EventManager(this);
 		viewCommons = new ViewCommonsProcessing();
 		transitionsView = new TransitionsViewProcessing(viewCommons, em);
@@ -636,6 +644,41 @@ public class Main {
 		lblCopiright.setBounds(6, 527, 325, 16);
 		pnlUnidimensional.add(lblCopiright);
 	}
+	
+	public class KeyMonitor {
+	    private volatile boolean ctrlPressed = false;
+	    
+	    public KeyMonitor(){
+	    	KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+
+	            @Override
+	            public boolean dispatchKeyEvent(KeyEvent ke) {
+	                synchronized (KeyMonitor.class) {
+	                    switch (ke.getID()) {
+	                    case KeyEvent.KEY_PRESSED:
+	                        if (ke.getKeyCode() == KeyEvent.VK_CONTROL) {
+	                            ctrlPressed = true;
+	                        }
+	                        break;
+
+	                    case KeyEvent.KEY_RELEASED:
+	                        if (ke.getKeyCode() == KeyEvent.VK_CONTROL) {
+	                            ctrlPressed = false;
+	                        }
+	                        break;
+	                    }
+	                    return false;
+	                }
+	            }
+	        });
+	    }
+	    
+	    public boolean isCtrlPressed() {
+	        synchronized (KeyMonitor.class) {
+	            return ctrlPressed;
+	        }
+	    }
+	};
 	
 	public void setStatus(String key, String info){
 		lastStatusKey = key;
