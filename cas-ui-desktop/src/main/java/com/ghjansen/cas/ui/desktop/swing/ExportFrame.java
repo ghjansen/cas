@@ -33,6 +33,9 @@ import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
+import com.ghjansen.cas.ui.desktop.manager.EventManager;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -40,11 +43,13 @@ import java.awt.event.ActionEvent;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class ExportFrame extends JFrame {
+	private EventManager em;
 	private JTextField txtCellScale;
 	private JTextField txtGridLinesThickness;
 	private JTextField txtCellLinesColour;
-	public ExportFrame() {
+	public ExportFrame(EventManager em) {
 		super();
+		this.em = em;
 		setAlwaysOnTop(true);
 		setTitle("Advanced Export Options (ALPHA)");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

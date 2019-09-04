@@ -137,8 +137,8 @@ public class Main {
 
 	private void initialize() {
 		keyMonitor = new KeyMonitor();
-		exportFrame = new ExportFrame();
 		em = new EventManager(this);
+		exportFrame = new ExportFrame(em);
 		viewCommons = new ViewCommonsProcessing();
 		transitionsView = new TransitionsViewProcessing(viewCommons, em);
 		simulationView = new SimulationViewProcessing(viewCommons, transitionsView);
