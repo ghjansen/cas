@@ -50,6 +50,7 @@ import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.IconListRenderer;
 import com.ghjansen.cas.ui.desktop.swing.Main;
+import com.ghjansen.cas.ui.desktop.swing.SimulationExportUtil;
 import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalLimitsParameter;
@@ -59,7 +60,6 @@ import com.ghjansen.cas.unidimensional.control.UnidimensionalSequenceParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationBuilder;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationController;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationParameter;
-import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -449,30 +449,9 @@ public class EventManager {
 			if(!fileName.endsWith(".png")){
 				fileName = fileName + ".png";
 			}
-			int width = simulationController.getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
-			int height = simulationController.getSimulation().getUniverse().getTime().getLimit() + 1;
-			BufferedImage buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			// initial condition
-			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
-				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-				buffer.setRGB(i, 0, color.getRGB());
-			}
-			// history
-			for(int j = 0; j < simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-				List<UnidimensionalCell> cells = simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
-				for(int i = 0; i < cells.size(); i++){
-					UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
-					Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-					buffer.setRGB(i, j+1, color.getRGB());
-				}
-			}
-			// current/last
-			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
-				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-				buffer.setRGB(i, height-1, color.getRGB());
-			}
+
+			BufferedImage buffer = SimulationExportUtil.createBufferedImage(simulationController, cellScale, showGrid, gridLineThickness, gridLineColour);
+
 			File f = new File(fileName);
 			try {
 				ImageIO.write(buffer, "PNG", f);
