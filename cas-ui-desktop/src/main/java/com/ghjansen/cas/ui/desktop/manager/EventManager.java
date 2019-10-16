@@ -427,13 +427,13 @@ public class EventManager {
 	
 	public void exportEvent(){
 		if(main.keyMonitor.isCtrlPressed()){
-			main.exportFrame.setVisible(true);
+			main.aeo.setVisible(true);
 		} else {
-			exportSimulation();
+			exportSimulation(1, false, 0, null);
 		}		
 	}
 	
-	public void exportSimulation(){
+	public void exportSimulation(int cellScale, boolean showGrid, int gridLineThickness, Color gridLineColour){
 		ActivityState previous = activityState;
 		setActivityState(ActivityState.EXPORTING_FILE);
 		JFileChooser fc = new JFileChooser();
@@ -602,6 +602,68 @@ public class EventManager {
 		if(this.previousActivityState != null){
 			this.activityState = null;
 			setActivityState(this.previousActivityState);
+		}
+	}
+	
+	public void aEOCellScaleEvent(){
+		if(validator.isAEOCellScaleValid()){
+			if(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) > 3) {
+				if(!main.aeo.rdbtnAEOYes.isEnabled()){
+					main.aeo.rdbtnAEONo.setEnabled(true);
+					main.aeo.rdbtnAEOYes.setEnabled(true);
+				}
+				if(!main.aeo.rdbtnAEOYes.isSelected()){
+					main.aeo.rdbtnAEONo.setSelected(true);
+				} else {
+					aEOGridYesEvent();
+				}
+			} else {
+				main.aeo.rdbtnAEONo.setEnabled(false);
+				main.aeo.rdbtnAEOYes.setEnabled(false);
+			}
+		}
+		
+	}
+	
+	public void aEOGridYesEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(true);
+		main.aeo.txtAEOCellLinesColour.setEnabled(true);
+		validator.isAEOCellLinesThicknessValid();
+		validator.isAEOCellColourValid();
+	}
+	
+	public void aEOGridNoEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(false);
+		main.aeo.txtAEOGridLinesThickness.setBackground(SystemColor.text);
+		main.aeo.txtAEOCellLinesColour.setEnabled(false);
+		main.aeo.txtAEOCellLinesColour.setBackground(SystemColor.text);
+		aEOCellScaleEvent();
+	}
+	
+	public void aEOGridThicknessEvent(){
+		validator.isAEOCellLinesThicknessValid();
+	}
+	
+	public void aEOGridColourEvent(){
+		validator.isAEOCellColourValid();
+	}
+	
+	public void aEOExportEvent(){
+		if(!validator.isAEOActivityLocked()){
+			main.aeo.setVisible(false);
+			main.aeo.txtAEOCellScale.requestFocus();
+			int scale = Integer.valueOf(main.aeo.txtAEOCellScale.getText());
+			boolean showGrid = main.aeo.rdbtnAEOYes.isSelected() ? true : false;
+			int thickness = Integer.valueOf(main.aeo.txtAEOGridLinesThickness.getText());
+			String hex = main.aeo.txtAEOCellLinesColour.getText().replaceAll("#", "");
+			int r = Integer.valueOf(hex.substring(0, 2));
+			int g = Integer.valueOf(hex.substring(2, 4));
+			int b = Integer.valueOf(hex.substring(4, 6));
+			int rgb = r;
+			rgb = (rgb << 8) + g;
+			rgb = (rgb << 8) + b;
+			Color gridColour = new Color(rgb);
+			exportSimulation(scale, showGrid, thickness, gridColour);
 		}
 	}
 	
