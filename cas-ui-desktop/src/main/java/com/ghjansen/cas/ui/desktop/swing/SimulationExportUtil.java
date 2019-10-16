@@ -68,7 +68,7 @@ public class SimulationExportUtil {
 			UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
 			Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
 			g.setColor(color);
-			g.fillRect(i * cellScale, (bufferHeight-1) * cellScale, cellScale, cellScale);
+			g.fillRect(i * cellScale, bufferHeight - cellScale, cellScale, cellScale);
 			//buffer.setRGB(i, bufferHeight-1, color.getRGB());
 		}
 		return buffer;
