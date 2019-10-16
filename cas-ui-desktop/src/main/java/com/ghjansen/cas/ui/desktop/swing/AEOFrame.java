@@ -256,6 +256,12 @@ public class AEOFrame extends JDialog {
 		btnAEOExport = new JButton("Export");
 		btnAEOExport.setBounds(156, 205, 138, 29);
 		btnAEOExport.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnAEOExport.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				em.aEOExportEvent();
+			}
+		});
 		getContentPane().add(btnAEOExport);
 		
 		lblAEOStatus = new JLabel("");

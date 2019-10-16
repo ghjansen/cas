@@ -20,6 +20,7 @@ package com.ghjansen.cas.ui.desktop.swing;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.util.regex.Pattern;
 
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 
@@ -32,10 +33,13 @@ public class GUIValidator {
 	private Color invalidFieldColor;
 	private boolean activityLocked = false;
 	private Boolean aOEActivityLocked = false;
+	private static final String HEX_PATTERN = "^#?(?:[0-9a-fA-F]{2}){3}$";
+    private Pattern hexValidator;
 
 	public GUIValidator(Main main, Color invalidFieldColor) {
 		this.main = main;
 		this.invalidFieldColor = invalidFieldColor;
+		this.hexValidator = Pattern.compile(HEX_PATTERN);
 	}
 	
 	public boolean isRuleNumberValid(){
@@ -112,7 +116,17 @@ public class GUIValidator {
 	}
 	
 	public boolean isAEOCellColourValid(){
-		return false;
+		String value = main.aeo.txtAEOCellLinesColour.getText();
+		if(!String.valueOf(value).isEmpty() && hexValidator.matcher(value).matches()){
+			main.aeo.txtAEOCellLinesColour.setBackground(SystemColor.text);
+			updateStatusAEO(4);
+			return true;
+		} else {
+			lockActivityAOE(4);
+			main.aeo.txtAEOCellLinesColour.setBackground(invalidFieldColor);
+			updateStatusAEO(4);
+			return false;
+		}
 	}
 	
 	private boolean isValidPositiveInteger(String value){
@@ -149,7 +163,7 @@ public class GUIValidator {
 		(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) -1 ) / 2);
 			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
 		} else if (main.aeo.txtAEOCellLinesColour.getBackground().equals(invalidFieldColor)) {
-			main.aeo.lblAEOStatus.setText("Cell Lines Colour must use the pattern #ffffff or ffffff");
+			main.aeo.lblAEOStatus.setText("Cell Lines Colour must be a RGB hexadecimal");
 			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
 		} else {
 			main.aeo.lblAEOStatus.setText("");
@@ -165,7 +179,7 @@ public class GUIValidator {
 	
 	public void setNormalStatus(String key){
 		main.setStatus(key, "");
-		main.lblStatus.setForeground(SystemColor.text);
+		main.lblStatus.setForeground(SystemColor.textText);
 	}
 	
 	private void lockActivity(){
