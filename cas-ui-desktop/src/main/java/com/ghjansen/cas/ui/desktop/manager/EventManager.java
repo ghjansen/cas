@@ -427,7 +427,7 @@ public class EventManager {
 	
 	public void exportEvent(){
 		if(main.keyMonitor.isCtrlPressed()){
-			main.exportFrame.setVisible(true);
+			main.aeo.setVisible(true);
 		} else {
 			exportSimulation();
 		}		
@@ -603,6 +603,38 @@ public class EventManager {
 			this.activityState = null;
 			setActivityState(this.previousActivityState);
 		}
+	}
+	
+	public void aEOCellScaleEvent(){
+		if(validator.isAEOCellScaleValid()){
+			if(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) > 3) {
+				main.aeo.rdbtnAEONo.setEnabled(true);
+				main.aeo.rdbtnAEONo.setSelected(true);
+				main.aeo.rdbtnAEOYes.setEnabled(true);
+				main.aeo.rdbtnAEOYes.setSelected(false);
+			} else {
+				main.aeo.rdbtnAEONo.setEnabled(false);
+				main.aeo.rdbtnAEOYes.setEnabled(false);
+			}
+		}
+		
+	}
+	
+	public void aEOGridYesEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(true);
+	}
+	
+	public void aEOGridNoEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(false);
+		main.aeo.txtAEOCellLinesColour.setEnabled(false);
+	}
+	
+	public void aEOGridThicknessEvent(){
+		validator.isAEOCellLinesThicknessValid();
+	}
+	
+	public void aEOGridColourEvent(){
+		validator.isAEOCellColourValid();
 	}
 	
 }

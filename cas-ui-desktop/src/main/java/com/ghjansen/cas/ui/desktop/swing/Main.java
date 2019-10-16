@@ -112,7 +112,7 @@ public class Main {
 	public JPanel pnlView;
 	private String lastStatusKey;
 	public KeyMonitor keyMonitor;
-	public ExportFrame exportFrame;
+	public AEOFrame aeo;
 
 	public static void main(String[] args) {
 		UIManager.put("Table.gridColor", new ColorUIResource(Color.gray));
@@ -138,7 +138,7 @@ public class Main {
 	private void initialize() {
 		keyMonitor = new KeyMonitor();
 		em = new EventManager(this);
-		exportFrame = new ExportFrame(em);
+		aeo = new AEOFrame(em, frame);
 		viewCommons = new ViewCommonsProcessing();
 		transitionsView = new TransitionsViewProcessing(viewCommons, em);
 		simulationView = new SimulationViewProcessing(viewCommons, transitionsView);

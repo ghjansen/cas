@@ -31,6 +31,7 @@ public class GUIValidator {
 	private Main main;
 	private Color invalidFieldColor;
 	private boolean activityLocked = false;
+	private Boolean aOEActivityLocked = false;
 
 	public GUIValidator(Main main, Color invalidFieldColor) {
 		this.main = main;
@@ -79,6 +80,41 @@ public class GUIValidator {
 		}
 	}
 	
+	public boolean isAEOCellScaleValid(){
+		String value = main.aeo.txtAEOCellScale.getText();
+		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
+			main.aeo.txtAEOCellScale.setBackground(SystemColor.text);
+			updateStatusAEO(1);
+			return true;
+		} else {
+			lockActivityAOE(1);
+			main.aeo.txtAEOCellScale.setBackground(invalidFieldColor);
+			updateStatusAEO(1);
+			return false;
+		}
+	}
+	
+	public boolean isAEOCellLinesThicknessValid(){
+		String value = main.aeo.txtAEOGridLinesThickness.getText();
+		if(isValidPositiveInteger(value)){
+			int t = Integer.valueOf(value);
+			int c = Integer.valueOf(main.aeo.txtAEOCellScale.getText());
+			if(t >= 1 && t <= (c-1)/2){
+				main.aeo.txtAEOGridLinesThickness.setBackground(SystemColor.text);
+				updateStatusAEO(3);
+				return true;
+			}
+		}
+		lockActivityAOE(3);
+		main.aeo.txtAEOGridLinesThickness.setBackground(invalidFieldColor);
+		updateStatusAEO(3);
+		return false;
+	}
+	
+	public boolean isAEOCellColourValid(){
+		return false;
+	}
+	
 	private boolean isValidPositiveInteger(String value){
 		try{
 			int integer = Integer.valueOf(value);
@@ -104,6 +140,24 @@ public class GUIValidator {
 		}
 	}
 	
+	public void updateStatusAEO(int level){
+		if(main.aeo.txtAEOCellScale.getBackground().equals(invalidFieldColor)){
+			main.aeo.lblAEOStatus.setText("Cell Scale must be >= 1");
+			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
+		} else if (main.aeo.txtAEOGridLinesThickness.getBackground().equals(invalidFieldColor)){
+			main.aeo.lblAEOStatus.setText("Grid Lines Thickness must be >= 1 and <= " + 
+		(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) -1 ) / 2);
+			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
+		} else if (main.aeo.txtAEOCellLinesColour.getBackground().equals(invalidFieldColor)) {
+			main.aeo.lblAEOStatus.setText("Cell Lines Colour must use the pattern #ffffff or ffffff");
+			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
+		} else {
+			main.aeo.lblAEOStatus.setText("");
+			main.aeo.lblAEOStatus.setForeground(SystemColor.text);
+			releaseActivityAEO(level);
+		}
+	}
+	
 	public void setErrorStatus(String key, String info){
 		main.setStatus(key, info);
 		main.lblStatus.setForeground(invalidFieldColor);
@@ -111,7 +165,7 @@ public class GUIValidator {
 	
 	public void setNormalStatus(String key){
 		main.setStatus(key, "");
-		main.lblStatus.setForeground(SystemColor.textText);
+		main.lblStatus.setForeground(SystemColor.text);
 	}
 	
 	private void lockActivity(){
@@ -121,6 +175,21 @@ public class GUIValidator {
 		main.btnSave.setEnabled(false);
 	}
 	
+	private void lockActivityAOE(int level){
+		this.aOEActivityLocked = true;
+		main.aeo.btnAEOExport.setEnabled(false);
+		if(level <= 1) {
+			main.aeo.rdbtnAEOYes.setEnabled(false);
+			main.aeo.rdbtnAEONo.setEnabled(false);
+		}
+		if(level <= 2) {
+			main.aeo.txtAEOGridLinesThickness.setEnabled(false);
+		}
+		if(level <= 3) {
+			main.aeo.txtAEOCellLinesColour.setEnabled(false);
+		}
+	}
+	
 	private void releaseActivity(){
 		this.activityLocked = false;
 		main.btnSimulateComplete.setEnabled(true);
@@ -128,8 +197,27 @@ public class GUIValidator {
 		main.btnSave.setEnabled(true);
 	}
 	
+	private void releaseActivityAEO(int level){
+		this.aOEActivityLocked = false;
+		main.aeo.btnAEOExport.setEnabled(true);
+		if(level >= 1) {
+			main.aeo.rdbtnAEOYes.setEnabled(true);
+			main.aeo.rdbtnAEONo.setEnabled(true);
+		}
+		if(level >= 2) {
+			main.aeo.txtAEOGridLinesThickness.setEnabled(true);
+		}
+		if(level >= 3) {
+			main.aeo.txtAEOCellLinesColour.setEnabled(true);
+		}
+	}
+	
 	public boolean isActivityLocked(){
 		return this.activityLocked;
+	}
+	
+	public boolean isAEOActivityLocked(){
+		return this.aOEActivityLocked;
 	}
 
 }
