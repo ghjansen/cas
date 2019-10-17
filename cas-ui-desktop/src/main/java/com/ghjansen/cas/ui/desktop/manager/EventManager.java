@@ -586,7 +586,7 @@ public class EventManager {
 	
 	public void aEOCellScaleEvent(){
 		if(validator.isAEOCellScaleValid()){
-			if(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) > 3) {
+			if(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) >= 3) {
 				if(!main.aeo.rdbtnAEOYes.isEnabled()){
 					main.aeo.rdbtnAEONo.setEnabled(true);
 					main.aeo.rdbtnAEOYes.setEnabled(true);
