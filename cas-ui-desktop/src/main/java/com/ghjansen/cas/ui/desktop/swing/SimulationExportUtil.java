@@ -34,6 +34,8 @@ public class SimulationExportUtil {
 	public static BufferedImage createBufferedImage(UnidimensionalSimulationController simulationController, 
 			int cellScale, boolean showGrid, int gridLineThickness, Color gridLineColour){
 		
+		if(cellScale < 1) cellScale = 1; //replace invalid by default
+		
 		int simulationWidth = simulationController.getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
 		int simulationHeight = simulationController.getSimulation().getUniverse().getTime().getLimit() + 1;
 		int bufferWidth = simulationWidth * cellScale;
@@ -42,6 +44,18 @@ public class SimulationExportUtil {
 		BufferedImage buffer = new BufferedImage(bufferWidth, bufferHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = buffer.createGraphics();
 		
+		//cells
+		drawCells(g, simulationController, cellScale, bufferHeight);
+		
+		//grid lines
+		if(showGrid && cellScale >= 3){
+			drawGrid(g, cellScale, bufferWidth, bufferHeight);
+		}
+		
+		return buffer;
+	}
+	
+	private static void drawCells(Graphics2D g, UnidimensionalSimulationController simulationController, int cellScale, int bufferHeight){
 		// initial condition
 		for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
 			UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
@@ -71,7 +85,27 @@ public class SimulationExportUtil {
 			g.fillRect(i * cellScale, bufferHeight - cellScale, cellScale, cellScale);
 			//buffer.setRGB(i, bufferHeight-1, color.getRGB());
 		}
-		return buffer;
 	}
-
+	
+	private static void drawGrid(Graphics2D g, int cellScale, int bufferWidth, int bufferHeight){
+		int px = 0, py = cellScale;
+		g.setColor(Color.gray);
+		//horizontal lines (bottom)
+		for(int i = 1; py <= bufferHeight;){
+			g.fillRect(0, py-1, bufferWidth, 1);
+			i++;
+			py = cellScale * i;
+		}
+		//vertical lines (left)
+		for(int i = 0; px < bufferWidth;){
+			g.fillRect(px, 0, 1, bufferHeight);
+			i++;
+			px = cellScale * i;
+		}
+		//horizontal line (top)
+		g.fillRect(0, 0, bufferWidth, 1);
+		//vertical line (right)
+		g.fillRect(bufferWidth-1, 0, 1, bufferHeight);
+	}
+	
 }
