@@ -635,9 +635,9 @@ public class EventManager {
 			boolean showGrid = main.aeo.rdbtnAEOYes.isSelected() ? true : false;
 			int thickness = Integer.valueOf(main.aeo.txtAEOGridLinesThickness.getText());
 			String hex = main.aeo.txtAEOCellLinesColour.getText().replaceAll("#", "");
-			int r = Integer.valueOf(hex.substring(0, 2));
-			int g = Integer.valueOf(hex.substring(2, 4));
-			int b = Integer.valueOf(hex.substring(4, 6));
+			int r = Integer.parseInt(hex.substring(0, 2), 16);
+			int g = Integer.parseInt(hex.substring(2, 4), 16);
+			int b = Integer.parseInt(hex.substring(4, 6), 16);
 			int rgb = r;
 			rgb = (rgb << 8) + g;
 			rgb = (rgb << 8) + b;

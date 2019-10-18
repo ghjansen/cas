@@ -55,7 +55,7 @@ public class SimulationExportUtil {
 		
 		//draw grid lines
 		if(showGrid && cellScale >= 3){
-			drawGrid(g, cellScale, bufferWidth, bufferHeight, gridLineThickness);
+			drawGrid(g, cellScale, bufferWidth, bufferHeight, gridLineThickness, gridLineColour);
 		}
 		
 		return buffer;
@@ -93,9 +93,9 @@ public class SimulationExportUtil {
 		}
 	}
 	
-	private static void drawGrid(Graphics2D g, int cellScale, int bufferWidth, int bufferHeight, int gridLineThickness){
+	private static void drawGrid(Graphics2D g, int cellScale, int bufferWidth, int bufferHeight, int gridLineThickness, Color colour){
 		int px = 0, py = cellScale;
-		g.setColor(Color.gray);
+		g.setColor(colour);
 		//horizontal lines (bottom)
 		for(int i = 1; py <= bufferHeight;){
 			g.fillRect(0, py-gridLineThickness, bufferWidth, gridLineThickness);
