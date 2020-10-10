@@ -56,7 +56,6 @@
 		<java.version>1.6</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<sonar.projectKey>ghjansen_cas</sonar.projectKey>
 	</properties>
 	<modules>
 		<module>cas-core</module>
