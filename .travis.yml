@@ -1,1 +1,11 @@
 language: java
+
+addons:
+  sonarcloud:
+    organization: "ghjansen-github"
+    token:
+      secure: ZW81BZcdma6uoufoWy8Rq+me23GYlotJYCosRTCaFpZkwOhAJZPmJ6bfhmj7Xs+qFvCknwDDuCIDiFDfb9iRifEtIMwO0T6b0feJ5BynS1M1BGwHkXR8QxDmh95NkVCcvXv/zkF8OEUX5JUVDzlHAhXSfJmHHUststlPbpoc3zuR5bhxfB/DCveneX3TS0tASnwxuXRozyIs0X2o7ANcxhxCcyA7viOey7lTgOAi2KHrZlme/+7by7ouDWi6FkJ/cMYEormEzJ+rd0acF1v92XSReIoz+2r32yQSRcPsdygj5WZAKUSlrhjuYxRLZkzTuRFZMkw+dKU3syvbQYV/CmWDrwl/vh0szoIXIGEy6fTZUMmtvInQnQDgX88mjUx5A1XYuv9oc1jM1/UQdXML1PCt61PZMGSuHM5NUel+fWABliKFveMJs/P5cXFpNCfNFoL6GDaLTgWtFiT67Zz74USwHhAq1eTiGey6O7MMfAZRecwjvdaO3mL4mkDB04gdYoz6T+0fWTwHpx8ZNhsvTv6nnkH/ZIbSGYthFsJj3IULnzwGXrCOTkAZjnsyUrNcws2jbUbO17HlNrt8QbgoxNyUos5wIRocDYIvHALoFI5gX1Kp1SSsKqt0GeqChf0e6t51Dafl9+54ZSUZIqK4jMXM8vnRgZRlRWPe9dkot9k=
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ghjansen_cas
