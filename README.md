@@ -1,7 +1,9 @@
 # CAS - Cellular Automata Simulator
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc72f98cd80f447288731de2c49333e6)](https://www.codacy.com/app/contact.ghjansen/cas?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ghjansen/cas&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.com/ghjansen/cas.svg?branch=master)](https://travis-ci.com/ghjansen/cas)
 [![Latest](https://img.shields.io/badge/dynamic/json.svg?label=latest&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fghjansen%2Fcas%2Freleases%2Flatest&query=%24.tag_name&style=popout&colorB=brightgreen)](https://github.com/ghjansen/cas/releases/latest)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ghjansen_cas&metric=alert_status)](https://sonarcloud.io/dashboard?id=ghjansen_cas)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ghjansen_cas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ghjansen_cas)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ghjansen_cas&metric=ncloc)](https://sonarcloud.io/dashboard?id=ghjansen_cas)
 
 The Cellular Automata Simulator (CAS) is a project of didactic and scientific purposes, based on the publications of Stephen Wolfram and other great authors like Andrew Ilachinski, Harold V. McIntosh, Joel L. Schiff; also inspired by the ideas of Stanislaw Ulam and John von Neumann. See the full reference on page 65 of [the monograph](http://dsc.inf.furb.br/arquivos/tccs/monografias/2016_2_guilherme-humberto-jansen_monografia.pdf).
 
