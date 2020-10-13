@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidTransitionException extends Throwable {
+public class InvalidTransitionException extends Exception {
 
 	/**
 	 * Serialization management

@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidDimensionalSpaceException extends Throwable {
+public class InvalidDimensionalSpaceException extends Exception {
 
 	/**
 	 * Serialization management

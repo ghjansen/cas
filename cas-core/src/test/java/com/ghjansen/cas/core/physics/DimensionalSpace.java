@@ -53,7 +53,7 @@ public class DimensionalSpace extends Space {
 		// module. The implementation here (if any) is used since required to
 		// test other structures.
 		if (super.keepHistory) {
-			super.history = new ArrayList<List>();
+			super.history = new ArrayList<List<?>>();
 		}
 		super.current = new ArrayList<Cell>();
 	}

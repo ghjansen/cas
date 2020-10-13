@@ -35,21 +35,21 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 public abstract class Space {
 
 	protected List<?> initial;
-	protected List<List> history;
+	protected List<List<?>> history;
 	protected List<?> last;
 	protected List<?> current;
 	protected int dimensionalAmount;
 	protected boolean keepHistory;
 	protected boolean rotating;
 
-	public Space(Time time, List<?> initialCondition, boolean keepHistory)
+	protected Space(Time time, List<?> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
-		if (time.getRelative() != null && time.getRelative().size() > 0) {
+		if (time.getRelative() != null && !time.getRelative().isEmpty()) {
 			this.dimensionalAmount = time.getRelative().size();
 		} else {
 			throw new InvalidDimensionalAmountException();
 		}
-		if (initialCondition != null && initialCondition.size() > 0) {
+		if (initialCondition != null && !initialCondition.isEmpty()) {
 			validateDimensions(initialCondition, this.dimensionalAmount);
 			this.initial = initialCondition;
 		} else {
@@ -62,10 +62,10 @@ public abstract class Space {
 
 	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
 		if (dimensionalAmount == 1) {
-			if (space.size() > 0 && !(space.get(0) instanceof Cell)) {
+			if (!space.isEmpty() && !(space.get(0) instanceof Cell)) {
 				throw new InvalidDimensionalSpaceException();
 			}
-		} else if (space.size() > 0 && space.get(0) instanceof List) {
+		} else if (!space.isEmpty() && space.get(0) instanceof List) {
 			validateDimensions((List) space.get(0), dimensionalAmount--);
 		} else {
 			throw new InvalidDimensionalSpaceException();
@@ -103,26 +103,26 @@ public abstract class Space {
 
 	private void rotate() {
 		this.rotating = true;
-		ArrayList currentClone = (ArrayList) ((ArrayList) this.current).clone();
+		ArrayList<?> currentClone = (ArrayList) ((ArrayList) this.current).clone();
 		if (this.keepHistory) {
 			this.history.add(currentClone);
 		}
 		this.last = currentClone;
 	}
 
-	public List<?> getInitial() {
+	public List getInitial() {
 		return this.initial;
 	}
 
-	public List<List> getHistory() {
+	public List<List<?>> getHistory() {
 		return this.history;
 	}
 
-	public List<?> getLast() {
+	public List getLast() {
 		return this.last;
 	}
 
-	public List<?> getCurrent() {
+	public List getCurrent() {
 		return this.current;
 	}
 

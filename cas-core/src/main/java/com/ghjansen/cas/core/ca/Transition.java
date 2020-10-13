@@ -29,7 +29,7 @@ public abstract class Transition {
 	private Combination combination;
 	private State state;
 
-	public Transition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
+	protected Transition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
 		if (combination == null) {
 			throw new InvalidCombinationException();
 		}

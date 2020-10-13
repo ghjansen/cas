@@ -31,7 +31,7 @@ public abstract class Cell {
 	protected State state;
 	protected Transition transition;
 
-	public Cell(Transition transition) throws InvalidTransitionException {
+	protected Cell(Transition transition) throws InvalidTransitionException {
 		if (transition == null) {
 			throw new InvalidTransitionException();
 		}
@@ -39,7 +39,7 @@ public abstract class Cell {
 		this.state = transition.getState();
 	}
 
-	public Cell(State state) throws InvalidStateException {
+	protected Cell(State state) throws InvalidStateException {
 		if (state == null) {
 			throw new InvalidStateException();
 		}

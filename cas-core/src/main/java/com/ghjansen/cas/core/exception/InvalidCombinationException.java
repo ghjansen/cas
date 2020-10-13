@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidCombinationException extends Throwable {
+public class InvalidCombinationException extends Exception {
 
 	/**
 	 * Serialization management

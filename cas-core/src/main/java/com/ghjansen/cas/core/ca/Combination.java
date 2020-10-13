@@ -31,7 +31,7 @@ public abstract class Combination {
 	private State reference;
 	private List<State> neighborhood;
 
-	public Combination(State reference, State... neighbors) throws InvalidStateException {
+	protected Combination(State reference, State... neighbors) throws InvalidStateException {
 		if (reference == null || neighbors == null) {
 			throw new InvalidStateException();
 		}

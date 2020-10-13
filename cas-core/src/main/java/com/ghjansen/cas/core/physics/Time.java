@@ -44,7 +44,7 @@ public abstract class Time implements Cloneable {
 		this.absoluteTime = new AtomicInteger();
 	}
 
-	public Time(final int limit, int... limits)
+	protected Time(final int limit, int... limits)
 			throws InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		initializeLimit(limit);
 		initializeRelativeTime(limits);
@@ -53,18 +53,18 @@ public abstract class Time implements Cloneable {
 
 	private void initializeRelativeTime(int... limits) throws InvalidRelativeTimeLimitException, CloneNotSupportedException {
 		if (limits != null && limits.length > 0) {
-			ArrayList<Time> relativeTime = new ArrayList<Time>();
+			ArrayList<Time> relTimTmp = new ArrayList<Time>();
 			for (int i = 0; i < limits.length; i++) {
 				try {
 					Time t = (Time) this.clone();
 					t.initializeLimit(limits[i]);
 					t.absoluteTime = new AtomicInteger();
-					relativeTime.add(t);
+					relTimTmp.add(t);
 				} catch (InvalidAbsoluteTimeLimitException e) {
 					throw new InvalidRelativeTimeLimitException();
 				}
 			}
-			this.relativeTime = (List<Time>) relativeTime.clone();
+			this.relativeTime = (List<Time>) relTimTmp.clone();
 		} else {
 			throw new InvalidRelativeTimeLimitException();
 		}

@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidStateException extends Throwable {
+public class InvalidStateException extends Exception {
 
 	/**
 	 * Serialization management

@@ -361,7 +361,7 @@ public class UnidimensionalSimulationTest {
 		// Validate history
 		for (int i = 0; i < absoluteLimit - 1; i++) {
 			line = convertLine(buffer.readLine());
-			List<Cell> cells = simulation.getUniverse().getSpace().getHistory().get(i);
+			List<Cell> cells = (List<Cell>) simulation.getUniverse().getSpace().getHistory().get(i);
 			for (int j = 0; j < relativeLimit; j++) {
 				Cell cell = cells.get(j);
 				if (line.get(j) != cell.getState().getValue()) {

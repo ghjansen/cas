@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidCellularAutomataException extends Throwable {
+public class InvalidCellularAutomataException extends Exception {
 
 	/**
 	 * Serialization management

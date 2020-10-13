@@ -26,7 +26,7 @@ public abstract class State {
 	private String name;
 	private int value;
 
-	public State(String name, int value) {
+	protected State(String name, int value) {
 		if (name == null) {
 			throw new IllegalArgumentException();
 		}

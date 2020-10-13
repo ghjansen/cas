@@ -88,7 +88,7 @@ public final class UnidimensionalSpace extends Space {
 	@Override
 	protected void initialize() {
 		if (super.keepHistory) {
-			super.history = new ArrayList<List>();
+			super.history = new ArrayList<List<?>>();
 		}
 		super.current = new ArrayList<Cell>();
 	}

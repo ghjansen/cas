@@ -21,7 +21,7 @@ package com.ghjansen.cas.core.exception;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class InvalidDimensionalAmountException extends Throwable {
+public class InvalidDimensionalAmountException extends Exception {
 
 	/**
 	 * Serialization management
