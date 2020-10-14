@@ -26,27 +26,27 @@ import com.ghjansen.cas.core.exception.InvalidStateException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Combination {
+public abstract class Combination<A extends State> {
 
-	private State reference;
-	private List<State> neighborhood;
+	private A reference;
+	private List<A> neighborhood;
 
-	protected Combination(State reference, State... neighbors) throws InvalidStateException {
+	protected Combination(A reference, A... neighbors) throws InvalidStateException {
 		if (reference == null || neighbors == null) {
 			throw new InvalidStateException();
 		}
 		this.reference = reference;
-		this.neighborhood = new ArrayList<State>();
+		this.neighborhood = new ArrayList<A>();
 		for (int i = 0; i < neighbors.length; i++) {
 			this.neighborhood.add(neighbors[i]);
 		}
 	}
 
-	public State getReferenceState() {
+	public A getReferenceState() {
 		return this.reference;
 	}
 
-	public List<State> getNeighborhood() {
+	public List<A> getNeighborhood() {
 		return this.neighborhood;
 	}
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -53,7 +54,7 @@ public class SpaceTest {
 	public void dimensionalSpaceConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
 			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
 		firstDimension.add(dimensionalCell);
@@ -67,35 +68,40 @@ public class SpaceTest {
 	public void dimensionalSpaceConstructorInvalidInitialCondition()
 			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException,
 			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		new DimensionalSpace(dimensionalTime, null, true);
 	}
 
+	/*
+	With the refactoring of generic types for dimensional consistency, this case becomes invalid
+	 */
+	@Ignore
+	@Deprecated
 	@Test(expected = InvalidDimensionalSpaceException.class)
 	public void dimensionalSpaceConstructorInvalidDimensionalSpace() throws CloneNotSupportedException,
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException,
 			InvalidDimensionalSpaceException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<List> firstDimension = new ArrayList<List>();
 		final ArrayList<Cell> secondDimension = new ArrayList<Cell>();
 		firstDimension.add(secondDimension);
 		secondDimension.add(dimensionalCell);
-		new DimensionalSpace(dimensionalTime, firstDimension, true);
+		//new DimensionalSpace(dimensionalTime, firstDimension, true);
 	}
 
 	@Test(expected = InvalidDimensionalAmountException.class)
 	public void dimensionalSpaceConstructorInvalidDimensionalAmount() throws InvalidAbsoluteTimeLimitException,
 			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
-		final Time dimensionalTime = new LimitedTime(1000);
-		new DimensionalSpace(dimensionalTime, null, false);
+		final LimitedTime dimensionalTime = new LimitedTime(1000);
+		new LimitedTimeSpace(dimensionalTime, null, false);
 	}
 
 	@Test
 	public void dimensionalGetCombination() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
 			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			TimeLimitReachedException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Time dimensionalTime = new DimensionalTime(3, 1);
+		final DimensionalTime dimensionalTime = new DimensionalTime(3, 1);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
 		firstDimension.add(dimensionalCell);
@@ -119,12 +125,12 @@ public class SpaceTest {
 	public void dimensionalSetState() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
 			InvalidRelativeTimeLimitException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			TimeLimitReachedException, InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Time dimensionalTime = new DimensionalTime(3, 2);
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
+		final DimensionalTime dimensionalTime = new DimensionalTime(3, 2);
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalBlackState);
 		final Cell dimensionalCell = new DimensionalCell(dimensionalTransition);
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
@@ -146,11 +152,11 @@ public class SpaceTest {
 	}
 
 	private Cell getNewValidDimensionalCell() throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalBlackState);
 		return new DimensionalCell(dimensionalTransition);
 	}

@@ -24,27 +24,30 @@ import com.ghjansen.cas.core.exception.InvalidTimeException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Universe {
+public abstract class Universe<S extends Space, T extends Time> {
 
-	private Space space;
-	private Time time;
+	private S space;
+	private T time;
 
-	protected Universe(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+	protected Universe(S space, T time) throws InvalidSpaceException, InvalidTimeException {
 		if(space == null) {
 			throw new InvalidSpaceException();
 		}
 		if(time == null) {
 			throw new InvalidTimeException();
 		}
+		/*
+		TODO compare the Time from Universe with the Time from Space, their instances must have the same class
+		 */
 		this.space = space;
 		this.time = time;
 	}
 
-	public Space getSpace() {
+	public S getSpace() {
 		return space;
 	}
 
-	public Time getTime() {
+	public T getTime() {
 		return time;
 	}
 	

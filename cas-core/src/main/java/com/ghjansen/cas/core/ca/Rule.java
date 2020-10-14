@@ -30,42 +30,42 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Rule {
+public abstract class Rule<A extends State, N extends Transition, O extends Combination> {
 
-	private Map<State, List<Transition>> transitions;
+	private Map<A, List<N>> transitions;
 
-	protected Rule(Transition... transitions) throws InvalidTransitionException {
+	protected Rule(N... transitions) throws InvalidTransitionException {
 		if (transitions == null) {
 			throw new InvalidTransitionException();
 		}
 		initialize(transitions);
 	}
 
-	private void initialize(Transition... transitions) {
-		this.transitions = new HashMap<State, List<Transition>>();
-		for (Transition t : transitions) {
-			State s = t.getCombination().getReferenceState();
+	private void initialize(N... transitions) {
+		this.transitions = new HashMap<A, List<N>>();
+		for (N t : transitions) {
+			A s = (A) t.getCombination().getReferenceState();
 			if (this.transitions.containsKey(s)) {
 				this.transitions.get(s).add(t);
 			} else {
-				ArrayList<Transition> l = new ArrayList<Transition>();
+				ArrayList<N> l = new ArrayList<N>();
 				l.add(t);
 				this.transitions.put(s, l);
 			}
 		}
 	}
 
-	public Transition getTransition(Combination combination) throws InvalidStateException, InvalidCombinationException {
-		State s = combination.getReferenceState();
-		List<Transition> l = this.transitions.get(s);
+	public N getTransition(O combination) throws InvalidStateException, InvalidCombinationException {
+		A s = (A) combination.getReferenceState();
+		List<N> l = this.transitions.get(s);
 		if (l == null) {
 			throw new InvalidStateException();
 		}
-		for (Transition t : l) {
+		for (N t : l) {
 			boolean found = true;
 			for (int i = 0; i < combination.getNeighborhood().size(); i++) {
-				State neighborCombination = combination.getNeighborhood().get(i);
-				State neighborTransition = t.getCombination().getNeighborhood().get(i);
+				A neighborCombination = (A) combination.getNeighborhood().get(i);
+				A neighborTransition = (A) t.getCombination().getNeighborhood().get(i);
 				if (!neighborCombination.equals(neighborTransition)) {
 					found = false;
 					break;
@@ -78,7 +78,7 @@ public abstract class Rule {
 		throw new InvalidCombinationException();
 	}
 	
-	public Map<State, List<Transition>> getTransitions(){
+	public Map<A, List<N>> getTransitions(){
 		return this.transitions;
 	}
 

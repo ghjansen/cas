@@ -39,11 +39,11 @@ public class CellTest {
 	@Test
 	public void dimensionalCellConstructor()
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalWhiteState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalWhiteState);
 		final Cell dimensionalCell = new DimensionalCell(dimensionalTransition);
 		Assert.assertTrue(dimensionalCell.getTransition().equals(dimensionalTransition));
@@ -52,13 +52,13 @@ public class CellTest {
 
 	@Test(expected = InvalidTransitionException.class)
 	public void dimensionalCellConstructorInvalidTransition() throws InvalidTransitionException {
-		Transition t = null;
+		DimensionalTransition t = null;
 		new DimensionalCell(t);
 	}
 
 	@Test(expected = InvalidStateException.class)
 	public void dimensionalCellConstructorInvalidState() throws InvalidStateException {
-		State s = null;
+		DimensionalState s = null;
 		new DimensionalCell(s);
 	}
 

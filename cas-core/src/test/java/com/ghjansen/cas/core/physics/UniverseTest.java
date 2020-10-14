@@ -49,11 +49,11 @@ public class UniverseTest {
 	public void dimensionalUniverseConstructor() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException,
 			InvalidRelativeTimeLimitException, InvalidStateException, InvalidTransitionException, InvalidCombinationException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidSpaceException, InvalidTimeException {
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
 		firstDimension.add(dimensionalCell);
-		final Space dimensionalSpace = new DimensionalSpace(dimensionalTime, firstDimension, true);
+		final DimensionalSpace dimensionalSpace = new DimensionalSpace(dimensionalTime, firstDimension, true);
 		Universe dimensionalUniverse = new DimensionalUniverse(dimensionalSpace, dimensionalTime);
 		Assert.assertTrue(dimensionalUniverse.getSpace().equals(dimensionalSpace));
 		Assert.assertTrue(dimensionalUniverse.getTime().equals(dimensionalTime));
@@ -62,26 +62,26 @@ public class UniverseTest {
 	@Test(expected = InvalidSpaceException.class)
 	public void dimensionalUniverseConstructorInvalidSpace() throws CloneNotSupportedException,
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidSpaceException, InvalidTimeException{
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		new DimensionalUniverse(null, dimensionalTime);
 	}
 	
 	@Test(expected = InvalidTimeException.class)
 	public void dimensionalUniverseConstructorInvalidTime() throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidStateException, InvalidTransitionException, InvalidCombinationException, InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidSpaceException, InvalidTimeException{
-		final Time dimensionalTime = new DimensionalTime(1000, 1000);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1000, 1000);
 		final Cell dimensionalCell = getNewValidDimensionalCell();
 		final ArrayList<Cell> firstDimension = new ArrayList<Cell>();
 		firstDimension.add(dimensionalCell);
-		final Space dimensionalSpace = new DimensionalSpace(dimensionalTime, firstDimension, true);
+		final DimensionalSpace dimensionalSpace = new DimensionalSpace(dimensionalTime, firstDimension, true);
 		new DimensionalUniverse(dimensionalSpace, null);
 	}
 
 	private Cell getNewValidDimensionalCell() throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalBlackState);
 		return new DimensionalCell(dimensionalTransition);
 	}

@@ -32,17 +32,17 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Space {
+public abstract class Space<S, T extends Time, N extends Transition> {
 
-	protected List<?> initial;
-	protected List<List<?>> history;
-	protected List<?> last;
-	protected List<?> current;
+	protected List<S> initial;
+	protected List<List<S>> history;
+	protected List<S> last;
+	protected List<S> current;
 	protected int dimensionalAmount;
 	protected boolean keepHistory;
 	protected boolean rotating;
 
-	protected Space(Time time, List<?> initialCondition, boolean keepHistory)
+	protected Space(T time, List<S> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		if (time.getRelative() != null && !time.getRelative().isEmpty()) {
 			this.dimensionalAmount = time.getRelative().size();
@@ -60,7 +60,7 @@ public abstract class Space {
 		initialize();
 	}
 
-	protected void validateDimensions(List<?> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
+	protected void validateDimensions(List<S> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
 		if (dimensionalAmount == 1) {
 			if (!space.isEmpty() && !(space.get(0) instanceof Cell)) {
 				throw new InvalidDimensionalSpaceException();
@@ -72,7 +72,7 @@ public abstract class Space {
 		}
 	}
 
-	public Combination getCombination(Time time) throws InvalidStateException {
+	public Combination getCombination(T time) throws InvalidStateException {
 		if (time.getAbsolute() == 0) {
 			return getCombination(time, this.initial);
 		} else {
@@ -80,7 +80,7 @@ public abstract class Space {
 		}
 	}
 
-	public void setState(Time time, Transition transition) throws InvalidTransitionException {
+	public void setState(T time, N transition) throws InvalidTransitionException {
 		if (this.rotating) {
 			this.rotating = false;
 			createNewIteration(time);
@@ -92,7 +92,7 @@ public abstract class Space {
 
 	}
 
-	private boolean needsNewIteration(Time time) {
+	private boolean needsNewIteration(T time) {
 		for (Time r : time.getRelative()) {
 			if (time.getAbsolute() == time.getLimit() - 1 || r.getAbsolute() != r.getLimit() - 1) {
 				return false;
@@ -103,30 +103,30 @@ public abstract class Space {
 
 	private void rotate() {
 		this.rotating = true;
-		ArrayList<?> currentClone = (ArrayList) ((ArrayList) this.current).clone();
+		ArrayList<S> currentClone = (ArrayList) ((ArrayList) this.current).clone();
 		if (this.keepHistory) {
 			this.history.add(currentClone);
 		}
 		this.last = currentClone;
 	}
 
-	public List getInitial() {
+	public List<S> getInitial() {
 		return this.initial;
 	}
 
-	public List<List<?>> getHistory() {
+	public List<List<S>> getHistory() {
 		return this.history;
 	}
 
-	public List getLast() {
+	public List<S> getLast() {
 		return this.last;
 	}
 
-	public List getCurrent() {
+	public List<S> getCurrent() {
 		return this.current;
 	}
 
-	public int getDimensionalAmout() {
+	public int getDimensionalAmount() {
 		return this.dimensionalAmount;
 	}
 
@@ -136,10 +136,10 @@ public abstract class Space {
 	
 	protected abstract void initialize();
 	
-	protected abstract Combination getCombination(Time time, List<?> space) throws InvalidStateException;
+	protected abstract Combination getCombination(T time, List<S> space) throws InvalidStateException;
 
-	protected abstract void createNewIteration(Time time);
+	protected abstract void createNewIteration(T time);
 
-	protected abstract void createNewCell(Time time, Transition transition) throws InvalidTransitionException;
+	protected abstract void createNewCell(T time, N transition) throws InvalidTransitionException;
 
 }

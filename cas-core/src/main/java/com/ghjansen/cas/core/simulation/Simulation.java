@@ -30,13 +30,13 @@ import com.ghjansen.cas.core.physics.Universe;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Simulation {
+public abstract class Simulation<U extends Universe, C extends CellularAutomaton> {
 
-	private Universe universe;
-	private CellularAutomaton ca;
+	private U universe;
+	private C ca;
 	private boolean active;
 
-	protected Simulation(Universe universe, CellularAutomaton ca)
+	protected Simulation(U universe, C ca)
 			throws InvalidUniverseException, InvalidCellularAutomataException {
 		if (universe == null) {
 			throw new InvalidUniverseException();
@@ -104,11 +104,11 @@ public abstract class Simulation {
 		this.active = active;
 	}
 
-	public Universe getUniverse() {
+	public U getUniverse() {
 		return this.universe;
 	}
 
-	public CellularAutomaton getCellularAutomata() {
+	public C getCellularAutomaton() {
 		return this.ca;
 	}
 

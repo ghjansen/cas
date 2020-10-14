@@ -29,18 +29,18 @@ import com.ghjansen.cas.core.physics.Time;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class CellularAutomaton {
+public abstract class CellularAutomaton<R extends Rule, S extends Space, T extends Time> {
 
-	private Rule rule;
+	private R rule;
 
-	protected CellularAutomaton(Rule rule) throws InvalidRuleException {
+	protected CellularAutomaton(R rule) throws InvalidRuleException {
 		if (rule == null) {
 			throw new InvalidRuleException();
 		}
 		this.rule = rule;
 	}
 
-	public void executeRule(Space space, Time time) throws InvalidStateException, InvalidCombinationException,
+	public void executeRule(S space, T time) throws InvalidStateException, InvalidCombinationException,
 			InvalidTransitionException, TimeLimitReachedException {
 		Combination combination = space.getCombination(time);
 		Transition transition = this.rule.getTransition(combination);
@@ -48,7 +48,7 @@ public abstract class CellularAutomaton {
 		time.increase();
 	}
 
-	public Rule getRule() {
+	public R getRule() {
 		return this.rule;
 	}
 

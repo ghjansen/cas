@@ -73,26 +73,26 @@ public class SimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule dimensionalRule = new DimensionalRule(dimensionalTransition0);
-		final CellularAutomaton dimensionalCellularAutomaton = new DimensionalCellularAutomaton(dimensionalRule);
-		final Time dimensionalTime = new DimensionalTime(1, 3);
+		final DimensionalRule dimensionalRule = new DimensionalRule(dimensionalTransition0);
+		final DimensionalCellularAutomaton dimensionalCellularAutomaton = new DimensionalCellularAutomaton(dimensionalRule);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1, 3);
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space dimensionalSpace = new DimensionalSpace(dimensionalTime, initialCondition, true);
+		final DimensionalSpace dimensionalSpace = new DimensionalSpace(dimensionalTime, initialCondition, true);
 		final Universe dimensionalUniverse = new DimensionalUniverse(dimensionalSpace, dimensionalTime);
 		final Simulation dimensionalSimulation = new DimensionalSimulation(dimensionalUniverse,
 				dimensionalCellularAutomaton);
 		Assert.assertTrue(dimensionalSimulation.getUniverse().equals(dimensionalUniverse));
-		Assert.assertTrue(dimensionalSimulation.getCellularAutomata().equals(dimensionalCellularAutomaton));
+		Assert.assertTrue(dimensionalSimulation.getCellularAutomaton().equals(dimensionalCellularAutomaton));
 		Assert.assertTrue(dimensionalSimulation.isActive() == false);
 	}
 
@@ -102,13 +102,13 @@ public class SimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule dimensionalRule = new DimensionalRule(dimensionalTransition0);
+		final DimensionalRule dimensionalRule = new DimensionalRule(dimensionalTransition0);
 		final CellularAutomaton dimensionalCellularAutomaton = new DimensionalCellularAutomaton(dimensionalRule);
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
@@ -124,14 +124,14 @@ public class SimulationTest {
 			InvalidStateException, InvalidTransitionException, InvalidCombinationException,
 			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final Time dimensionalTime = new DimensionalTime(1, 3);
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalTime dimensionalTime = new DimensionalTime(1, 3);
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space dimensionalSpace = new DimensionalSpace(dimensionalTime, initialCondition, true);
+		final DimensionalSpace dimensionalSpace = new DimensionalSpace(dimensionalTime, initialCondition, true);
 		final Universe dimensionalUniverse = new DimensionalUniverse(dimensionalSpace, dimensionalTime);
 		new DimensionalSimulation(dimensionalUniverse, null);
 	}
@@ -142,24 +142,24 @@ public class SimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
-		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
+		final DimensionalRule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
+		final DimensionalCellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
 		final int absoluteTimeLimit = 3;
 		final int relativeTimeLimit = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
+		final DimensionalTime mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
+		final DimensionalSpace mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
 		final Universe dimensionalUniverse = new DimensionalUniverse(mockedDimensionalSpace, mockedDimensionalTime);
 		final Simulation dimensionalSimulation = new DimensionalSimulation(dimensionalUniverse,
 				mockedDimensionalCellularAutomaton);
@@ -188,24 +188,24 @@ public class SimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
-		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
+		final DimensionalRule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
+		final DimensionalCellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
 		final int absoluteTimeLimit = 3;
 		final int relativeTimeLimit = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
+		final DimensionalTime mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
+		final DimensionalSpace mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
 		final Universe dimensionalUniverse = new DimensionalUniverse(mockedDimensionalSpace, mockedDimensionalTime);
 		final Simulation dimensionalSimulation = new DimensionalSimulation(dimensionalUniverse,
 				mockedDimensionalCellularAutomaton);
@@ -234,24 +234,24 @@ public class SimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
-		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
+		final DimensionalRule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
+		final DimensionalCellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
 		final int absoluteTimeLimit = 3;
 		final int relativeTimeLimit = 3;
-		final Time mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
+		final DimensionalTime mockedDimensionalTime = spy(new DimensionalTime(absoluteTimeLimit, relativeTimeLimit));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
+		final DimensionalSpace mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
 		final Universe dimensionalUniverse = new DimensionalUniverse(mockedDimensionalSpace, mockedDimensionalTime);
 		final Simulation dimensionalSimulation = new DimensionalSimulation(dimensionalUniverse,
 				mockedDimensionalCellularAutomaton);
@@ -274,11 +274,11 @@ public class SimulationTest {
 		Assert.assertTrue(dimensionalSimulation.isActive() == false);
 	}
 
-	private Cell getNewBlackDimensionalCell(State dimensionalBlackState)
+	private DimensionalCell getNewBlackDimensionalCell(DimensionalState dimensionalBlackState)
 			throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalBlackState);
 		return new DimensionalCell(dimensionalTransition);
 	}

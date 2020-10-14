@@ -23,9 +23,9 @@ import com.ghjansen.cas.core.exception.InvalidStateException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalCombination extends Combination {
+public final class DimensionalCombination extends Combination<DimensionalState> {
 
-	public DimensionalCombination(State reference, State... neighbors) throws InvalidStateException {
+	public DimensionalCombination(DimensionalState reference, DimensionalState... neighbors) throws InvalidStateException {
 		super(reference, neighbors);
 	}
 

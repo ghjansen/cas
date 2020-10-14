@@ -24,12 +24,12 @@ import com.ghjansen.cas.core.exception.InvalidStateException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Transition {
+public abstract class Transition<O extends Combination, A extends State> {
 
-	private Combination combination;
-	private State state;
+	private O combination;
+	private A state;
 
-	protected Transition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
+	protected Transition(O combination, A state) throws InvalidCombinationException, InvalidStateException {
 		if (combination == null) {
 			throw new InvalidCombinationException();
 		}
@@ -40,11 +40,11 @@ public abstract class Transition {
 		this.state = state;
 	}
 
-	public Combination getCombination() {
+	public O getCombination() {
 		return this.combination;
 	}
 
-	public State getState() {
+	public A getState() {
 		return this.state;
 	}
 	

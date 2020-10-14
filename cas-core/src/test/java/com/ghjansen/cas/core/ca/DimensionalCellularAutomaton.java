@@ -19,13 +19,15 @@
 package com.ghjansen.cas.core.ca;
 
 import com.ghjansen.cas.core.exception.InvalidRuleException;
+import com.ghjansen.cas.core.physics.DimensionalSpace;
+import com.ghjansen.cas.core.physics.DimensionalTime;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalCellularAutomaton extends CellularAutomaton {
+public class DimensionalCellularAutomaton extends CellularAutomaton<DimensionalRule, DimensionalSpace, DimensionalTime> {
 
-	public DimensionalCellularAutomaton(Rule rule) throws InvalidRuleException {
+	public DimensionalCellularAutomaton(DimensionalRule rule) throws InvalidRuleException {
 		super(rule);
 	}
 

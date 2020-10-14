@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.DimensionalTransition;
 import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
 import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
@@ -30,15 +31,15 @@ import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalSpace extends Space {
+public class DimensionalSpace extends Space<Cell,DimensionalTime,DimensionalTransition> {
 
-	public DimensionalSpace(Time time, List<?> initialCondition, boolean keepHistory)
+	public DimensionalSpace(DimensionalTime time, List<Cell> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		super(time, initialCondition, keepHistory);
 	}
 
 	@Override
-	protected Combination getCombination(Time time, List<?> space) {
+	protected Combination getCombination(DimensionalTime time, List<Cell> space) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module. The implementation here (if any) is used since required to
@@ -53,13 +54,13 @@ public class DimensionalSpace extends Space {
 		// module. The implementation here (if any) is used since required to
 		// test other structures.
 		if (super.keepHistory) {
-			super.history = new ArrayList<List<?>>();
+			super.history = new ArrayList<List<Cell>>();
 		}
 		super.current = new ArrayList<Cell>();
 	}
 
 	@Override
-	protected void createNewIteration(Time time) {
+	protected void createNewIteration(DimensionalTime time) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module. The implementation here (if any) is used since required to
@@ -67,7 +68,7 @@ public class DimensionalSpace extends Space {
 	}
 
 	@Override
-	protected void createNewCell(Time time, Transition transition) {
+	protected void createNewCell(DimensionalTime time, DimensionalTransition transition) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module. The implementation here (if any) is used since required to

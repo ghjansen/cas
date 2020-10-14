@@ -26,31 +26,31 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Cell {
+public abstract class Cell<A extends State,N extends Transition> {
 
-	protected State state;
-	protected Transition transition;
+	protected A state;
+	protected N transition;
 
-	protected Cell(Transition transition) throws InvalidTransitionException {
+	protected Cell(N transition) throws InvalidTransitionException {
 		if (transition == null) {
 			throw new InvalidTransitionException();
 		}
 		this.transition = transition;
-		this.state = transition.getState();
+		this.state = (A) transition.getState();
 	}
 
-	protected Cell(State state) throws InvalidStateException {
+	protected Cell(A state) throws InvalidStateException {
 		if (state == null) {
 			throw new InvalidStateException();
 		}
 		this.state = state;
 	}
 
-	public State getState() {
+	public A getState() {
 		return state;
 	}
 
-	public Transition getTransition() {
+	public N getTransition() {
 		return this.transition;
 	}
 
