@@ -73,7 +73,7 @@ public class SpaceTest {
 	}
 
 	/*
-	With the refactoring of generic types for dimensional consistency, this case becomes invalid
+	With the generic types refactoring for dimensional consistency, this case becomes invalid
 	 */
 	@Ignore
 	@Deprecated

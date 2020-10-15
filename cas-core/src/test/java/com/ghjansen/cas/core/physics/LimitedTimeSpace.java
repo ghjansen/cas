@@ -19,6 +19,7 @@
 package com.ghjansen.cas.core.physics;
 
 import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.DimensionalCombination;
 import com.ghjansen.cas.core.ca.DimensionalTransition;
 import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
 import com.ghjansen.cas.core.exception.InvalidDimensionalSpaceException;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class LimitedTimeSpace extends Space<Cell,LimitedTime, DimensionalTransition> {
+public class LimitedTimeSpace extends Space<Cell,LimitedTime, DimensionalTransition,DimensionalCombination> {
 
     public LimitedTimeSpace(LimitedTime time, List<Cell> initialCondition, boolean keepHistory)
             throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
@@ -38,7 +39,7 @@ public class LimitedTimeSpace extends Space<Cell,LimitedTime, DimensionalTransit
     }
 
     @Override
-    protected Combination getCombination(LimitedTime time, List<Cell> space) {
+    protected DimensionalCombination getCombination(LimitedTime time, List<Cell> space) {
         // Since this method is declared as abstract in core module, its
         // implementation and tests should be created inside each dimensional
         // module. The implementation here (if any) is used since required to

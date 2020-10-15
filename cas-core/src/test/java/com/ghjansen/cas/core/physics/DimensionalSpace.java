@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ghjansen.cas.core.ca.Combination;
+import com.ghjansen.cas.core.ca.DimensionalCombination;
 import com.ghjansen.cas.core.ca.DimensionalTransition;
 import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.exception.InvalidDimensionalAmountException;
@@ -31,7 +32,7 @@ import com.ghjansen.cas.core.exception.InvalidInitialConditionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalSpace extends Space<Cell,DimensionalTime,DimensionalTransition> {
+public class DimensionalSpace extends Space<Cell,DimensionalTime,DimensionalTransition,DimensionalCombination> {
 
 	public DimensionalSpace(DimensionalTime time, List<Cell> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
@@ -39,7 +40,7 @@ public class DimensionalSpace extends Space<Cell,DimensionalTime,DimensionalTran
 	}
 
 	@Override
-	protected Combination getCombination(DimensionalTime time, List<Cell> space) {
+	protected DimensionalCombination getCombination(DimensionalTime time, List<Cell> space) {
 		// Since this method is declared as abstract in core module, its
 		// implementation and tests should be created inside each dimensional
 		// module. The implementation here (if any) is used since required to
