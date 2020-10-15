@@ -32,17 +32,17 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class Space<S, T extends Time, N extends Transition> {
+public abstract class Space<X, T extends Time, N extends Transition, O extends Combination> {
 
-	protected List<S> initial;
-	protected List<List<S>> history;
-	protected List<S> last;
-	protected List<S> current;
+	protected List<X> initial;
+	protected List<List<X>> history;
+	protected List<X> last;
+	protected List<X> current;
 	protected int dimensionalAmount;
 	protected boolean keepHistory;
 	protected boolean rotating;
 
-	protected Space(T time, List<S> initialCondition, boolean keepHistory)
+	protected Space(T time, List<X> initialCondition, boolean keepHistory)
 			throws InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		if (time.getRelative() != null && !time.getRelative().isEmpty()) {
 			this.dimensionalAmount = time.getRelative().size();
@@ -60,7 +60,7 @@ public abstract class Space<S, T extends Time, N extends Transition> {
 		initialize();
 	}
 
-	protected void validateDimensions(List<S> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
+	protected void validateDimensions(List<X> space, int dimensionalAmount) throws InvalidDimensionalSpaceException {
 		if (dimensionalAmount == 1) {
 			if (!space.isEmpty() && !(space.get(0) instanceof Cell)) {
 				throw new InvalidDimensionalSpaceException();
@@ -72,7 +72,7 @@ public abstract class Space<S, T extends Time, N extends Transition> {
 		}
 	}
 
-	public Combination getCombination(T time) throws InvalidStateException {
+	public O getCombination(T time) throws InvalidStateException {
 		if (time.getAbsolute() == 0) {
 			return getCombination(time, this.initial);
 		} else {
@@ -103,26 +103,26 @@ public abstract class Space<S, T extends Time, N extends Transition> {
 
 	private void rotate() {
 		this.rotating = true;
-		ArrayList<S> currentClone = (ArrayList) ((ArrayList) this.current).clone();
+		ArrayList<X> currentClone = (ArrayList) ((ArrayList) this.current).clone();
 		if (this.keepHistory) {
 			this.history.add(currentClone);
 		}
 		this.last = currentClone;
 	}
 
-	public List<S> getInitial() {
+	public List<X> getInitial() {
 		return this.initial;
 	}
 
-	public List<List<S>> getHistory() {
+	public List<List<X>> getHistory() {
 		return this.history;
 	}
 
-	public List<S> getLast() {
+	public List<X> getLast() {
 		return this.last;
 	}
 
-	public List<S> getCurrent() {
+	public List<X> getCurrent() {
 		return this.current;
 	}
 
@@ -136,7 +136,7 @@ public abstract class Space<S, T extends Time, N extends Transition> {
 	
 	protected abstract void initialize();
 	
-	protected abstract Combination getCombination(T time, List<S> space) throws InvalidStateException;
+	protected abstract O getCombination(T time, List<X> space) throws InvalidStateException;
 
 	protected abstract void createNewIteration(T time);
 
