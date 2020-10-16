@@ -36,7 +36,7 @@ public class UnidimensionalTimeTest {
 			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
-		final Time unidimensionalTime = new UnidimensionalTime(absoluteLimit, relativeLimit);
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(absoluteLimit, relativeLimit);
 		Assert.assertTrue(unidimensionalTime.getLimit() == absoluteLimit);
 		Assert.assertTrue(unidimensionalTime.getRelative().size() == 1);
 		Assert.assertTrue(unidimensionalTime.getRelative().get(0).getLimit() == relativeLimit);
@@ -48,7 +48,7 @@ public class UnidimensionalTimeTest {
 		final int absoluteLimit = 1000;
 		final int relativeLimit = 1000;
 		final int timeEvolutionLimit = (absoluteLimit * relativeLimit) - 1;
-		final Time dimensionalTime = new UnidimensionalTime(absoluteLimit, relativeLimit);
+		final UnidimensionalTime dimensionalTime = new UnidimensionalTime(absoluteLimit, relativeLimit);
 		for (int i = 0; i < timeEvolutionLimit; i++) {
 			dimensionalTime.increase();
 		}

@@ -32,23 +32,23 @@ public class UnidimensionalCombinationTest {
 
 	@Test
 	public void unidimensionalCombinationConstructor() throws InvalidStateException {
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 0);
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
 		Assert.assertTrue(unidimensionalCombination0.getReferenceState().equals(unidimensionalBlackState));
 		Assert.assertTrue(unidimensionalCombination0.getNeighborhood().get(0).equals(unidimensionalBlackState));

@@ -27,9 +27,9 @@ import com.ghjansen.cas.core.physics.Universe;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalUniverse extends Universe {
+public final class UnidimensionalUniverse extends Universe<UnidimensionalSpace,UnidimensionalTime> {
 
-	public UnidimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+	public UnidimensionalUniverse(UnidimensionalSpace space, UnidimensionalTime time) throws InvalidSpaceException, InvalidTimeException {
 		super(space, time);
 	}
 

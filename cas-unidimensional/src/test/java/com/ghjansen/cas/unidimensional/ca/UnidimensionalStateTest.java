@@ -34,8 +34,8 @@ public class UnidimensionalStateTest {
 		final int valueBlack = 0;
 		final String nameWhite = "white";
 		final int valueWhite = 1;
-		final State unidimensionalBlackState = new UnidimensionalState(nameBlack, valueBlack);
-		final State unidimensionalWhiteState = new UnidimensionalState(nameWhite, valueWhite);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState(nameBlack, valueBlack);
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState(nameWhite, valueWhite);
 		Assert.assertTrue(unidimensionalBlackState.getName().equals(nameBlack));
 		Assert.assertTrue(unidimensionalBlackState.getValue() == valueBlack);
 		Assert.assertTrue(unidimensionalWhiteState.getName().equals(nameWhite));

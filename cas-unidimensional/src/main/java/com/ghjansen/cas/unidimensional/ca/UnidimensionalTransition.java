@@ -27,9 +27,9 @@ import com.ghjansen.cas.core.exception.InvalidStateException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalTransition extends Transition {
+public final class UnidimensionalTransition extends Transition<UnidimensionalCombination,UnidimensionalState> {
 
-	public UnidimensionalTransition(Combination combination, State state)
+	public UnidimensionalTransition(UnidimensionalCombination combination, UnidimensionalState state)
 			throws InvalidCombinationException, InvalidStateException {
 		super(combination, state);
 	}

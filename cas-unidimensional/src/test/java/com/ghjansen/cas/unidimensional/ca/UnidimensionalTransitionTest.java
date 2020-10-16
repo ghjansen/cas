@@ -34,39 +34,39 @@ public class UnidimensionalTransitionTest {
 
 	@Test
 	public void unidimensionalTransitionConstructor() throws InvalidStateException, InvalidCombinationException {
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 0);
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
+		final UnidimensionalTransition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
+		final UnidimensionalTransition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
+		final UnidimensionalTransition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
+		final UnidimensionalTransition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
+		final UnidimensionalTransition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
+		final UnidimensionalTransition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
+		final UnidimensionalTransition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
+		final UnidimensionalTransition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
 				unidimensionalWhiteState);
 		Assert.assertTrue(unidimensionalTransition0.getCombination().equals(unidimensionalCombination0));
 		Assert.assertTrue(unidimensionalTransition0.getState().equals(unidimensionalWhiteState));

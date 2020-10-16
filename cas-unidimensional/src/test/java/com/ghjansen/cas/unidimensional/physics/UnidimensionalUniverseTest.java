@@ -57,30 +57,30 @@ public class UnidimensionalUniverseTest {
 			InvalidStateException, InvalidCombinationException, InvalidTransitionException,
 			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			InvalidRuleException, InvalidSpaceException, InvalidTimeException {
-		final Time unidimensionalTime = new UnidimensionalTime(3, 3);
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
-		final List<Cell> initialCondition = new ArrayList<Cell>();
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(3, 3);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 0);
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final List<UnidimensionalCell> initialCondition = new ArrayList<UnidimensionalCell>();
 		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
 		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
 		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState, unidimensionalWhiteState));
-		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
-		final Universe unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
+		final UnidimensionalSpace unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		final UnidimensionalUniverse unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
 		Assert.assertTrue(unidimensionalUniverse.getSpace().equals(unidimensionalSpace));
 		Assert.assertTrue(unidimensionalUniverse.getTime().equals(unidimensionalTime));
 	}
 
-	private Cell getNewWhiteUnidimensionalCell(State black, State white)
+	private UnidimensionalCell getNewWhiteUnidimensionalCell(UnidimensionalState black, UnidimensionalState white)
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final Combination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
-		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, white);
+		final UnidimensionalCombination unidimensionalCombination = new UnidimensionalCombination(black, white, white);
+		final UnidimensionalTransition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, white);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
-	private Cell getNewBlackUnidimensionalCell(State black, State white)
+	private UnidimensionalCell getNewBlackUnidimensionalCell(UnidimensionalState black, UnidimensionalState white)
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final Combination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
-		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, black);
+		final UnidimensionalCombination unidimensionalCombination = new UnidimensionalCombination(white, black, black);
+		final UnidimensionalTransition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination, black);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
