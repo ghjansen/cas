@@ -29,7 +29,8 @@ import com.ghjansen.cas.core.physics.Time;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class CellularAutomaton<R extends Rule, S extends Space, T extends Time> {
+public abstract class CellularAutomaton<R extends Rule, S extends Space, T extends Time,O extends Combination,
+		N extends Transition> {
 
 	private R rule;
 
@@ -42,8 +43,8 @@ public abstract class CellularAutomaton<R extends Rule, S extends Space, T exten
 
 	public void executeRule(S space, T time) throws InvalidStateException, InvalidCombinationException,
 			InvalidTransitionException, TimeLimitReachedException {
-		Combination combination = space.getCombination(time);
-		Transition transition = this.rule.getTransition(combination);
+		O combination = (O) space.getCombination(time);
+		N transition = (N) this.rule.getTransition(combination);
 		space.setState(time, transition);
 		time.increase();
 	}

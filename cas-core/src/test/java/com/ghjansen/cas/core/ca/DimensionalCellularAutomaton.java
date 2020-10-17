@@ -25,7 +25,8 @@ import com.ghjansen.cas.core.physics.DimensionalTime;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public class DimensionalCellularAutomaton extends CellularAutomaton<DimensionalRule, DimensionalSpace, DimensionalTime> {
+public class DimensionalCellularAutomaton extends CellularAutomaton<DimensionalRule, DimensionalSpace, DimensionalTime,
+		DimensionalCombination,DimensionalTransition> {
 
 	public DimensionalCellularAutomaton(DimensionalRule rule) throws InvalidRuleException {
 		super(rule);

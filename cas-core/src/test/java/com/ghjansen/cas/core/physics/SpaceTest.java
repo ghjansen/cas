@@ -72,10 +72,7 @@ public class SpaceTest {
 		new DimensionalSpace(dimensionalTime, null, true);
 	}
 
-	/*
-	With the generic types refactoring for dimensional consistency, this case becomes invalid
-	 */
-	@Ignore
+	@Ignore("With the generic types refactoring for dimensional consistency, this case becomes invalid. See https://github.com/ghjansen/cas/issues/1")
 	@Deprecated
 	@Test(expected = InvalidDimensionalSpaceException.class)
 	public void dimensionalSpaceConstructorInvalidDimensionalSpace() throws CloneNotSupportedException,

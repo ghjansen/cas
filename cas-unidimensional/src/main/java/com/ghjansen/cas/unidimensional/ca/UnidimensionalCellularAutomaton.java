@@ -27,7 +27,8 @@ import com.ghjansen.cas.unidimensional.physics.UnidimensionalTime;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalCellularAutomaton extends CellularAutomaton<UnidimensionalGeneralRule,UnidimensionalSpace,UnidimensionalTime> {
+public final class UnidimensionalCellularAutomaton extends CellularAutomaton<UnidimensionalGeneralRule,
+		UnidimensionalSpace,UnidimensionalTime,UnidimensionalCombination,UnidimensionalTransition> {
 
 	public UnidimensionalCellularAutomaton(UnidimensionalGeneralRule rule) throws InvalidRuleException {
 		super(rule);

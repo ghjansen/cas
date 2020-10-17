@@ -36,9 +36,6 @@ public abstract class Universe<S extends Space, T extends Time> {
 		if(time == null) {
 			throw new InvalidTimeException();
 		}
-		/*
-		TODO compare the Time from Universe with the Time from Space, their instances must have the same class
-		 */
 		this.space = space;
 		this.time = time;
 	}
