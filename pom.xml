@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ghjansen</groupId>
 	<artifactId>cas</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<version>4.13.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mockito</groupId>
@@ -52,6 +52,11 @@
 			<url>https://github.com/ghjansen</url>
 		</developer>
 	</developers>
+	<properties>
+		<java.version>1.6</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
 	<modules>
 		<module>cas-core</module>
 		<module>cas-unidimensional</module>

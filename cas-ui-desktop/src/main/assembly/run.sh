@@ -1,6 +1,6 @@
 #!/bin/bash
 # CAS - Cellular Automata Simulator
-# Copyright (C) 2016  Guilherme Humberto Jansen
+# Copyright (C) 2019  Guilherme Humberto Jansen
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -14,7 +14,8 @@
 # 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-if type -p java; then
+javatype=$(type -p java)
+if [ ! -z "$javatype" ]; then
     _java=java
 elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
     _java="$JAVA_HOME/bin/java"
@@ -27,9 +28,11 @@ if [[ "$_java" ]]; then
     if [[ "$version" > "1.5" ]]; then
     	DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
         cd "${DIR}"
+        echo "Starting CAS..."
         java -jar cas-*.jar
+        echo "Stopped CAS."
     else         
-        echo "Java version is not compatible with CAS. Please install Java 1.5 or later, or update your Java version and try again."
-        read -n1 -r -p "Press any key to continue..."
+        echo "Java version is not compatible with CAS. Please install Java 1.6 or later, or update your Java version and try again."
+        read -n1 -r -p "Press any key to exit..."
     fi
 fi

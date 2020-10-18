@@ -50,6 +50,7 @@ import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.IconListRenderer;
 import com.ghjansen.cas.ui.desktop.swing.Main;
+import com.ghjansen.cas.ui.desktop.swing.SimulationExportUtil;
 import com.ghjansen.cas.ui.desktop.swing.SimulationParameterJsonAdapter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalLimitsParameter;
@@ -59,7 +60,6 @@ import com.ghjansen.cas.unidimensional.control.UnidimensionalSequenceParameter;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationBuilder;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationController;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationParameter;
-import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -426,6 +426,14 @@ public class EventManager {
 	
 	
 	public void exportEvent(){
+		if(main.keyMonitor.isCtrlPressed()){
+			main.aeo.setVisible(true);
+		} else {
+			exportSimulation(1, false, 0, null);
+		}		
+	}
+	
+	public void exportSimulation(int cellScale, boolean showGrid, int gridLineThickness, Color gridLineColour){
 		ActivityState previous = activityState;
 		setActivityState(ActivityState.EXPORTING_FILE);
 		JFileChooser fc = new JFileChooser();
@@ -441,30 +449,9 @@ public class EventManager {
 			if(!fileName.endsWith(".png")){
 				fileName = fileName + ".png";
 			}
-			int width = simulationController.getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
-			int height = simulationController.getSimulation().getUniverse().getTime().getLimit() + 1;
-			BufferedImage buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			// initial condition
-			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
-				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-				buffer.setRGB(i, 0, color.getRGB());
-			}
-			// history
-			for(int j = 0; j < simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-				List<UnidimensionalCell> cells = simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
-				for(int i = 0; i < cells.size(); i++){
-					UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
-					Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-					buffer.setRGB(i, j+1, color.getRGB());
-				}
-			}
-			// current/last
-			for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
-				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
-				buffer.setRGB(i, height-1, color.getRGB());
-			}
+
+			BufferedImage buffer = SimulationExportUtil.createBufferedImage(simulationController, cellScale, showGrid, gridLineThickness, gridLineColour);
+
 			File f = new File(fileName);
 			try {
 				ImageIO.write(buffer, "PNG", f);
@@ -594,6 +581,68 @@ public class EventManager {
 		if(this.previousActivityState != null){
 			this.activityState = null;
 			setActivityState(this.previousActivityState);
+		}
+	}
+	
+	public void aEOCellScaleEvent(){
+		if(validator.isAEOCellScaleValid()){
+			if(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) >= 3) {
+				if(!main.aeo.rdbtnAEOYes.isEnabled()){
+					main.aeo.rdbtnAEONo.setEnabled(true);
+					main.aeo.rdbtnAEOYes.setEnabled(true);
+				}
+				if(!main.aeo.rdbtnAEOYes.isSelected()){
+					main.aeo.rdbtnAEONo.setSelected(true);
+				} else {
+					aEOGridYesEvent();
+				}
+			} else {
+				main.aeo.rdbtnAEONo.setEnabled(false);
+				main.aeo.rdbtnAEOYes.setEnabled(false);
+			}
+		}
+		
+	}
+	
+	public void aEOGridYesEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(true);
+		main.aeo.txtAEOCellLinesColour.setEnabled(true);
+		validator.isAEOCellLinesThicknessValid();
+		validator.isAEOCellColourValid();
+	}
+	
+	public void aEOGridNoEvent(){
+		main.aeo.txtAEOGridLinesThickness.setEnabled(false);
+		main.aeo.txtAEOGridLinesThickness.setBackground(SystemColor.text);
+		main.aeo.txtAEOCellLinesColour.setEnabled(false);
+		main.aeo.txtAEOCellLinesColour.setBackground(SystemColor.text);
+		aEOCellScaleEvent();
+	}
+	
+	public void aEOGridThicknessEvent(){
+		validator.isAEOCellLinesThicknessValid();
+	}
+	
+	public void aEOGridColourEvent(){
+		validator.isAEOCellColourValid();
+	}
+	
+	public void aEOExportEvent(){
+		if(!validator.isAEOActivityLocked()){
+			main.aeo.setVisible(false);
+			main.aeo.txtAEOCellScale.requestFocus();
+			int scale = Integer.valueOf(main.aeo.txtAEOCellScale.getText());
+			boolean showGrid = main.aeo.rdbtnAEOYes.isSelected() ? true : false;
+			int thickness = Integer.valueOf(main.aeo.txtAEOGridLinesThickness.getText());
+			String hex = main.aeo.txtAEOCellLinesColour.getText().replaceAll("#", "");
+			int r = Integer.parseInt(hex.substring(0, 2), 16);
+			int g = Integer.parseInt(hex.substring(2, 4), 16);
+			int b = Integer.parseInt(hex.substring(4, 6), 16);
+			int rgb = r;
+			rgb = (rgb << 8) + g;
+			rgb = (rgb << 8) + b;
+			Color gridColour = new Color(rgb);
+			exportSimulation(scale, showGrid, thickness, gridColour);
 		}
 	}
 	
