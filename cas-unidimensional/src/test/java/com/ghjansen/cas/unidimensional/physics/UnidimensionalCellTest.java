@@ -40,13 +40,13 @@ public class UnidimensionalCellTest {
 	@Test
 	public void unidimensionalCellConstructor()
 			throws InvalidStateException, InvalidCombinationException, InvalidTransitionException {
-		final State unidimensionalBlackState = new UnidimensionalState("black", 0);
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 1);
-		final Combination unidimensionalCombination = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 0);
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 1);
+		final UnidimensionalCombination unidimensionalCombination = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
+		final UnidimensionalTransition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
 				unidimensionalWhiteState);
-		final Cell unidimensionalCell = new UnidimensionalCell(unidimensionalTransition);
+		final UnidimensionalCell unidimensionalCell = new UnidimensionalCell(unidimensionalTransition);
 		Assert.assertTrue(unidimensionalCell.getTransition().equals(unidimensionalTransition));
 		Assert.assertTrue(unidimensionalCell.getState().equals(unidimensionalTransition.getState()));
 	}

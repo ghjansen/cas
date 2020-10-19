@@ -240,12 +240,12 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private void drawHistory() {
-		List<List> history = universe.getSpace().getHistory();
+		List<List<UnidimensionalCell>> history = universe.getSpace().getHistory();
 		int iterations = 0;
 		while (history.size() > y && iterations < feedbackRate) {
 			while (history.get(y).size() - 1 > x) {
 				nextColumn();
-				drawCell((UnidimensionalCell) history.get(y).get(x));
+				drawCell(history.get(y).get(x));
 			}
 			nextLine();
 			iterations++;

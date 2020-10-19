@@ -30,9 +30,9 @@ public class CombinationTest {
 
 	@Test
 	public void dimensionalCombinationConstructor() throws InvalidStateException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalWhiteState, dimensionalBlackState);
 		Assert.assertTrue(dimensionalCombination.getReferenceState().equals(dimensionalBlackState));
 		Assert.assertTrue(dimensionalCombination.getNeighborhood().get(0).equals(dimensionalWhiteState));
@@ -41,14 +41,14 @@ public class CombinationTest {
 
 	@Test(expected = InvalidStateException.class)
 	public void dimensionalCombinationConstructorInvalidReference() throws InvalidStateException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
 		new DimensionalCombination(null, dimensionalWhiteState, dimensionalBlackState);
 	}
 
 	@Test(expected = InvalidStateException.class)
 	public void dimensionalCombinationConstructorInvalidNeighborhood() throws InvalidStateException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
 		new DimensionalCombination(dimensionalBlackState, null);
 	}
 

@@ -73,7 +73,7 @@ public class SimulationExportUtil {
 		}
 		// history cells
 		for(int j = 0; j < simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-			List<UnidimensionalCell> cells = simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
+			List<UnidimensionalCell> cells = (List<UnidimensionalCell>) simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
 			int y = (j+1) * cellScale;
 			for(int i = 0; i < cells.size(); i++){
 				UnidimensionalCell c = (UnidimensionalCell) cells.get(i);

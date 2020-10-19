@@ -24,9 +24,9 @@ import com.ghjansen.cas.core.exception.InvalidStateException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalTransition extends Transition {
+public final class DimensionalTransition extends Transition<DimensionalCombination,DimensionalState> {
 
-	public DimensionalTransition(Combination combination, State state) throws InvalidCombinationException, InvalidStateException {
+	public DimensionalTransition(DimensionalCombination combination, DimensionalState state) throws InvalidCombinationException, InvalidStateException {
 		super(combination, state);
 	}
 

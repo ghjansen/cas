@@ -33,22 +33,24 @@ import com.ghjansen.cas.core.physics.Cell;
 import com.ghjansen.cas.core.physics.Space;
 import com.ghjansen.cas.core.physics.Time;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalCombination;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalState;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalSpace extends Space {
+public final class UnidimensionalSpace extends Space<UnidimensionalCell,UnidimensionalTime,UnidimensionalTransition,UnidimensionalCombination> {
 
-	public UnidimensionalSpace(Time time, List<?> initialCondition) throws InvalidDimensionalAmountException,
+	public UnidimensionalSpace(UnidimensionalTime time, List<UnidimensionalCell> initialCondition) throws InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException {
 		super(time, initialCondition, true);
 	}
 
 	@Override
-	protected Combination getCombination(Time time, List<?> space) throws InvalidStateException {
+	protected UnidimensionalCombination getCombination(UnidimensionalTime time, List<UnidimensionalCell> space) throws InvalidStateException {
 		final int referencePosition = time.getRelative().get(0).getAbsolute();
 		final int lastPosition = time.getRelative().get(0).getLimit() - 1;
-		State leftCellState, referenceCellState, rightCellState;
+		UnidimensionalState leftCellState, referenceCellState, rightCellState;
 		leftCellState = getLeftCellState(referencePosition, lastPosition, space);
 		referenceCellState = getReferenceCellState(referencePosition, space);
 		rightCellState = getRightCellState(referencePosition, lastPosition, space);
@@ -56,30 +58,30 @@ public final class UnidimensionalSpace extends Space {
 		return uc;
 	}
 
-	private State getLeftCellState(final int referencePosition, final int lastPosition, final List<?> space) {
-		State leftCellState;
+	private UnidimensionalState getLeftCellState(final int referencePosition, final int lastPosition, final List<UnidimensionalCell> space) {
+		UnidimensionalState leftCellState;
 		if (referencePosition == 0) {
-			Cell leftCell = (Cell) space.get(lastPosition);
+			UnidimensionalCell leftCell = space.get(lastPosition);
 			leftCellState = leftCell.getState();
 		} else {
-			Cell leftCell = (Cell) space.get(referencePosition - 1);
+			UnidimensionalCell leftCell = space.get(referencePosition - 1);
 			leftCellState = leftCell.getState();
 		}
 		return leftCellState;
 	}
 
-	private State getReferenceCellState(final int referencePosition, final List<?> space) {
-		Cell referenceCell = (Cell) space.get(referencePosition);
+	private UnidimensionalState getReferenceCellState(final int referencePosition, final List<UnidimensionalCell> space) {
+		UnidimensionalCell referenceCell = space.get(referencePosition);
 		return referenceCell.getState();
 	}
 
-	private State getRightCellState(final int referencePosition, final int lastPosition, final List<?> space) {
-		State rightCellState;
+	private UnidimensionalState getRightCellState(final int referencePosition, final int lastPosition, final List<UnidimensionalCell> space) {
+		UnidimensionalState rightCellState;
 		if (referencePosition == lastPosition) {
-			Cell rightCell = (Cell) space.get(0);
+			UnidimensionalCell rightCell = space.get(0);
 			rightCellState = rightCell.getState();
 		} else {
-			Cell rightCell = (Cell) space.get(referencePosition + 1);
+			UnidimensionalCell rightCell = space.get(referencePosition + 1);
 			rightCellState = rightCell.getState();
 		}
 		return rightCellState;
@@ -88,23 +90,23 @@ public final class UnidimensionalSpace extends Space {
 	@Override
 	protected void initialize() {
 		if (super.keepHistory) {
-			super.history = new ArrayList<List>();
+			super.history = new ArrayList<List<UnidimensionalCell>>();
 		}
-		super.current = new ArrayList<Cell>();
+		super.current = new ArrayList<UnidimensionalCell>();
 	}
 
 	@Override
-	protected void createNewIteration(Time time) {
-		this.current = new ArrayList<Cell>();
+	protected void createNewIteration(UnidimensionalTime time) {
+		this.current = new ArrayList<UnidimensionalCell>();
 	}
 
 	@Override
-	protected void createNewCell(Time time, Transition transition) throws InvalidTransitionException {
+	protected void createNewCell(UnidimensionalTime time, UnidimensionalTransition transition) throws InvalidTransitionException {
 		// time parameter is not used in this method because dimensional access
 		// is linear for one dimension, but it should be used for more than one
 		// dimension
-		Cell cell = new UnidimensionalCell(transition);
-		((ArrayList<Cell>) current).add(cell);
+		UnidimensionalCell cell = new UnidimensionalCell(transition);
+		current.add(cell);
 	}
 
 }

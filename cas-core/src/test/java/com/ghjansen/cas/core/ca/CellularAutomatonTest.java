@@ -52,21 +52,21 @@ public class CellularAutomatonTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidStateException,
 			InvalidTransitionException, InvalidCombinationException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidRuleException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Combination dimensionalCombination1 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalCombination dimensionalCombination1 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalWhiteState);
-		final Transition dimensionalTransition1 = new DimensionalTransition(dimensionalCombination1,
+		final DimensionalTransition dimensionalTransition1 = new DimensionalTransition(dimensionalCombination1,
 				dimensionalBlackState);
-		final Combination dimensionalCombination2 = new DimensionalCombination(dimensionalWhiteState,
+		final DimensionalCombination dimensionalCombination2 = new DimensionalCombination(dimensionalWhiteState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition2 = new DimensionalTransition(dimensionalCombination2,
+		final DimensionalTransition dimensionalTransition2 = new DimensionalTransition(dimensionalCombination2,
 				dimensionalBlackState);
-		final Rule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
+		final DimensionalRule dimensionalRule = new DimensionalRule(dimensionalTransition0, dimensionalTransition1,
 				dimensionalTransition2);
 		final CellularAutomaton dimensionalCellularAutomaton = new DimensionalCellularAutomaton(dimensionalRule);
 		Assert.assertTrue(dimensionalCellularAutomaton.getRule().equals(dimensionalRule));
@@ -82,22 +82,22 @@ public class CellularAutomatonTest {
 			InvalidTransitionException, InvalidRuleException, CloneNotSupportedException,
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, TimeLimitReachedException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination0 = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
+		final DimensionalTransition dimensionalTransition0 = new DimensionalTransition(dimensionalCombination0,
 				dimensionalWhiteState);
-		final Rule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
-		final CellularAutomaton mockedDimensionalCellularAutomaton = spy(
+		final DimensionalRule mockedDimensionalRule = spy(new DimensionalRule(dimensionalTransition0));
+		final DimensionalCellularAutomaton mockedDimensionalCellularAutomaton = spy(
 				new DimensionalCellularAutomaton(mockedDimensionalRule));
-		final Time mockedDimensionalTime = spy(new DimensionalTime(1, 3));
+		final DimensionalTime mockedDimensionalTime = spy(new DimensionalTime(1, 3));
 		final Cell dimensionalCell = getNewBlackDimensionalCell(dimensionalBlackState);
 		final List<Cell> initialCondition = new ArrayList<Cell>();
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
 		initialCondition.add(dimensionalCell);
-		final Space mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
+		final DimensionalSpace mockedDimensionalSpace = spy(new DimensionalSpace(mockedDimensionalTime, initialCondition, true));
 		when(mockedDimensionalSpace.getCombination(mockedDimensionalTime)).thenReturn(dimensionalCombination0);
 		when(mockedDimensionalRule.getTransition(dimensionalCombination0)).thenReturn(dimensionalTransition0);
 		mockedDimensionalCellularAutomaton.executeRule(mockedDimensionalSpace, mockedDimensionalTime);
@@ -107,11 +107,11 @@ public class CellularAutomatonTest {
 		verify(mockedDimensionalTime, times(1)).increase();
 	}
 
-	private Cell getNewBlackDimensionalCell(State dimensionalBlackState)
+	private Cell getNewBlackDimensionalCell(DimensionalState dimensionalBlackState)
 			throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalBlackState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalBlackState);
 		return new DimensionalCell(dimensionalTransition);
 	}

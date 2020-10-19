@@ -25,9 +25,9 @@ import com.ghjansen.cas.core.exception.InvalidTransitionException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalGeneralRule extends Rule {
+public final class UnidimensionalGeneralRule extends Rule<UnidimensionalState,UnidimensionalTransition,UnidimensionalCombination> {
 
-	public UnidimensionalGeneralRule(Transition... transitions) throws InvalidTransitionException {
+	public UnidimensionalGeneralRule(UnidimensionalTransition... transitions) throws InvalidTransitionException {
 		super(transitions);
 	}
 

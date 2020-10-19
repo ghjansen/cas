@@ -23,17 +23,19 @@ import com.ghjansen.cas.core.ca.Transition;
 import com.ghjansen.cas.core.exception.InvalidStateException;
 import com.ghjansen.cas.core.exception.InvalidTransitionException;
 import com.ghjansen.cas.core.physics.Cell;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalState;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalCell extends Cell {
+public final class UnidimensionalCell extends Cell<UnidimensionalState, UnidimensionalTransition> {
 
-	public UnidimensionalCell(Transition transition) throws InvalidTransitionException {
+	public UnidimensionalCell(UnidimensionalTransition transition) throws InvalidTransitionException {
 		super(transition);
 	}
 
-	public UnidimensionalCell(State state) throws InvalidStateException {
+	public UnidimensionalCell(UnidimensionalState state) throws InvalidStateException {
 		super(state);
 	}
 

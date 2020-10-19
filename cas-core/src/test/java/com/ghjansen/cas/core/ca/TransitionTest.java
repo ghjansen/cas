@@ -31,11 +31,11 @@ public class TransitionTest {
 
 	@Test
 	public void dimensionalTransitionConstructor() throws InvalidStateException, InvalidCombinationException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalWhiteState, dimensionalBlackState);
-		final Transition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
+		final DimensionalTransition dimensionalTransition = new DimensionalTransition(dimensionalCombination,
 				dimensionalWhiteState);
 		Assert.assertTrue(dimensionalTransition.getCombination().equals(dimensionalCombination));
 		Assert.assertTrue(dimensionalTransition.getState().equals(dimensionalWhiteState));
@@ -43,15 +43,15 @@ public class TransitionTest {
 
 	@Test(expected = InvalidCombinationException.class)
 	public void dimensionalTransitionConstructorInvalidCombination() throws InvalidStateException, InvalidCombinationException {
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
 		new DimensionalTransition(null, dimensionalWhiteState);
 	}
 
 	@Test(expected = InvalidStateException.class)
 	public void dimensionalTransitionConstructorInvalidState() throws InvalidStateException, InvalidCombinationException {
-		final State dimensionalBlackState = new DimensionalState("black", 0);
-		final State dimensionalWhiteState = new DimensionalState("white", 1);
-		final Combination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
+		final DimensionalState dimensionalBlackState = new DimensionalState("black", 0);
+		final DimensionalState dimensionalWhiteState = new DimensionalState("white", 1);
+		final DimensionalCombination dimensionalCombination = new DimensionalCombination(dimensionalBlackState,
 				dimensionalWhiteState, dimensionalBlackState);
 		new DimensionalTransition(dimensionalCombination, null);
 	}

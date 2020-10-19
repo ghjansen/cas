@@ -18,18 +18,18 @@
 
 package com.ghjansen.cas.unidimensional.simulation;
 
-import com.ghjansen.cas.core.ca.CellularAutomaton;
 import com.ghjansen.cas.core.exception.InvalidCellularAutomataException;
 import com.ghjansen.cas.core.exception.InvalidUniverseException;
-import com.ghjansen.cas.core.physics.Universe;
 import com.ghjansen.cas.core.simulation.Simulation;
+import com.ghjansen.cas.unidimensional.ca.UnidimensionalCellularAutomaton;
+import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class UnidimensionalSimulation extends Simulation {
+public final class UnidimensionalSimulation extends Simulation<UnidimensionalUniverse,UnidimensionalCellularAutomaton> {
 
-	public UnidimensionalSimulation(Universe universe, CellularAutomaton ca)
+	public UnidimensionalSimulation(UnidimensionalUniverse universe, UnidimensionalCellularAutomaton ca)
 			throws InvalidUniverseException, InvalidCellularAutomataException {
 		super(universe, ca);
 	}

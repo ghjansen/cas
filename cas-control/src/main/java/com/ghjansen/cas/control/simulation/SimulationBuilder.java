@@ -48,7 +48,8 @@ import com.ghjansen.cas.core.simulation.Simulation;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public abstract class SimulationBuilder {
+public abstract class SimulationBuilder<A extends State,O extends Combination,N extends Transition,R extends Rule,
+		E extends Cell,C extends CellularAutomaton,T extends Time,S extends Space,U extends Universe> {
 
 	private final SimulationParameter simulationParameter;
 
@@ -62,15 +63,15 @@ public abstract class SimulationBuilder {
 
 	public Simulation build() throws SimulationBuilderException {
 		try {
-			List<State> states = buildStates();
-			List<Combination> combinations = buildCombinations(states);
-			List<Transition> transitions = buildTransitions(states, combinations);
-			Rule rule = buildRule(transitions);
-			CellularAutomaton cellularAutomaton = buildCellularAutomaton(rule);
-			Time time = buildTime();
-			List<Cell> initialCondition = buildInitialCondition(states);
-			Space space = buildSpace(time, initialCondition);
-			Universe universe = buildUniverse(space, time);
+			List<A> states = buildStates();
+			List<O> combinations = buildCombinations(states);
+			List<N> transitions = buildTransitions(states, combinations);
+			R rule = buildRule(transitions);
+			C cellularAutomaton = buildCellularAutomaton(rule);
+			T time = buildTime();
+			List<E> initialCondition = buildInitialCondition(states);
+			S space = buildSpace(time, initialCondition);
+			U universe = buildUniverse(space, time);
 			return buildSimulation(universe, cellularAutomaton);
 		} catch (InvalidStateException e) {
 			throw new SimulationBuilderException(e);
@@ -103,28 +104,28 @@ public abstract class SimulationBuilder {
 		}
 	}
 
-	public abstract List<State> buildStates();
+	public abstract List<A> buildStates();
 
-	public abstract List<Combination> buildCombinations(List<State> states) throws InvalidStateException;
+	public abstract List<O> buildCombinations(List<A> states) throws InvalidStateException;
 
-	public abstract List<Transition> buildTransitions(List<State> states, List<Combination> combinations)
+	public abstract List<N> buildTransitions(List<A> states, List<O> combinations)
 			throws InvalidCombinationException, InvalidStateException;
 
-	public abstract Rule buildRule(List<Transition> transitions) throws InvalidTransitionException;
+	public abstract R buildRule(List<N> transitions) throws InvalidTransitionException;
 
-	public abstract CellularAutomaton buildCellularAutomaton(Rule rule) throws InvalidRuleException;
+	public abstract C buildCellularAutomaton(R rule) throws InvalidRuleException;
 
-	public abstract Time buildTime()
+	public abstract T buildTime()
 			throws CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException;
 
-	public abstract List<Cell> buildInitialCondition(List<State> states) throws InvalidStateException;
+	public abstract List<E> buildInitialCondition(List<A> states) throws InvalidStateException;
 
-	public abstract Space buildSpace(Time time, List<Cell> initialCondition) throws InvalidDimensionalAmountException,
+	public abstract S buildSpace(T time, List<E> initialCondition) throws InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException;
 
-	public abstract Universe buildUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException;
+	public abstract U buildUniverse(S space, T time) throws InvalidSpaceException, InvalidTimeException;
 
-	public abstract Simulation buildSimulation(Universe universe, CellularAutomaton cellularAutomaton)
+	public abstract Simulation buildSimulation(U universe, C cellularAutomaton)
 			throws InvalidUniverseException, InvalidCellularAutomataException;
 
 }

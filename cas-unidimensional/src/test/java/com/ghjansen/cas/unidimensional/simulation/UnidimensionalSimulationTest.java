@@ -72,59 +72,59 @@ public class UnidimensionalSimulationTest {
 			CloneNotSupportedException, InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException,
 			InvalidDimensionalAmountException, InvalidInitialConditionException, InvalidDimensionalSpaceException,
 			InvalidSpaceException, InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException {
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
-		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
+		final UnidimensionalTransition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
+		final UnidimensionalTransition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
+		final UnidimensionalTransition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
+		final UnidimensionalTransition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
+		final UnidimensionalTransition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
+		final UnidimensionalTransition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
+		final UnidimensionalTransition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
+		final UnidimensionalTransition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
 				unidimensionalWhiteState);
-		final Rule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
+		final UnidimensionalGeneralRule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
 				unidimensionalTransition1, unidimensionalTransition2, unidimensionalTransition3,
 				unidimensionalTransition4, unidimensionalTransition5, unidimensionalTransition6,
 				unidimensionalTransition7);
-		final CellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
+		final UnidimensionalCellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
 				unidimensionalRule);
 		final int absoluteTimeLimit = 3;
 		final int relativeTimeLimit = 3;
-		final Time unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
-		final List<Cell> initialCondition = new ArrayList<Cell>();
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
+		final List<UnidimensionalCell> initialCondition = new ArrayList<UnidimensionalCell>();
 		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState));
-		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
-		final Universe unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
-		final Simulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
+		final UnidimensionalSpace unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		final UnidimensionalUniverse unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
+		final UnidimensionalSimulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
 				unidimensionalCellularAutomaton);
 		Assert.assertTrue(unidimensionalSimulation.getUniverse().equals(unidimensionalUniverse));
-		Assert.assertTrue(unidimensionalSimulation.getCellularAutomata().equals(unidimensionalCellularAutomaton));
+		Assert.assertTrue(unidimensionalSimulation.getCellularAutomaton().equals(unidimensionalCellularAutomaton));
 	}
 
 	@Test
@@ -133,50 +133,50 @@ public class UnidimensionalSimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidSpaceException,
 			InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException, IOException {
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
-		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
+		final UnidimensionalTransition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
+		final UnidimensionalTransition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
+		final UnidimensionalTransition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
+		final UnidimensionalTransition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
+		final UnidimensionalTransition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
+		final UnidimensionalTransition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
+		final UnidimensionalTransition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
+		final UnidimensionalTransition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
 				unidimensionalWhiteState);
-		final Rule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
+		final UnidimensionalGeneralRule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
 				unidimensionalTransition1, unidimensionalTransition2, unidimensionalTransition3,
 				unidimensionalTransition4, unidimensionalTransition5, unidimensionalTransition6,
 				unidimensionalTransition7);
-		final CellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
+		final UnidimensionalCellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
 				unidimensionalRule);
 		final int absoluteTimeLimit = 1000;
 		final int relativeTimeLimit = 1000;
-		final Time unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
-		final List<Cell> initialCondition = new ArrayList<Cell>();
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
+		final List<UnidimensionalCell> initialCondition = new ArrayList<UnidimensionalCell>();
 		for (int i = 0; i < (relativeTimeLimit / 2) - 1; i++) {
 			initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		}
@@ -184,9 +184,9 @@ public class UnidimensionalSimulationTest {
 		for (int i = 0; i < (relativeTimeLimit / 2); i++) {
 			initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		}
-		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
-		final Universe unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
-		final Simulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
+		final UnidimensionalSpace unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		final UnidimensionalUniverse unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
+		final UnidimensionalSimulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
 				unidimensionalCellularAutomaton);
 		try {
 			unidimensionalSimulation.simulateComplete();
@@ -207,50 +207,50 @@ public class UnidimensionalSimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidSpaceException,
 			InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException, IOException {
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
-		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
+		final UnidimensionalTransition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
+		final UnidimensionalTransition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
+		final UnidimensionalTransition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
+		final UnidimensionalTransition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
+		final UnidimensionalTransition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
+		final UnidimensionalTransition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
+		final UnidimensionalTransition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
+		final UnidimensionalTransition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
 				unidimensionalWhiteState);
-		final Rule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
+		final UnidimensionalGeneralRule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
 				unidimensionalTransition1, unidimensionalTransition2, unidimensionalTransition3,
 				unidimensionalTransition4, unidimensionalTransition5, unidimensionalTransition6,
 				unidimensionalTransition7);
-		final CellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
+		final UnidimensionalCellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
 				unidimensionalRule);
 		final int absoluteTimeLimit = 1000;
 		final int relativeTimeLimit = 1000;
-		final Time unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
-		final List<Cell> initialCondition = new ArrayList<Cell>();
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
+		final List<UnidimensionalCell> initialCondition = new ArrayList<UnidimensionalCell>();
 		for (int i = 0; i < (relativeTimeLimit / 2) - 1; i++) {
 			initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		}
@@ -258,9 +258,9 @@ public class UnidimensionalSimulationTest {
 		for (int i = 0; i < (relativeTimeLimit / 2); i++) {
 			initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		}
-		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
-		final Universe unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
-		final Simulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
+		final UnidimensionalSpace unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		final UnidimensionalUniverse unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
+		final UnidimensionalSimulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
 				unidimensionalCellularAutomaton);
 		try {
 			unidimensionalSimulation.simulateComplete();
@@ -281,57 +281,57 @@ public class UnidimensionalSimulationTest {
 			InvalidAbsoluteTimeLimitException, InvalidRelativeTimeLimitException, InvalidDimensionalAmountException,
 			InvalidInitialConditionException, InvalidDimensionalSpaceException, InvalidSpaceException,
 			InvalidTimeException, InvalidUniverseException, InvalidCellularAutomataException, IOException {
-		final State unidimensionalWhiteState = new UnidimensionalState("white", 0);
-		final State unidimensionalBlackState = new UnidimensionalState("black", 1);
-		final Combination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalState unidimensionalWhiteState = new UnidimensionalState("white", 0);
+		final UnidimensionalState unidimensionalBlackState = new UnidimensionalState("black", 1);
+		final UnidimensionalCombination unidimensionalCombination0 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
+		final UnidimensionalTransition unidimensionalTransition0 = new UnidimensionalTransition(unidimensionalCombination0,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination1 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
+		final UnidimensionalTransition unidimensionalTransition1 = new UnidimensionalTransition(unidimensionalCombination1,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination2 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
+		final UnidimensionalTransition unidimensionalTransition2 = new UnidimensionalTransition(unidimensionalCombination2,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination3 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalBlackState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
+		final UnidimensionalTransition unidimensionalTransition3 = new UnidimensionalTransition(unidimensionalCombination3,
 				unidimensionalWhiteState);
-		final Combination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination4 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
+		final UnidimensionalTransition unidimensionalTransition4 = new UnidimensionalTransition(unidimensionalCombination4,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination5 = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
+		final UnidimensionalTransition unidimensionalTransition5 = new UnidimensionalTransition(unidimensionalCombination5,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination6 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalBlackState);
-		final Transition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
+		final UnidimensionalTransition unidimensionalTransition6 = new UnidimensionalTransition(unidimensionalCombination6,
 				unidimensionalBlackState);
-		final Combination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination7 = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
+		final UnidimensionalTransition unidimensionalTransition7 = new UnidimensionalTransition(unidimensionalCombination7,
 				unidimensionalWhiteState);
-		final Rule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
+		final UnidimensionalGeneralRule unidimensionalRule = new UnidimensionalGeneralRule(unidimensionalTransition0,
 				unidimensionalTransition1, unidimensionalTransition2, unidimensionalTransition3,
 				unidimensionalTransition4, unidimensionalTransition5, unidimensionalTransition6,
 				unidimensionalTransition7);
-		final CellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
+		final UnidimensionalCellularAutomaton unidimensionalCellularAutomaton = new UnidimensionalCellularAutomaton(
 				unidimensionalRule);
 		final int absoluteTimeLimit = 1000;
 		final int relativeTimeLimit = 1000;
-		final Time unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
-		final List<Cell> initialCondition = new ArrayList<Cell>();
+		final UnidimensionalTime unidimensionalTime = new UnidimensionalTime(absoluteTimeLimit, relativeTimeLimit);
+		final List<UnidimensionalCell> initialCondition = new ArrayList<UnidimensionalCell>();
 		for (int i = 0; i < relativeTimeLimit - 1; i++) {
 			initialCondition.add(getNewWhiteUnidimensionalCell(unidimensionalWhiteState));
 		}
 		initialCondition.add(getNewBlackUnidimensionalCell(unidimensionalBlackState));
-		final Space unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
-		final Universe unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
-		final Simulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
+		final UnidimensionalSpace unidimensionalSpace = new UnidimensionalSpace(unidimensionalTime, initialCondition);
+		final UnidimensionalUniverse unidimensionalUniverse = new UnidimensionalUniverse(unidimensionalSpace, unidimensionalTime);
+		final UnidimensionalSimulation unidimensionalSimulation = new UnidimensionalSimulation(unidimensionalUniverse,
 				unidimensionalCellularAutomaton);
 		try {
 			unidimensionalSimulation.simulateComplete();
@@ -346,14 +346,14 @@ public class UnidimensionalSimulationTest {
 		// Mathematica input: Export["mathematicaRule110.txt", CellularAutomaton[110, PadLeft[{1}, 1000], 1000]]
 	}
 
-	private boolean validateWithMathematicaOutput(String filePath, Simulation simulation) throws IOException {
+	private boolean validateWithMathematicaOutput(String filePath, UnidimensionalSimulation simulation) throws IOException {
 		final int absoluteLimit = simulation.getUniverse().getTime().getLimit();
 		final int relativeLimit = simulation.getUniverse().getTime().getRelative().get(0).getLimit();
 		final BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 		List<Integer> line = convertLine(buffer.readLine());
 		// Validate initial condition
 		for (int i = 0; i < relativeLimit; i++) {
-			Cell cell = (Cell) simulation.getUniverse().getSpace().getInitial().get(i);
+			Cell cell = simulation.getUniverse().getSpace().getInitial().get(i);
 			if (line.get(i) != cell.getState().getValue()) {
 				return false;
 			}
@@ -361,7 +361,7 @@ public class UnidimensionalSimulationTest {
 		// Validate history
 		for (int i = 0; i < absoluteLimit - 1; i++) {
 			line = convertLine(buffer.readLine());
-			List<Cell> cells = simulation.getUniverse().getSpace().getHistory().get(i);
+			List<UnidimensionalCell> cells = (List<UnidimensionalCell>) simulation.getUniverse().getSpace().getHistory().get(i);
 			for (int j = 0; j < relativeLimit; j++) {
 				Cell cell = cells.get(j);
 				if (line.get(j) != cell.getState().getValue()) {
@@ -390,20 +390,20 @@ public class UnidimensionalSimulationTest {
 		return list;
 	}
 
-	private Cell getNewBlackUnidimensionalCell(State unidimensionalBlackState)
+	private UnidimensionalCell getNewBlackUnidimensionalCell(UnidimensionalState unidimensionalBlackState)
 			throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Combination unidimensionalCombination = new UnidimensionalCombination(unidimensionalBlackState,
+		final UnidimensionalCombination unidimensionalCombination = new UnidimensionalCombination(unidimensionalBlackState,
 				unidimensionalBlackState, unidimensionalBlackState);
-		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
+		final UnidimensionalTransition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
 				unidimensionalBlackState);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}
 
-	private Cell getNewWhiteUnidimensionalCell(State unidimensionalWhiteState)
+	private UnidimensionalCell getNewWhiteUnidimensionalCell(UnidimensionalState unidimensionalWhiteState)
 			throws InvalidStateException, InvalidTransitionException, InvalidCombinationException {
-		final Combination unidimensionalCombination = new UnidimensionalCombination(unidimensionalWhiteState,
+		final UnidimensionalCombination unidimensionalCombination = new UnidimensionalCombination(unidimensionalWhiteState,
 				unidimensionalWhiteState, unidimensionalWhiteState);
-		final Transition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
+		final UnidimensionalTransition unidimensionalTransition = new UnidimensionalTransition(unidimensionalCombination,
 				unidimensionalWhiteState);
 		return new UnidimensionalCell(unidimensionalTransition);
 	}

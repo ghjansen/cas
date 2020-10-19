@@ -138,7 +138,7 @@ public class MainTest {
         }
         // history
         for(int j = 0; j < main.em.simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-            List<UnidimensionalCell> cells = main.em.simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
+            List<UnidimensionalCell> cells = (List<UnidimensionalCell>) main.em.simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
             for(int i = 0; i < cells.size(); i++){
                 UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
                 Color color = c.getState().getValue() == 0 ? Color.white : Color.black;

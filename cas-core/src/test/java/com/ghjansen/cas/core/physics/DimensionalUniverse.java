@@ -24,9 +24,9 @@ import com.ghjansen.cas.core.exception.InvalidTimeException;
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
-public final class DimensionalUniverse extends Universe {
+public final class DimensionalUniverse extends Universe<DimensionalSpace,DimensionalTime> {
 
-	public DimensionalUniverse(Space space, Time time) throws InvalidSpaceException, InvalidTimeException {
+	public DimensionalUniverse(DimensionalSpace space, DimensionalTime time) throws InvalidSpaceException, InvalidTimeException {
 		super(space, time);
 	}
 
