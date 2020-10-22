@@ -1,6 +1,6 @@
 /*
  * CAS - Cellular Automata Simulator
- * Copyright (C) 2016  Guilherme Humberto Jansen
+ * Copyright (C) 2020  Guilherme Humberto Jansen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published
@@ -16,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ghjansen.cas.control.exception;
+package com.ghjansen.cas.control.simulation;
 
-/**
- * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
- */
-public class SimulationAlreadyActiveException extends Exception {
+import com.ghjansen.cas.control.exception.SimulationBuilderException;
+import com.ghjansen.cas.control.task.TaskNotification;
+import com.ghjansen.cas.core.simulation.Simulation;
 
-    /**
-     * Serialization management
-     */
-    private static final long serialVersionUID = 3256836960787368903L;
+public class DimensionalSimulationController extends SimulationController<Simulation,SimulationBuilder> {
 
+
+    public DimensionalSimulationController(SimulationBuilder simulationBuilder, TaskNotification notification) throws SimulationBuilderException {
+        super(simulationBuilder, notification);
+    }
 }
