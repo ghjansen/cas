@@ -32,6 +32,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,7 +130,7 @@ public class Main {
 		});
 	}
 
-	public Main() {
+	public Main() throws IOException {
 		Translator.getInstance().setLanguage(Language.ENGLISH_UNITED_KINGDOM);
 		initialize();
 		em.setActivityState(ActivityState.CONFIGURING_RULE);

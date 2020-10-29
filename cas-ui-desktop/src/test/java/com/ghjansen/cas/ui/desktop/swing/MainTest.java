@@ -40,7 +40,7 @@ import java.util.List;
 public class MainTest {
 
     @Test
-    public void elementaryRandomInitialCondition() throws InterruptedException {
+    public void elementaryRandomInitialCondition() throws InterruptedException, IOException {
         int msDelay = 3000;
         String txtCells = "540";
         String txtIterations = "539";
@@ -65,7 +65,7 @@ public class MainTest {
     }
 
     @Test
-    public void elementaryUniqueBlackCellInitialCondition() throws InterruptedException {
+    public void elementaryUniqueBlackCellInitialCondition() throws InterruptedException, IOException {
         int msDelay = 3000;
         String txtCells = "540";
         String txtIterations = "539";

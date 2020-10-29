@@ -36,5 +36,6 @@
   "errSimulation": "Ocorreu um erro durante a simulação: ",
   "errRuleNumber": "O numero da regra deve ser um número inteiro maior ou igual a 0 e menor ou igual a 255",
   "errCells": "A quantidade de células deve ser um número inteiro maior ou igual a 1",
-  "errIterations": "A quantidade de iterações deve ser um número inteiro maior ou igual a 1"
+  "errIterations": "A quantidade de iterações deve ser um número inteiro maior ou igual a 1",
+  "errTranslation": "Erro de tradução: "
 }

@@ -36,5 +36,6 @@
   "errSimulation": "An error occurred while simulating: ",
   "errRuleNumber": "Rule number must be an integer greater than or equal to 0 and less than or equal to 255",
   "errCells": "The amount of cells must be an integer greater than or equals to 1",
-  "errIterations": "The amount of iterations must be an integer greater than or equals to 1"
+  "errIterations": "The amount of iterations must be an integer greater than or equals to 1",
+  "errTranslation": "Translation error: "
 }

@@ -48,7 +48,7 @@ public class Translator {
 		return instance;
 	}
 
-	public void setLanguage(Language language) {
+	public void setLanguage(Language language) throws IOException {
 		this.language = language;
 		String filename = language.getLangtag() + ".json";
 		StringBuilder content = new StringBuilder();
@@ -64,9 +64,9 @@ public class Translator {
 			Type type = new TypeToken<Map<String, String>>() {
 			}.getType();
 			Map<String, String> map = gson.fromJson(content.toString(), type);
-			dictionary.setDictionary(map);
+			dictionary.setMapping(map);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -75,7 +75,7 @@ public class Translator {
 	}
 
 	public String get(String key) {
-		return dictionary.getDictionary().get(key);
+		return dictionary.getMapping().get(key);
 	}
 
 }

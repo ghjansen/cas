@@ -465,12 +465,16 @@ public class EventManager {
 	}
 	
 	public void languageEvent(){
-		if(main.langCombo.getSelectedIndex() == 0){
-			Translator.getInstance().setLanguage(Language.PORTUGUESE_BRAZIL);
-		} else if (main.langCombo.getSelectedIndex() == 1){
-			Translator.getInstance().setLanguage(Language.ENGLISH_UNITED_KINGDOM);
+		try{
+			if(main.langCombo.getSelectedIndex() == 0){
+				Translator.getInstance().setLanguage(Language.PORTUGUESE_BRAZIL);
+			} else if (main.langCombo.getSelectedIndex() == 1){
+				Translator.getInstance().setLanguage(Language.ENGLISH_UNITED_KINGDOM);
+			}
+			updateComponentsLanguage();
+		} catch (IOException e) {
+			validator.setErrorStatus("errTranslation", e.getMessage());
 		}
-		updateComponentsLanguage();
 	}
 	
 	private void updateComponentsLanguage(){
