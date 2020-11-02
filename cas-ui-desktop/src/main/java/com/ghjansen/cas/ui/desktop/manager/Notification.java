@@ -1,24 +1,23 @@
 /*
  * CAS - Cellular Automata Simulator
  * Copyright (C) 2016  Guilherme Humberto Jansen
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.ghjansen.cas.ui.desktop.manager;
 
-import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.ActivityState;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalTaskNotification;
 
@@ -26,20 +25,20 @@ import com.ghjansen.cas.unidimensional.control.UnidimensionalTaskNotification;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class Notification implements UnidimensionalTaskNotification {
-	
-	private EventManager em;
-	
-	public Notification(EventManager em){
-		this.em = em;
-	}
 
-	public void timeLimitReached(Throwable e) {
-		em.validator.setNormalStatus("msgSimulationSuccessWaiting");
-		em.setActivityState(ActivityState.ANALYSING);
-	}
+    private EventManager em;
 
-	public void generic(Throwable e) {
-		em.validator.setErrorStatus("errSimulation", e.toString());
-	}
+    public Notification(EventManager em) {
+        this.em = em;
+    }
+
+    public void timeLimitReached(Throwable e) {
+        em.getValidator().setNormalStatus("msgSimulationSuccessWaiting");
+        em.setActivityState(ActivityState.ANALYSING);
+    }
+
+    public void generic(Throwable e) {
+        em.getValidator().setErrorStatus("errSimulation", e.toString());
+    }
 
 }

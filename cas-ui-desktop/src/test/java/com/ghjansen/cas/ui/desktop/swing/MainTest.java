@@ -45,7 +45,7 @@ public class MainTest {
         String txtCells = "540";
         String txtIterations = "539";
         Main main = new Main();
-        main.em.omitDiscardConfirmation = true;
+        main.em.setOmitDiscardConfirmation(true);
         for(int i = 0; i < 256; i++){
             main.txtCells.setText(txtCells);
             main.txtIterations.setText(txtIterations);
@@ -70,7 +70,7 @@ public class MainTest {
         String txtCells = "540";
         String txtIterations = "539";
         Main main = new Main();
-        main.em.omitDiscardConfirmation = true;
+        main.em.setOmitDiscardConfirmation(true);
         for(int i = 0; i < 256; i++){
             main.txtCells.setText(txtCells);
             main.txtIterations.setText(txtIterations);
@@ -89,15 +89,12 @@ public class MainTest {
     }
 
     private void saveAction(Main main, String path){
-        ActivityState previous = main.em.activityState;
+        ActivityState previous = main.em.getActivityState();
         main.em.setActivityState(ActivityState.SAVING_FILE);
-        if(main.em.simulationParameter == null){
+        if(main.em.getSimulationParameter() == null){
             try {
                 main.em.createSimulationParameter();
             } catch (InvalidSimulationParameterException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (SimulationBuilderException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -106,13 +103,13 @@ public class MainTest {
         if(!fileName.endsWith(".cas")){
             fileName = fileName + ".cas";
         }
-        String content = main.em.gson.toJson(main.em.simulationParameter);
+        String content = main.em.getGson().toJson(main.em.getSimulationParameter());
         FileWriter fw;
         try {
             fw = new FileWriter(fileName);
             fw.write(content);
             fw.close();
-            main.em.validator.setNormalStatus("msgSaveSuccess");
+            main.em.getValidator().setNormalStatus("msgSaveSuccess");
             main.em.setActivityState(previous);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -121,24 +118,24 @@ public class MainTest {
     }
 
     private void exportAction(Main main, String path){
-        ActivityState previous = main.em.activityState;
+        ActivityState previous = main.em.getActivityState();
         main.em.setActivityState(ActivityState.EXPORTING_FILE);
         String fileName = String.valueOf(path);
         if(!fileName.endsWith(".png")){
             fileName = fileName + ".png";
         }
-        int width = main.em.simulationController.getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
-        int height = main.em.simulationController.getSimulation().getUniverse().getTime().getLimit() + 1;
+        int width = main.em.getSimulationController().getSimulation().getUniverse().getTime().getRelative().get(0).getLimit();
+        int height = main.em.getSimulationController().getSimulation().getUniverse().getTime().getLimit() + 1;
         BufferedImage buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         // initial condition
-        for(int i = 0; i < main.em.simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
-            UnidimensionalCell c = (UnidimensionalCell) main.em.simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
+        for(int i = 0; i < main.em.getSimulationController().getSimulation().getUniverse().getSpace().getInitial().size(); i++){
+            UnidimensionalCell c = (UnidimensionalCell) main.em.getSimulationController().getSimulation().getUniverse().getSpace().getInitial().get(i);
             Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
             buffer.setRGB(i, 0, color.getRGB());
         }
         // history
-        for(int j = 0; j < main.em.simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-            List<UnidimensionalCell> cells = (List<UnidimensionalCell>) main.em.simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
+        for(int j = 0; j < main.em.getSimulationController().getSimulation().getUniverse().getSpace().getHistory().size(); j++){
+            List<UnidimensionalCell> cells = (List<UnidimensionalCell>) main.em.getSimulationController().getSimulation().getUniverse().getSpace().getHistory().get(j);
             for(int i = 0; i < cells.size(); i++){
                 UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
                 Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
@@ -146,15 +143,15 @@ public class MainTest {
             }
         }
         // current/last
-        for(int i = 0; i < main.em.simulationController.getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
-            UnidimensionalCell c = (UnidimensionalCell) main.em.simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
+        for(int i = 0; i < main.em.getSimulationController().getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
+            UnidimensionalCell c = (UnidimensionalCell) main.em.getSimulationController().getSimulation().getUniverse().getSpace().getCurrent().get(i);
             Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
             buffer.setRGB(i, height-1, color.getRGB());
         }
         File f = new File(fileName);
         try {
             ImageIO.write(buffer, "PNG", f);
-            main.em.validator.setNormalStatus("msgExportSuccess");
+            main.em.getValidator().setNormalStatus("msgExportSuccess");
             main.em.setActivityState(previous);
         } catch (IOException e) {
             // TODO Auto-generated catch block

@@ -37,5 +37,7 @@
   "errRuleNumber": "O numero da regra deve ser um número inteiro maior ou igual a 0 e menor ou igual a 255",
   "errCells": "A quantidade de células deve ser um número inteiro maior ou igual a 1",
   "errIterations": "A quantidade de iterações deve ser um número inteiro maior ou igual a 1",
-  "errTranslation": "Erro de tradução: "
+  "errTranslation": "Erro de tradução: ",
+  "errSave": "Erro ao salvar arquivo: ",
+  "errExport": "Erro ao exportar arquivo: "
 }

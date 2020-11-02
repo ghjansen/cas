@@ -374,7 +374,7 @@ public class Main {
 		rdbtnRandom.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					em.uniqueCellEvent();
+					em.randomEvent();
 				}
 			}
 		});
