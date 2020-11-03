@@ -22,11 +22,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import javax.imageio.ImageIO;
@@ -327,57 +323,70 @@ public class EventManager {
         }
     }
 
+	public void openEvent() {
+		ButtonModel selected = main.grpInitialCondition.getSelection();
+		setActivityState(ActivityState.OPENING_FILE);
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setSelectedFile(fc.getCurrentDirectory());
+		fc.setDialogTitle(Translator.getInstance().get("msgOpenDialogTitle"));
+		fc.setMultiSelectionEnabled(false);
+		fc.setFileFilter(new FileNameExtensionFilter(Translator.getInstance().get("casFileExtension"), "cas"));
+		int result = fc.showOpenDialog(main.frame);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			String content = readFile(fc.getSelectedFile());
+			if (content.length() > 0) {
+				this.simulationParameter = gson.fromJson(content, UnidimensionalSimulationParameter.class);
+				updateVisualParameters();
+				validator.updateStatus();
+				if (!validator.isActivityLocked()) {
+					simulationController = null;
+					main.transitionsView.hideHighlight();
+					main.progressBar.setValue(0);
+					executeComplete();
+				}
+			} else {
+				validator.setErrorStatus("errOpenFileInvalid", "");
+			}
+		} else {
+			revertActivityState();
+			main.grpInitialCondition.setSelected(selected, true);
+		}
+	}
 
-    public void openEvent() {
-        ButtonModel selected = main.grpInitialCondition.getSelection();
-        setActivityState(ActivityState.OPENING_FILE);
-        JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fc.setSelectedFile(fc.getCurrentDirectory());
-        fc.setDialogTitle(Translator.getInstance().get("msgOpenDialogTitle"));
-        fc.setMultiSelectionEnabled(false);
-        fc.setFileFilter(new FileNameExtensionFilter(Translator.getInstance().get("casFileExtension"), "cas"));
-        int result = fc.showOpenDialog(main.frame);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            BufferedReader br = null;
-            StringBuilder content = new StringBuilder();
-            String line = null;
-            try {
-                br = new BufferedReader(new FileReader(fc.getSelectedFile()));
-                while ((line = br.readLine()) != null) {
-                    content.append(line);
-                }
-                if (content.length() > 0) {
-                    this.simulationParameter = gson.fromJson(content.toString(), UnidimensionalSimulationParameter.class);
-                    updateVisualParameters();
-                    validator.updateStatus();
-                    if (!validator.isActivityLocked()) {
-                        simulationController = null;
-                        main.transitionsView.hideHighlight();
-                        main.progressBar.setValue(0);
-                        executeComplete();
-                    }
-                } else {
-                    validator.setErrorStatus("errOpenFileInvalid", "");
-                }
-            } catch (Exception e) {
-                validator.setErrorStatus("errOpenFileGeneric", e.toString());
-            } finally {
-                if (br != null) {
-                    try {
-                        br.close();
-                    } catch (IOException e) {
-                        validator.setErrorStatus("errOpenFileGeneric", e.toString());
-                    }
-                }
+	private String readFile(File file) {
+		BufferedReader br = null;
+		String content = "";
+		try {
+			br = new BufferedReader(new FileReader(file));
+			content = readLines(br);
+		} catch (Exception e) {
+			validator.setErrorStatus("errOpenFileGeneric", e.toString());
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					validator.setErrorStatus("errOpenFileGeneric", e.toString());
+				}
+			}
+			return content;
+		}
+	}
 
-            }
-        } else {
-            revertActivityState();
-            main.grpInitialCondition.setSelected(selected, true);
-        }
-    }
-
+	private String readLines(BufferedReader br) {
+		StringBuilder content = new StringBuilder();
+		String line = null;
+		try {
+			while ((line = br.readLine()) != null) {
+				content.append(line);
+			}
+		} catch (Exception e) {
+			validator.setErrorStatus("errOpenFileGeneric", e.toString());
+		} finally {
+			return content.toString();
+		}
+	}
 
     private void updateVisualParameters() {
         int[] statesParameter = this.simulationParameter.getRuleConfigurationParameter().getStateValues();
