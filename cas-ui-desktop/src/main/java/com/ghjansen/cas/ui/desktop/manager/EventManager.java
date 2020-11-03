@@ -56,6 +56,8 @@ import com.ghjansen.cas.unidimensional.control.UnidimensionalSimulationParameter
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import static com.ghjansen.cas.ui.desktop.i18n.TranslationKey.*;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -293,7 +295,7 @@ public class EventManager {
                 try {
                     createSimulationParameter();
                 } catch (InvalidSimulationParameterException e) {
-                    validator.setErrorStatus("errSave", e.toString());
+                    validator.setErrorStatus(ERR_SAVE, e.toString());
                 }
             }
             String fileName = String.valueOf(fc.getSelectedFile());
@@ -309,13 +311,13 @@ public class EventManager {
                 validator.setNormalStatus("msgSaveSuccess");
                 setActivityState(previous);
             } catch (IOException e) {
-                validator.setErrorStatus("errSave", e.toString());
+                validator.setErrorStatus(ERR_SAVE, e.toString());
             } finally {
                 if (fw != null) {
                     try {
                         fw.close();
                     } catch (IOException e) {
-                        validator.setErrorStatus("errSave", e.toString());
+                        validator.setErrorStatus(ERR_SAVE, e.toString());
                     }
                 }
 
@@ -346,7 +348,7 @@ public class EventManager {
 					executeComplete();
 				}
 			} else {
-				validator.setErrorStatus("errOpenFileInvalid", "");
+				validator.setErrorStatus(ERR_OPEN_FILE_INVALID, "");
 			}
 		} else {
 			revertActivityState();
@@ -361,13 +363,13 @@ public class EventManager {
 			br = new BufferedReader(new FileReader(file));
 			content = readLines(br);
 		} catch (Exception e) {
-			validator.setErrorStatus("errOpenFileGeneric", e.toString());
+			validator.setErrorStatus(ERR_OPEN_FILE_GENERIC,  e.toString());
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
 				} catch (IOException e) {
-					validator.setErrorStatus("errOpenFileGeneric", e.toString());
+					validator.setErrorStatus(ERR_OPEN_FILE_GENERIC, e.toString());
 				}
 			}
 			return content;
@@ -382,7 +384,7 @@ public class EventManager {
 				content.append(line);
 			}
 		} catch (Exception e) {
-			validator.setErrorStatus("errOpenFileGeneric", e.toString());
+			validator.setErrorStatus(ERR_OPEN_FILE_GENERIC, e.toString());
 		} finally {
 			return content.toString();
 		}

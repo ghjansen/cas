@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.util.regex.Pattern;
 
+import com.ghjansen.cas.ui.desktop.i18n.TranslationKey;
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 
 /**
@@ -175,6 +176,10 @@ public class GUIValidator {
 	public void setErrorStatus(String key, String info){
 		main.setStatus(key, info);
 		main.lblStatus.setForeground(invalidFieldColor);
+	}
+
+	public void setErrorStatus(TranslationKey tk, String info){
+		setErrorStatus(tk.getKey(), info);
 	}
 	
 	public void setNormalStatus(String key){
