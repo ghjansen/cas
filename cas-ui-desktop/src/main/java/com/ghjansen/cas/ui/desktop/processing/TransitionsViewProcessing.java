@@ -23,6 +23,8 @@ import processing.core.PApplet;
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
 import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 
+import java.util.HashMap;
+
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
@@ -124,30 +126,39 @@ public class TransitionsViewProcessing extends PApplet {
 			int leftState = transitionHighlight.getCombination().getNeighborhood().get(0).getValue();
 			int referenceState = transitionHighlight.getCombination().getReferenceState().getValue();
 			int rightState = transitionHighlight.getCombination().getNeighborhood().get(1).getValue();
-			if(leftState == 1 && referenceState == 1 && rightState == 1){
-				transition = 7;
-			} else if (leftState == 1 && referenceState == 1 && rightState == 0){
-				transition = 6;
-			} else if (leftState == 1 && referenceState == 0 && rightState == 1){
-				transition = 5;
-			} else if (leftState == 1 && referenceState == 0 && rightState == 0){
-				transition = 4;
-			} else if (leftState == 0 && referenceState == 1 && rightState == 1){
-				transition = 3;
-			} else if (leftState == 0 && referenceState == 1 && rightState == 0){
-				transition = 2;
-			} else if (leftState == 0 && referenceState == 0 && rightState == 1){
-				transition = 1;
-			} else if (leftState == 0 && referenceState == 0 && rightState == 0){
-				transition = 0;
-			}
+			transition = getTransitionHighlightNumber(leftState, referenceState, rightState);
 			if(transition != -1){
 				stroke(255.0F, commons.getGlowIntensity(), commons.getGlowIntensity());
 				strokeWeight(5);
 				strokeCap(ROUND);
 				noFill();
-				rect(transitionSquareWidth * (7-transition), 3, transitionSquareWidth, transitionSquareHeight-6);
+				float a = transitionSquareWidth * (7-transition);
+				float b = 3;
+				float c = transitionSquareWidth;
+				float d = transitionSquareHeight-6;
+				rect(a, b, c, d);
 			}
+		}
+	}
+
+	private int getTransitionHighlightNumber(int leftState, int referenceState, int rightState){
+		final int leftScore = 1;
+		final int referenceScore = 3;
+		final int rightScore = 5;
+		HashMap<Integer,Integer> scoreMap = new HashMap<Integer, Integer>();
+		scoreMap.put(leftScore*1 + referenceScore*1 + rightScore*1,7);
+		scoreMap.put(leftScore*1 + referenceScore*1 + rightScore*0,6);
+		scoreMap.put(leftScore*1 + referenceScore*0 + rightScore*1,5);
+		scoreMap.put(leftScore*1 + referenceScore*0 + rightScore*0,4);
+		scoreMap.put(leftScore*0 + referenceScore*1 + rightScore*1,3);
+		scoreMap.put(leftScore*0 + referenceScore*1 + rightScore*0,2);
+		scoreMap.put(leftScore*0 + referenceScore*0 + rightScore*1,1);
+		scoreMap.put(leftScore*0 + referenceScore*0 + rightScore*0,0);
+		int score = leftState*leftScore + referenceState*referenceScore + rightState*rightScore;
+		if(scoreMap.containsKey(score)){
+			return scoreMap.get(score);
+		} else {
+			return -1;
 		}
 	}
 	
