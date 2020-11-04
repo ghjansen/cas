@@ -363,7 +363,7 @@ public class EventManager {
 			br = new BufferedReader(new FileReader(file));
 			content = readLines(br);
 		} catch (Exception e) {
-			validator.setErrorStatus(ERR_OPEN_FILE_GENERIC,  e.toString());
+			validator.setErrorStatus(ERR_OPEN_FILE_GENERIC, e.toString());
 		} finally {
 			if (br != null) {
 				try {
@@ -372,22 +372,17 @@ public class EventManager {
 					validator.setErrorStatus(ERR_OPEN_FILE_GENERIC, e.toString());
 				}
 			}
-			return content;
 		}
+		return content;
 	}
 
-	private String readLines(BufferedReader br) {
+	private String readLines(BufferedReader br) throws IOException {
 		StringBuilder content = new StringBuilder();
 		String line = null;
-		try {
-			while ((line = br.readLine()) != null) {
-				content.append(line);
-			}
-		} catch (Exception e) {
-			validator.setErrorStatus(ERR_OPEN_FILE_GENERIC, e.toString());
-		} finally {
-			return content.toString();
+		while ((line = br.readLine()) != null) {
+			content.append(line);
 		}
+		return content.toString();
 	}
 
     private void updateVisualParameters() {
