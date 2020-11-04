@@ -23,10 +23,10 @@ package com.ghjansen.cas.ui.desktop.processing;
  */
 public class ViewCommonsProcessing {
 	
-	public boolean glowControl = true;
-	public float glowIntensity = 0.0F;
+	private boolean glowControl = true;
+	private float glowIntensity = 0.0F;
 	
-	public void glowControl(){
+	public void glowOscillator(){
 		if(glowControl){
 			if(glowIntensity < 255.0F){
 				glowIntensity = glowIntensity +20;
@@ -47,4 +47,7 @@ public class ViewCommonsProcessing {
 	    return Math.log(num) / Math.log(base);
 	}
 
+	public float getGlowIntensity() {
+		return glowIntensity;
+	}
 }

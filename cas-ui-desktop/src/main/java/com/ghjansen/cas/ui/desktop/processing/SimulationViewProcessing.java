@@ -300,8 +300,8 @@ public class SimulationViewProcessing extends PApplet {
 		if(xCell >= 0 && xCell < relativeTimeLimit && 
 				yCell > 0 && yCell < absoluteTimeLimit + 1){
 			
-			commons.glowControl();
-			stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
+			commons.glowOscillator();
+			stroke(255.0F, commons.getGlowIntensity(), commons.getGlowIntensity());
 			strokeWeight(squareSize/10);
 			strokeCap(ROUND);
 			noFill();

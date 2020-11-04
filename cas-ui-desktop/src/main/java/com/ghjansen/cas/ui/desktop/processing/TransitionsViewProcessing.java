@@ -28,12 +28,12 @@ import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
  */
 public class TransitionsViewProcessing extends PApplet {
 	
-	private EventManager em;
-	private UnidimensionalTransition transitionHighlight;
-	private ViewCommonsProcessing commons;
-	private int width = 301;
-	private int height = 34;
-	private int background = 255;
+	private transient EventManager em;
+	private transient UnidimensionalTransition transitionHighlight;
+	private transient ViewCommonsProcessing commons;
+	private int viewWidth = 301;
+	private int viewHeight = 34;
+	private int viewBackground = 255;
 	private float transitionSquareWidth = 37.6F;
 	private int transitionSquareHeight = 33;
 	private int stateSize = 8;
@@ -51,12 +51,14 @@ public class TransitionsViewProcessing extends PApplet {
 		this.em = em;
 	}
 
+	@Override
 	public void setup() {
-		size(width, height);
-		background(background);
+		size(viewWidth, viewHeight);
+		background(viewBackground);
 		states = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 	}
 
+	@Override
 	public void draw() {
 		drawElementaryTransitions();
 		drawHighlight();
@@ -140,7 +142,7 @@ public class TransitionsViewProcessing extends PApplet {
 				transition = 0;
 			}
 			if(transition != -1){
-				stroke(255.0F, commons.glowIntensity, commons.glowIntensity);
+				stroke(255.0F, commons.getGlowIntensity(), commons.getGlowIntensity());
 				strokeWeight(5);
 				strokeCap(ROUND);
 				noFill();
