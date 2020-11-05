@@ -18,6 +18,9 @@
 
 package com.ghjansen.cas.ui.desktop.i18n;
 
+/**
+ * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
+ */
 public enum TranslationKey {
 
     PNL_RULE_TYPE("pnlRuleType"),

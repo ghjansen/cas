@@ -39,17 +39,17 @@ import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
  */
 public class SimulationViewProcessing extends PApplet {
 
-	private UnidimensionalUniverse universe;
+	private transient UnidimensionalUniverse universe;
 	private TransitionsViewProcessing transitions;
-	private ViewCommonsProcessing commons;
-	private PImage welcomeImgs[] = new PImage[2];;
+	private transient ViewCommonsProcessing commons;
+	private transient PImage[] welcomeImgs = new PImage[2];
 	private HelpFrame helpFrame;
-	private int width = 582;
-	private int height = 582;
-	private int background = 204;
+	private int viewWidth = 582;
+	private int viewHeight = 582;
+	private int viewBackground = 204;
 	private float squareSize = 100.0F;
-	private int x = -1;
-	private int y = 0;
+	private int viewX = -1;
+	private int viewY = 0;
 	private int feedbackRate = 60;
 	private float translationX;
 	private float translationY;
@@ -65,7 +65,7 @@ public class SimulationViewProcessing extends PApplet {
 	private float inspectionSubjectX;
 	private float inspectionSubjectY;
 	private boolean resetControl = true;
-	private float toolsX = width - 50;
+	private float toolsX = viewWidth - 50;
 	private float toolsY = 50;
 	private float helpButtonX = toolsX + 15;
 	private float helpButtonY = toolsY;
@@ -80,29 +80,31 @@ public class SimulationViewProcessing extends PApplet {
 	private boolean overMinus = false;
 	private boolean draggingSlider = false;
 	private JProgressBar progress;
-	private GUIValidator validator;
-	private boolean finished = false;
+	private transient GUIValidator validator;
+	private boolean viewFinished = false;
 	
 	public SimulationViewProcessing(ViewCommonsProcessing commons, TransitionsViewProcessing transitions){
 		this.commons = commons;
 		this.transitions = transitions;
 	}
 
+	@Override
 	public void setup() {
-		size(width, height);
+		size(viewWidth, viewHeight);
 		String welcomeFile0 = "welcome-"+Language.PORTUGUESE_BRAZIL.getLangtag().toLowerCase()+".png";
 		String welcomeFile1 = "welcome-"+Language.ENGLISH_UNITED_KINGDOM.getLangtag().toLowerCase()+".png";
 		welcomeImgs[0] = loadImage(SimulationViewProcessing.class.getResource(welcomeFile0).toString());
 		welcomeImgs[1] = loadImage(SimulationViewProcessing.class.getResource(welcomeFile1).toString());
 		helpFrame = new HelpFrame();
 		textAlign(CENTER);
-		background(background);
+		background(viewBackground);
 		frameRate(30);
 	}
 
+	@Override
 	public void draw() {
 		if(resetControl){
-			background(background);
+			background(viewBackground);
 			delay(feedbackRate);
 		}
 		if (isSpaceAvailable()) {
@@ -116,7 +118,7 @@ public class SimulationViewProcessing extends PApplet {
 	}
 	
 	private boolean isSpaceAvailable(){
-		return universe != null && universe.getSpace().getInitial().size() > 0;
+		return universe != null && !universe.getSpace().getInitial().isEmpty();
 	}
 	
 	private void drawSpace(){
@@ -127,10 +129,10 @@ public class SimulationViewProcessing extends PApplet {
 		scale(scale);
 		strokeControl();
 		drawInitialCondition();
-		if(universe != null && universe.getSpace().getHistory().size() > 0){
+		if(universe != null && !universe.getSpace().getHistory().isEmpty()){
 			drawHistory();
 		}
-		if(universe != null && universe.getSpace().getCurrent().size() > 0){
+		if(universe != null && !universe.getSpace().getCurrent().isEmpty()){
 			drawCurrent();
 		}
 		drawInspector();
@@ -140,82 +142,119 @@ public class SimulationViewProcessing extends PApplet {
 	private void calibrateScaleAndTranslation(){
 		if(resetControl){
 			// calibrate initial scale
-			float emptySpaceX = width - universe.getTime().getRelative().get(0).getLimit();
-			float emptySpaceY = height - universe.getTime().getLimit();
-			double deltaScaleLimitX = 0;
-			double deltaScaleLimitY = 0;
-			float newScale = 0.0F;
+			ScaleCalibration isc = calibrateInitialScale();
 			// verify horizontal limit
-			if(emptySpaceX > 0){
-				float horizontalSize = universe.getTime().getRelative().get(0).getLimit() * squareSize;
-				float potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
-				while(horizontalSize * potentialScale < width ){
-					deltaScaleLimitX++;
-					potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
-				}
-				if(horizontalSize * potentialScale > width){
-					deltaScaleLimitX--;
-				}
-			}
+			isc = verifyHorizontalLimit(isc);
 			// verify vertical limit
-			if(emptySpaceY > 0){
-				float verticalSize = universe.getTime().getLimit() * squareSize;
-				float potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
-				while(verticalSize * potentialScale < height ){
-					deltaScaleLimitY++;
-					potentialScale = minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
-				}
-				if(verticalSize * potentialScale > height){
-					deltaScaleLimitY--;
-				}
-			}
+			isc = verifyVerticalLimit(isc);
 			// use smallest limit
-			if((deltaScaleLimitX < deltaScaleLimitY) || deltaScaleLimitX == deltaScaleLimitY){
-				newScale = (float) minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitX));
-				deltaScale = (float) deltaScaleLimitX;
-			} else if(deltaScaleLimitY < deltaScaleLimitX){
-				newScale = (float) minScale * (float) (Math.pow((double) alphaScale, deltaScaleLimitY));
-				deltaScale = (float) deltaScaleLimitY;
-			}
+			isc = useSmallestLimit(isc);
 			// if smallest limit is greater than maxScale, assume maxScale, otherwise use smallest
-			if(newScale > maxScale){
-				scale = maxScale;
-				deltaScale = (float) commons.logOfBase((int)alphaScale, (int) (maxScale * squareSize));
-			} else {
-				scale = newScale;
-			}
+			assertScale(isc);
 			// recalculate emptySpace
-			emptySpaceX = width - (universe.getTime().getRelative().get(0).getLimit() * (scale * squareSize));
-			emptySpaceY = height - (universe.getTime().getLimit() * (scale * squareSize));
+			isc = recalculateEmptySpace(isc);
 			// calibrate initial translation
-			if(emptySpaceX > 0){
-				translationX = (float) Math.floor((double) emptySpaceX / 2);
-			}
-			if(emptySpaceY > 0){
-				translationY = (float) Math.floor((double) emptySpaceY / 2);
-			}
+			calibrateInitialTranslation(isc);
 		} else if (lastScale != scale){
 			// hold center when zooming in or out
-			float centralShiftX;
-			float centralShiftY;
-			if(lastScale > scale){
-				centralShiftX = ((width / 2) - translationX) / (lastScale / scale);
-				centralShiftY = ((height / 2) - translationY) / (lastScale / scale);
-				translationX = (float) Math.floor((double) translationX + centralShiftX);
-				translationY = (float) Math.floor((double) translationY + centralShiftY);
-				inspectionSubjectX = inspectionSubjectX + centralShiftX;
-				inspectionSubjectY = inspectionSubjectY + centralShiftY;
-			} else {
-				centralShiftX = (((width / 2) - translationX));
-				centralShiftY = (((height / 2) - translationY));
-				translationX = (float) Math.floor((double) translationX - centralShiftX);
-				translationY = (float) Math.floor((double) translationY - centralShiftY);
-				inspectionSubjectX = inspectionSubjectX - centralShiftX;
-				inspectionSubjectY = inspectionSubjectY - centralShiftY;				
-			}
+			holdCenterForZoom();
 		}
 	}
-	
+
+	private ScaleCalibration calibrateInitialScale(){
+		float emptySpaceX = viewWidth - universe.getTime().getRelative().get(0).getLimit();
+		float emptySpaceY = viewHeight - universe.getTime().getLimit();
+		double deltaScaleLimitX = 0;
+		double deltaScaleLimitY = 0;
+		float newScale = 0.0F;
+		return new ScaleCalibration(emptySpaceX,emptySpaceY,deltaScaleLimitX,deltaScaleLimitY,newScale);
+	}
+
+	private ScaleCalibration verifyHorizontalLimit(ScaleCalibration isc){
+		if(isc.getEmptySpaceX() > 0){
+			float horizontalSize = universe.getTime().getRelative().get(0).getLimit() * squareSize;
+			float potentialScale = minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitX()));
+			while(horizontalSize * potentialScale < viewWidth){
+				isc.setDeltaScaleLimitX(isc.getDeltaScaleLimitX()+1);
+				potentialScale = minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitX()));
+			}
+			if(horizontalSize * potentialScale > viewWidth){
+				isc.setDeltaScaleLimitX(isc.getDeltaScaleLimitX()-1);
+			}
+		}
+		return isc;
+	}
+
+	private ScaleCalibration verifyVerticalLimit(ScaleCalibration isc){
+		if(isc.getEmptySpaceY() > 0){
+			float verticalSize = universe.getTime().getLimit() * squareSize;
+			float potentialScale = minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitY()));
+			while(verticalSize * potentialScale < viewHeight){
+				isc.setDeltaScaleLimitY(isc.getDeltaScaleLimitY()+1);
+				potentialScale = minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitY()));
+			}
+			if(verticalSize * potentialScale > viewHeight){
+				isc.setDeltaScaleLimitY(isc.getDeltaScaleLimitY()-1);
+			}
+		}
+		return isc;
+	}
+
+	private ScaleCalibration useSmallestLimit(ScaleCalibration isc){
+		if((isc.getDeltaScaleLimitX() < isc.getDeltaScaleLimitY() || isc.getDeltaScaleLimitX() == isc.getDeltaScaleLimitY())){
+			isc.setNewScale(minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitX())));
+			deltaScale = (float) isc.getDeltaScaleLimitX();
+		} else if(isc.getDeltaScaleLimitY() < isc.getDeltaScaleLimitX()){
+			isc.setNewScale(minScale * (float) (Math.pow((double) alphaScale, isc.getDeltaScaleLimitY())));
+			deltaScale = (float) isc.getDeltaScaleLimitY();
+		}
+		return isc;
+	}
+
+	private void assertScale(ScaleCalibration isc){
+		if(isc.getNewScale() > maxScale){
+			scale = maxScale;
+			deltaScale = (float) commons.logOfBase((int)alphaScale, (int) (maxScale * squareSize));
+		} else {
+			scale = isc.getNewScale();
+		}
+	}
+
+	private ScaleCalibration recalculateEmptySpace(ScaleCalibration isc){
+		isc.setEmptySpaceX(viewWidth - (universe.getTime().getRelative().get(0).getLimit() * (scale * squareSize)));
+		isc.setEmptySpaceY(viewHeight - (universe.getTime().getLimit() * (scale * squareSize)));
+		return isc;
+	}
+
+	private void calibrateInitialTranslation(ScaleCalibration isc){
+		if(isc.getEmptySpaceX() > 0){
+			translationX = (float) Math.floor((double) isc.getEmptySpaceX() / 2);
+		}
+		if(isc.getEmptySpaceY() > 0){
+			translationY = (float) Math.floor((double) isc.getEmptySpaceY() / 2);
+		}
+	}
+
+	private void holdCenterForZoom(){
+		float centralShiftX;
+		float centralShiftY;
+		if(lastScale > scale){
+			centralShiftX = ((viewWidth / 2) - translationX) / (lastScale / scale);
+			centralShiftY = ((viewHeight / 2) - translationY) / (lastScale / scale);
+			translationX = (float) Math.floor((double) translationX + centralShiftX);
+			translationY = (float) Math.floor((double) translationY + centralShiftY);
+			inspectionSubjectX = inspectionSubjectX + centralShiftX;
+			inspectionSubjectY = inspectionSubjectY + centralShiftY;
+		} else {
+			centralShiftX = ((viewWidth / 2) - translationX);
+			centralShiftY = ((viewHeight / 2) - translationY);
+			translationX = (float) Math.floor((double) translationX - centralShiftX);
+			translationY = (float) Math.floor((double) translationY - centralShiftY);
+			inspectionSubjectX = inspectionSubjectX - centralShiftX;
+			inspectionSubjectY = inspectionSubjectY - centralShiftY;
+		}
+	}
+
 	private void drawInitialCondition(){
 		List<?> initialCondition = universe.getSpace().getInitial();
 		for(int i = 0; i < initialCondition.size(); i++){
@@ -231,7 +270,7 @@ public class SimulationViewProcessing extends PApplet {
 	
 	private void strokeControl(){
 		if(scale > 0.16){
-			stroke(background);
+			stroke(viewBackground);
 			strokeWeight(1);
 		} else {
 			strokeWeight(0);
@@ -242,15 +281,15 @@ public class SimulationViewProcessing extends PApplet {
 	private void drawHistory() {
 		List<List<UnidimensionalCell>> history = universe.getSpace().getHistory();
 		int iterations = 0;
-		while (history.size() > y && iterations < feedbackRate) {
-			while (history.get(y).size() - 1 > x) {
+		while (history.size() > viewY && iterations < feedbackRate) {
+			while (history.get(viewY).size() - 1 > viewX) {
 				nextColumn();
-				drawCell(history.get(y).get(x));
+				drawCell(history.get(viewY).get(viewX));
 			}
 			nextLine();
 			iterations++;
-			if(progress != null && progress.getValue() < y){
-				progress.setValue(y);
+			if(progress != null && progress.getValue() < viewY){
+				progress.setValue(viewY);
 			}
 		}
 	}
@@ -269,13 +308,13 @@ public class SimulationViewProcessing extends PApplet {
 				} else if (c.getState().getValue() == 1) {
 					fill(0);
 				}
-				rect(squareSize * i, squareSize * (y + 1), squareSize, squareSize);
-				if(progress != null && progress.getValue() < y+1){
-					progress.setValue(y+1);
+				rect(squareSize * i, squareSize * (viewY + 1), squareSize, squareSize);
+				if(progress != null && progress.getValue() < viewY +1){
+					progress.setValue(viewY +1);
 				}
-				if(!finished && y+1 == universe.getTime().getLimit()){
+				if(!viewFinished && viewY +1 == universe.getTime().getLimit()){
 					this.validator.setNormalStatus("msgRenderingSuccess");
-					finished = true;
+					viewFinished = true;
 				}
 			}
 		}
@@ -425,8 +464,8 @@ public class SimulationViewProcessing extends PApplet {
 		} else if (c.getState().getValue() == 1) {
 			fill(0);
 		}
-		int sX = (int) squareSize * x;
-		int sY = (int) squareSize * (y + 1);
+		int sX = (int) squareSize * viewX;
+		int sY = (int) squareSize * (viewY + 1);
 		rect((float) sX, (float) sY, squareSize, squareSize);
 	}
 	
@@ -539,12 +578,12 @@ public class SimulationViewProcessing extends PApplet {
 	}
 
 	private void nextColumn() {
-		x++;
+		viewX++;
 	}
 
 	private void nextLine() {
-		y++;
-		x = -1;
+		viewY++;
+		viewX = -1;
 	}
 
 	public void setUniverse(UnidimensionalUniverse universe) {
@@ -559,14 +598,14 @@ public class SimulationViewProcessing extends PApplet {
 		deltaScale = 0.0F;
 		cellInspector = false;
 		resetControl = true;
-		finished = false;
+		viewFinished = false;
 		refresh();
 	}
 	
 	private void refresh(){
-		x = -1;
-		y = 0;
-		background(background);
+		viewX = -1;
+		viewY = 0;
+		background(viewBackground);
 	}
 	
 	private void zoomIn(){
