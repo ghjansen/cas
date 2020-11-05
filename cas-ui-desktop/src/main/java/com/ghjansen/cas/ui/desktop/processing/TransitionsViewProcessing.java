@@ -135,7 +135,7 @@ public class TransitionsViewProcessing extends PApplet {
 				float a = transitionSquareWidth * (7-transition);
 				float b = 3;
 				float c = transitionSquareWidth;
-				float d = transitionSquareHeight-6;
+				float d = transitionSquareHeight-6F;
 				rect(a, b, c, d);
 			}
 		}
@@ -167,7 +167,7 @@ public class TransitionsViewProcessing extends PApplet {
 		super.mousePressed();
 		if(mouseEnabled){
 			float n = mouseX / transitionSquareWidth;
-			int rangesIndex[][] = new int[][]{{7,8}, {6,7}, {5,6}, {4,5}, {3,4}, {2,3}, {1,2}, {0,1}};
+			int[][] rangesIndex = new int[][]{{7,8}, {6,7}, {5,6}, {4,5}, {3,4}, {2,3}, {1,2}, {0,1}};
 			for(int i = 0; i < rangesIndex.length; i++){
 				if(n >= rangesIndex[i][0] && n < rangesIndex[i][1]){
 					states[i] = getNextState(states[i]);
