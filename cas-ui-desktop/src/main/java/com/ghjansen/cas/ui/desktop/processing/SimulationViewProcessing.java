@@ -144,15 +144,15 @@ public class SimulationViewProcessing extends PApplet {
 			// calibrate initial scale
 			ScaleCalibration isc = calibrateInitialScale();
 			// verify horizontal limit
-			isc = verifyHorizontalLimit(isc);
+			verifyHorizontalLimit(isc);
 			// verify vertical limit
-			isc = verifyVerticalLimit(isc);
+			verifyVerticalLimit(isc);
 			// use smallest limit
-			isc = useSmallestLimit(isc);
+			useSmallestLimit(isc);
 			// if smallest limit is greater than maxScale, assume maxScale, otherwise use smallest
 			assertScale(isc);
 			// recalculate emptySpace
-			isc = recalculateEmptySpace(isc);
+			recalculateEmptySpace(isc);
 			// calibrate initial translation
 			calibrateInitialTranslation(isc);
 		} else if (lastScale != scale){
