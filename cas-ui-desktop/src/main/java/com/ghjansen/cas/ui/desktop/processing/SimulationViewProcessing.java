@@ -284,7 +284,7 @@ public class SimulationViewProcessing extends PApplet {
 		while (history.size() > viewY && iterations < feedbackRate) {
 			while (history.get(viewY).size() - 1 > viewX) {
 				nextColumn();
-				drawCell(history.get(viewY).get(viewX));
+				drawHistoryCell(history.get(viewY).get(viewX));
 			}
 			nextLine();
 			iterations++;
@@ -302,21 +302,25 @@ public class SimulationViewProcessing extends PApplet {
 		}
 		if(!current.equals(last)){
 			for(int i = 0; i < current.size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) current.get(i);
-				if (c.getState().getValue() == 0) {
-					fill(255);
-				} else if (c.getState().getValue() == 1) {
-					fill(0);
-				}
-				rect(squareSize * i, squareSize * (viewY + 1), squareSize, squareSize);
-				if(progress != null && progress.getValue() < viewY +1){
-					progress.setValue(viewY +1);
-				}
-				if(!viewFinished && viewY +1 == universe.getTime().getLimit()){
-					this.validator.setNormalStatus("msgRenderingSuccess");
-					viewFinished = true;
-				}
+				drawCurrentCell(current, i);
 			}
+		}
+	}
+
+	private void drawCurrentCell(List<?> current, int i) {
+		UnidimensionalCell c = (UnidimensionalCell) current.get(i);
+		if (c.getState().getValue() == 0) {
+			fill(255);
+		} else if (c.getState().getValue() == 1) {
+			fill(0);
+		}
+		rect(squareSize * i, squareSize * (viewY + 1), squareSize, squareSize);
+		if (progress != null && progress.getValue() < viewY + 1) {
+			progress.setValue(viewY + 1);
+		}
+		if (!viewFinished && viewY + 1 == universe.getTime().getLimit()) {
+			this.validator.setNormalStatus("msgRenderingSuccess");
+			viewFinished = true;
 		}
 	}
 	
@@ -347,7 +351,26 @@ public class SimulationViewProcessing extends PApplet {
 			
 			float cx = xCell * squareSize;
 			float cy = yCell * squareSize;
-			float p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y, p5x, p5y, p6x, p6y, p7x, p7y, p8x, p8y, p9x, p9y, p10x, p10y;
+			float p1x;
+			float p1y;
+			float p2x;
+			float p2y;
+			float p3x;
+			float p3y;
+			float p4x;
+			float p4y;
+			float p5x;
+			float p5y;
+			float p6x;
+			float p6y;
+			float p7x;
+			float p7y;
+			float p8x;
+			float p8y;
+			float p9x;
+			float p9y;
+			float p10x;
+			float p10y;
 			
 			/**
 			 * P1---P2---P3---P4
@@ -434,15 +457,15 @@ public class SimulationViewProcessing extends PApplet {
 				line(p10x, p10y, p1x, p1y);
 			}
 			UnidimensionalCell inspectedCell = getInspectedCell(xCell, yCell);
-			transitions.showHighlight((UnidimensionalTransition) inspectedCell.getTransition());
+			transitions.showHighlight(inspectedCell.getTransition());
 		}
 	}
 	
 	private UnidimensionalCell getInspectedCell(int xCell, int yCell){
 		if(yCell == universe.getTime().getLimit()){
-			return (UnidimensionalCell) universe.getSpace().getCurrent().get(xCell);
+			return universe.getSpace().getCurrent().get(xCell);
 		} else {
-			return (UnidimensionalCell) universe.getSpace().getHistory().get(--yCell).get(xCell);
+			return universe.getSpace().getHistory().get(--yCell).get(xCell);
 		}
 	}
 	
@@ -458,7 +481,7 @@ public class SimulationViewProcessing extends PApplet {
 		}
 	}
 
-	private void drawCell(UnidimensionalCell c) {
+	private void drawHistoryCell(UnidimensionalCell c) {
 		if (c.getState().getValue() == 0) {
 			fill(255);
 		} else if (c.getState().getValue() == 1) {
@@ -641,48 +664,35 @@ public class SimulationViewProcessing extends PApplet {
 		}
 		refresh();
 	}
-	
+
 	private boolean isOverHelpButton() {
-		if (mouseX > helpButtonX - 11 && mouseX < helpButtonX + 11 
-				&& mouseY > helpButtonY - 11 && mouseY < helpButtonY + 11) {
-			return true;
-		}
-		return false;
+		return (mouseX > helpButtonX - 11 && mouseX < helpButtonX + 11
+				&& mouseY > helpButtonY - 11 && mouseY < helpButtonY + 11);
+
 	}
-	
-	private boolean isOverInspectorButton(){
-		if (mouseX > inspectionButtonX - 11 && mouseX < inspectionButtonX + 11 
-				&& mouseY > inspectionButtonY - 11 && mouseY < inspectionButtonY + 11) {
-			return true;
-		}
-		return false;
+
+	private boolean isOverInspectorButton() {
+		return (mouseX > inspectionButtonX - 11 && mouseX < inspectionButtonX + 11
+				&& mouseY > inspectionButtonY - 11 && mouseY < inspectionButtonY + 11);
 	}
-	
-	private boolean isOverPlus(){
-		if (mouseX > zoomSliderX && mouseX < zoomSliderX + 23 
-				&& mouseY > zoomSliderY - 11 && mouseY < zoomSliderY + 11) {
-			return true;
-		}
-		return false;
+
+	private boolean isOverPlus() {
+		return (mouseX > zoomSliderX && mouseX < zoomSliderX + 23
+				&& mouseY > zoomSliderY - 11 && mouseY < zoomSliderY + 11);
 	}
-	
-	private boolean isOverMinus(){
-		if (mouseX > zoomSliderX && mouseX < zoomSliderX + 20 
-				&& mouseY > zoomSliderY + 242 && mouseY < zoomSliderY + 261) {
-			return true;
-		}
-		return false;
+
+	private boolean isOverMinus() {
+		return (mouseX > zoomSliderX && mouseX < zoomSliderX + 20
+				&& mouseY > zoomSliderY + 242 && mouseY < zoomSliderY + 261);
 	}
-	
-	private boolean isOverSlider(){
-		float zoomY = zoomSliderY+250-(30*deltaScale)-25;
-		if (mouseX > zoomSliderX+4 && mouseX < zoomSliderX + 20 
-				&& mouseY > zoomY && mouseY < zoomY + 14) {
-			return true;
-		}
-		return false;
+
+	private boolean isOverSlider() {
+		float zoomY = zoomSliderY + 250 - (30 * deltaScale) - 25;
+		return (mouseX > zoomSliderX + 4 && mouseX < zoomSliderX + 20
+				&& mouseY > zoomY && mouseY < zoomY + 14);
 	}
-	
+
+	@Override
 	public void mousePressed(){
 		if(overHelp){
 			helpFrame.setVisible(true);
@@ -699,7 +709,8 @@ public class SimulationViewProcessing extends PApplet {
 			mousePressedY = mouseY;
 		}
 	}
-	
+
+	@Override
 	public void mouseDragged(){
 		if(draggingSlider){
 			float delta = mouseY - (zoomSliderY+225-(30*deltaScale));
@@ -710,9 +721,10 @@ public class SimulationViewProcessing extends PApplet {
 			}
 		}
 	}
-	
+
+	@Override
 	public void mouseReleased(){
-		if(overHelp == overInspector == overMinus == overPlus == overSlider == false){
+		if(!overHelp == overInspector == overMinus == overPlus == overSlider){
 			if(cellInspector){
 				inspectionSubjectX = mousePressedX;
 				inspectionSubjectY = mousePressedY;
@@ -727,7 +739,8 @@ public class SimulationViewProcessing extends PApplet {
 		}
 		draggingSlider = false;
 	}
-	
+
+	@Override
 	public void mouseMoved(){
 		if (isOverHelpButton()) {
 			overHelp = true;
@@ -755,7 +768,8 @@ public class SimulationViewProcessing extends PApplet {
 			cursor(MOVE);
 		}
 	}
-	
+
+	@Override
 	public void keyPressed(){
 		if(key == '1'){
 			zoomOut();
