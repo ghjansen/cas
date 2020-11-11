@@ -30,7 +30,6 @@ import com.ghjansen.cas.ui.desktop.i18n.Language;
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
 import com.ghjansen.cas.ui.desktop.swing.GUIValidator;
 import com.ghjansen.cas.ui.desktop.swing.HelpFrame;
-import com.ghjansen.cas.unidimensional.ca.UnidimensionalTransition;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
 import com.ghjansen.cas.unidimensional.physics.UnidimensionalUniverse;
 

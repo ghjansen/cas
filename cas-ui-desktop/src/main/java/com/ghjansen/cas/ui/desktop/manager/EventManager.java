@@ -563,36 +563,36 @@ public class EventManager {
 
     public void aEOCellScaleEvent() {
         if (validator.isAEOCellScaleValid()) {
-            if (Integer.valueOf(main.aeo.txtAEOCellScale.getText()) >= 3) {
-                if (!main.aeo.rdbtnAEOYes.isEnabled()) {
-                    main.aeo.rdbtnAEONo.setEnabled(true);
-                    main.aeo.rdbtnAEOYes.setEnabled(true);
+            if (Integer.valueOf(main.aeo.getTxtAEOCellScale().getText()) >= 3) {
+                if (!main.aeo.getRdbtnAEOYes().isEnabled()) {
+                    main.aeo.getRdbtnAEONo().setEnabled(true);
+                    main.aeo.getRdbtnAEOYes().setEnabled(true);
                 }
-                if (!main.aeo.rdbtnAEOYes.isSelected()) {
-                    main.aeo.rdbtnAEONo.setSelected(true);
+                if (!main.aeo.getRdbtnAEOYes().isSelected()) {
+                    main.aeo.getRdbtnAEONo().setSelected(true);
                 } else {
                     aEOGridYesEvent();
                 }
             } else {
-                main.aeo.rdbtnAEONo.setEnabled(false);
-                main.aeo.rdbtnAEOYes.setEnabled(false);
+                main.aeo.getRdbtnAEONo().setEnabled(false);
+                main.aeo.getRdbtnAEOYes().setEnabled(false);
             }
         }
 
     }
 
     public void aEOGridYesEvent() {
-        main.aeo.txtAEOGridLinesThickness.setEnabled(true);
-        main.aeo.txtAEOCellLinesColour.setEnabled(true);
+        main.aeo.getTxtAEOGridLinesThickness().setEnabled(true);
+        main.aeo.getTxtAEOCellLinesColour().setEnabled(true);
         validator.isAEOCellLinesThicknessValid();
         validator.isAEOCellColourValid();
     }
 
     public void aEOGridNoEvent() {
-        main.aeo.txtAEOGridLinesThickness.setEnabled(false);
-        main.aeo.txtAEOGridLinesThickness.setBackground(SystemColor.text);
-        main.aeo.txtAEOCellLinesColour.setEnabled(false);
-        main.aeo.txtAEOCellLinesColour.setBackground(SystemColor.text);
+        main.aeo.getTxtAEOGridLinesThickness().setEnabled(false);
+        main.aeo.getTxtAEOGridLinesThickness().setBackground(SystemColor.text);
+        main.aeo.getTxtAEOCellLinesColour().setEnabled(false);
+        main.aeo.getTxtAEOCellLinesColour().setBackground(SystemColor.text);
         aEOCellScaleEvent();
     }
 
@@ -607,11 +607,11 @@ public class EventManager {
     public void aEOExportEvent() {
         if (!validator.isAEOActivityLocked()) {
             main.aeo.setVisible(false);
-            main.aeo.txtAEOCellScale.requestFocus();
-            int scale = Integer.parseInt(main.aeo.txtAEOCellScale.getText());
-            boolean showGrid = main.aeo.rdbtnAEOYes.isSelected();
-            int thickness = Integer.parseInt(main.aeo.txtAEOGridLinesThickness.getText());
-            String hex = main.aeo.txtAEOCellLinesColour.getText().replace("#", "");
+            main.aeo.getTxtAEOCellScale().requestFocus();
+            int scale = Integer.parseInt(main.aeo.getTxtAEOCellScale().getText());
+            boolean showGrid = main.aeo.getRdbtnAEOYes().isSelected();
+            int thickness = Integer.parseInt(main.aeo.getTxtAEOGridLinesThickness().getText());
+            String hex = main.aeo.getTxtAEOCellLinesColour().getText().replace("#", "");
             int r = Integer.parseInt(hex.substring(0, 2), 16);
             int g = Integer.parseInt(hex.substring(2, 4), 16);
             int b = Integer.parseInt(hex.substring(4, 6), 16);

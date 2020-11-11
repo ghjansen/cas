@@ -18,10 +18,8 @@
 
 package com.ghjansen.cas.ui.desktop.swing;
 
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -29,13 +27,7 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
 
 import com.ghjansen.cas.ui.desktop.manager.EventManager;
 
@@ -44,57 +36,53 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.ButtonGroup;
-
-import java.awt.Window.Type;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class AEOFrame extends JDialog {
-	private EventManager em;
-	public JTextField txtAEOCellScale;
-	public JTextField txtAEOGridLinesThickness;
-	public JTextField txtAEOCellLinesColour;
-	public JRadioButton rdbtnAEOYes;
-	public JRadioButton rdbtnAEONo;
+	private final static String FONT_NAME = "Lucida Grande";
+	private JTextField txtAEOCellScale;
+	private JTextField txtAEOGridLinesThickness;
+	private JTextField txtAEOCellLinesColour;
+	private JRadioButton rdbtnAEOYes;
+	private JRadioButton rdbtnAEONo;
 	private final ButtonGroup grpGridAEO = new ButtonGroup();
-	public JButton btnAEOExport;
-	public JLabel lblAEOStatus;
+	private JButton btnAEOExport;
+	private JLabel lblAEOStatus;
 	public AEOFrame(final EventManager em, JFrame parent) {
 		super(parent, "Advanced Export Options (ALPHA)", true);
 		setResizable(false);
-		this.em = em;
 		setAlwaysOnTop(true);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setBounds(100, 100, 300, 260);
 		getContentPane().setLayout(null);
 		JPanel panelAEO = new JPanel();
 		panelAEO.setBounds(6, 6, 288, 177);
-		panelAEO.setBorder(new TitledBorder(null, "Advanced Export Options", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande", Font.BOLD, 12), Color.BLACK));
+		panelAEO.setBorder(new TitledBorder(null, "Advanced Export Options", TitledBorder.LEFT, TitledBorder.TOP, new Font(FONT_NAME, Font.BOLD, 12), Color.BLACK));
 		
 		getContentPane().add(panelAEO);
 		
 		JLabel lblAEOWarning = new JLabel("WARNING: This is a development prototype!");
 		lblAEOWarning.setBackground(Color.BLACK);
 		lblAEOWarning.setForeground(Color.RED);
-		lblAEOWarning.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOWarning.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		
 		JLabel lblAEOCellScale = new JLabel("Cell Scale:");
-		lblAEOCellScale.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOCellScale.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		
 		JLabel lblAEOShowGridLines = new JLabel("Show Grid Lines:");
-		lblAEOShowGridLines.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOShowGridLines.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		
 		JLabel lblAEOGridLinesThickness = new JLabel("Grid Lines Thickness:");
-		lblAEOGridLinesThickness.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOGridLinesThickness.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		
 		JLabel lblAEOGridLinesColour = new JLabel("Grid Lines Colour:");
-		lblAEOGridLinesColour.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOGridLinesColour.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		
 		txtAEOCellScale = new JTextField();
 		txtAEOCellScale.setText("1");
-		txtAEOCellScale.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		txtAEOCellScale.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		txtAEOCellScale.setColumns(10);
 		txtAEOCellScale.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -114,7 +102,7 @@ public class AEOFrame extends JDialog {
 		rdbtnAEOYes = new JRadioButton("Yes");
 		grpGridAEO.add(rdbtnAEOYes);
 		rdbtnAEOYes.setEnabled(false);
-		rdbtnAEOYes.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		rdbtnAEOYes.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		rdbtnAEOYes.addItemListener(new ItemListener() {
 			
 			public void itemStateChanged(ItemEvent e) {
@@ -128,7 +116,7 @@ public class AEOFrame extends JDialog {
 		grpGridAEO.add(rdbtnAEONo);
 		rdbtnAEONo.setEnabled(false);
 		rdbtnAEONo.setSelected(true);
-		rdbtnAEONo.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		rdbtnAEONo.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		rdbtnAEONo.addItemListener(new ItemListener() {
 			
 			public void itemStateChanged(ItemEvent e) {
@@ -141,7 +129,7 @@ public class AEOFrame extends JDialog {
 		txtAEOGridLinesThickness = new JTextField();
 		txtAEOGridLinesThickness.setEnabled(false);
 		txtAEOGridLinesThickness.setText("1");
-		txtAEOGridLinesThickness.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		txtAEOGridLinesThickness.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		txtAEOGridLinesThickness.setColumns(10);
 		txtAEOGridLinesThickness.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -161,7 +149,7 @@ public class AEOFrame extends JDialog {
 		txtAEOCellLinesColour = new JTextField();
 		txtAEOCellLinesColour.setEnabled(false);
 		txtAEOCellLinesColour.setText("#888888");
-		txtAEOCellLinesColour.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		txtAEOCellLinesColour.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		txtAEOCellLinesColour.setColumns(10);
 		txtAEOCellLinesColour.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -250,12 +238,12 @@ public class AEOFrame extends JDialog {
 			}
 		});
 		btnAEOCancel.setBounds(6, 205, 138, 29);
-		btnAEOCancel.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnAEOCancel.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		getContentPane().add(btnAEOCancel);
 		
 		btnAEOExport = new JButton("Export");
 		btnAEOExport.setBounds(156, 205, 138, 29);
-		btnAEOExport.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		btnAEOExport.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		btnAEOExport.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -266,8 +254,36 @@ public class AEOFrame extends JDialog {
 		
 		lblAEOStatus = new JLabel("");
 		lblAEOStatus.setBounds(6, 185, 288, 16);
-		lblAEOStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		lblAEOStatus.setFont(new Font(FONT_NAME, Font.PLAIN, 12));
 		getContentPane().add(lblAEOStatus);
 		this.setVisible(false);
+	}
+
+	public JTextField getTxtAEOCellScale() {
+		return txtAEOCellScale;
+	}
+
+	public JTextField getTxtAEOGridLinesThickness() {
+		return txtAEOGridLinesThickness;
+	}
+
+	public JTextField getTxtAEOCellLinesColour() {
+		return txtAEOCellLinesColour;
+	}
+
+	public JRadioButton getRdbtnAEOYes() {
+		return rdbtnAEOYes;
+	}
+
+	public JRadioButton getRdbtnAEONo() {
+		return rdbtnAEONo;
+	}
+
+	public JButton getBtnAEOExport() {
+		return btnAEOExport;
+	}
+
+	public JLabel getLblAEOStatus() {
+		return lblAEOStatus;
 	}
 }

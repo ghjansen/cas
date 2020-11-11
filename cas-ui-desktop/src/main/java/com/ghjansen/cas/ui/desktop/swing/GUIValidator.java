@@ -23,7 +23,6 @@ import java.awt.SystemColor;
 import java.util.regex.Pattern;
 
 import com.ghjansen.cas.ui.desktop.i18n.TranslationKey;
-import com.ghjansen.cas.ui.desktop.i18n.Translator;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -86,45 +85,45 @@ public class GUIValidator {
 	}
 	
 	public boolean isAEOCellScaleValid(){
-		String value = main.aeo.txtAEOCellScale.getText();
+		String value = main.aeo.getTxtAEOCellScale().getText();
 		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
-			main.aeo.txtAEOCellScale.setBackground(SystemColor.text);
+			main.aeo.getTxtAEOCellScale().setBackground(SystemColor.text);
 			updateStatusAEO(1);
 			return true;
 		} else {
 			lockActivityAOE(1);
-			main.aeo.txtAEOCellScale.setBackground(invalidFieldColor);
+			main.aeo.getTxtAEOCellScale().setBackground(invalidFieldColor);
 			updateStatusAEO(1);
 			return false;
 		}
 	}
 	
 	public boolean isAEOCellLinesThicknessValid(){
-		String value = main.aeo.txtAEOGridLinesThickness.getText();
+		String value = main.aeo.getTxtAEOGridLinesThickness().getText();
 		if(isValidPositiveInteger(value)){
 			int t = Integer.valueOf(value);
-			int c = Integer.valueOf(main.aeo.txtAEOCellScale.getText());
+			int c = Integer.valueOf(main.aeo.getTxtAEOCellScale().getText());
 			if(t >= 1 && t <= (c-1)/2){
-				main.aeo.txtAEOGridLinesThickness.setBackground(SystemColor.text);
+				main.aeo.getTxtAEOGridLinesThickness().setBackground(SystemColor.text);
 				updateStatusAEO(3);
 				return true;
 			}
 		}
 		lockActivityAOE(3);
-		main.aeo.txtAEOGridLinesThickness.setBackground(invalidFieldColor);
+		main.aeo.getTxtAEOGridLinesThickness().setBackground(invalidFieldColor);
 		updateStatusAEO(3);
 		return false;
 	}
 	
 	public boolean isAEOCellColourValid(){
-		String value = main.aeo.txtAEOCellLinesColour.getText();
+		String value = main.aeo.getTxtAEOCellLinesColour().getText();
 		if(!String.valueOf(value).isEmpty() && hexValidator.matcher(value).matches()){
-			main.aeo.txtAEOCellLinesColour.setBackground(SystemColor.text);
+			main.aeo.getTxtAEOCellLinesColour().setBackground(SystemColor.text);
 			updateStatusAEO(4);
 			return true;
 		} else {
 			lockActivityAOE(4);
-			main.aeo.txtAEOCellLinesColour.setBackground(invalidFieldColor);
+			main.aeo.getTxtAEOCellLinesColour().setBackground(invalidFieldColor);
 			updateStatusAEO(4);
 			return false;
 		}
@@ -156,19 +155,19 @@ public class GUIValidator {
 	}
 	
 	public void updateStatusAEO(int level){
-		if(main.aeo.txtAEOCellScale.getBackground().equals(invalidFieldColor)){
-			main.aeo.lblAEOStatus.setText("Cell Scale must be >= 1");
-			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
-		} else if (main.aeo.txtAEOGridLinesThickness.getBackground().equals(invalidFieldColor)){
-			main.aeo.lblAEOStatus.setText("Grid Lines Thickness must be >= 1 and <= " + 
-		(Integer.valueOf(main.aeo.txtAEOCellScale.getText()) -1 ) / 2);
-			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
-		} else if (main.aeo.txtAEOCellLinesColour.getBackground().equals(invalidFieldColor)) {
-			main.aeo.lblAEOStatus.setText("Cell Lines Colour must be a RGB hexadecimal");
-			main.aeo.lblAEOStatus.setForeground(invalidFieldColor);
+		if(main.aeo.getTxtAEOCellScale().getBackground().equals(invalidFieldColor)){
+			main.aeo.getLblAEOStatus().setText("Cell Scale must be >= 1");
+			main.aeo.getLblAEOStatus().setForeground(invalidFieldColor);
+		} else if (main.aeo.getTxtAEOGridLinesThickness().getBackground().equals(invalidFieldColor)){
+			main.aeo.getLblAEOStatus().setText("Grid Lines Thickness must be >= 1 and <= " +
+		(Integer.valueOf(main.aeo.getTxtAEOCellScale().getText()) -1 ) / 2);
+			main.aeo.getLblAEOStatus().setForeground(invalidFieldColor);
+		} else if (main.aeo.getTxtAEOCellLinesColour().getBackground().equals(invalidFieldColor)) {
+			main.aeo.getLblAEOStatus().setText("Cell Lines Colour must be a RGB hexadecimal");
+			main.aeo.getLblAEOStatus().setForeground(invalidFieldColor);
 		} else {
-			main.aeo.lblAEOStatus.setText("");
-			main.aeo.lblAEOStatus.setForeground(SystemColor.text);
+			main.aeo.getLblAEOStatus().setText("");
+			main.aeo.getLblAEOStatus().setForeground(SystemColor.text);
 			releaseActivityAEO(level);
 		}
 	}
@@ -196,16 +195,16 @@ public class GUIValidator {
 	
 	private void lockActivityAOE(int level){
 		this.aOEActivityLocked = true;
-		main.aeo.btnAEOExport.setEnabled(false);
+		main.aeo.getBtnAEOExport().setEnabled(false);
 		if(level <= 1) {
-			main.aeo.rdbtnAEOYes.setEnabled(false);
-			main.aeo.rdbtnAEONo.setEnabled(false);
+			main.aeo.getRdbtnAEOYes().setEnabled(false);
+			main.aeo.getRdbtnAEONo().setEnabled(false);
 		}
 		if(level <= 2) {
-			main.aeo.txtAEOGridLinesThickness.setEnabled(false);
+			main.aeo.getTxtAEOGridLinesThickness().setEnabled(false);
 		}
 		if(level <= 3) {
-			main.aeo.txtAEOCellLinesColour.setEnabled(false);
+			main.aeo.getTxtAEOCellLinesColour().setEnabled(false);
 		}
 	}
 	
@@ -218,16 +217,16 @@ public class GUIValidator {
 	
 	private void releaseActivityAEO(int level){
 		this.aOEActivityLocked = false;
-		main.aeo.btnAEOExport.setEnabled(true);
+		main.aeo.getBtnAEOExport().setEnabled(true);
 		if(level >= 1) {
-			main.aeo.rdbtnAEOYes.setEnabled(true);
-			main.aeo.rdbtnAEONo.setEnabled(true);
+			main.aeo.getRdbtnAEOYes().setEnabled(true);
+			main.aeo.getRdbtnAEONo().setEnabled(true);
 		}
 		if(level >= 2) {
-			main.aeo.txtAEOGridLinesThickness.setEnabled(true);
+			main.aeo.getTxtAEOGridLinesThickness().setEnabled(true);
 		}
 		if(level >= 3) {
-			main.aeo.txtAEOCellLinesColour.setEnabled(true);
+			main.aeo.getTxtAEOCellLinesColour().setEnabled(true);
 		}
 	}
 	
