@@ -101,8 +101,8 @@ public class GUIValidator {
 	public boolean isAEOCellLinesThicknessValid(){
 		String value = main.aeo.getTxtAEOGridLinesThickness().getText();
 		if(isValidPositiveInteger(value)){
-			int t = Integer.valueOf(value);
-			int c = Integer.valueOf(main.aeo.getTxtAEOCellScale().getText());
+			int t = Integer.parseInt(value);
+			int c = Integer.parseInt(main.aeo.getTxtAEOCellScale().getText());
 			if(t >= 1 && t <= (c-1)/2){
 				main.aeo.getTxtAEOGridLinesThickness().setBackground(SystemColor.text);
 				updateStatusAEO(3);
@@ -131,11 +131,8 @@ public class GUIValidator {
 	
 	private boolean isValidPositiveInteger(String value){
 		try{
-			int integer = Integer.valueOf(value);
-			if(integer > -1){
-				return true;
-			} 
-			return false;
+			int integer = Integer.parseInt(value);
+			return (integer > -1);
 		} catch(Exception e){
 			return false;
 		}
