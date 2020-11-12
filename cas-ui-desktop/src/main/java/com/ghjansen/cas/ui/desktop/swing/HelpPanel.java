@@ -20,24 +20,22 @@ package com.ghjansen.cas.ui.desktop.swing;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.ghjansen.cas.ui.desktop.i18n.Translator;
-import com.ghjansen.cas.ui.desktop.processing.SimulationViewProcessing;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class HelpPanel extends JPanel {
 
-	private BufferedImage image;
-	private final String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
-	private final String fileNamePrefix = "welcome-";
-	private final String fileExtension = ".png";
+	private transient BufferedImage image;
+	private final static String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
+	private final static  String fileNamePrefix = "welcome-";
+	private final static String fileExtension = ".png";
 	
 	@Override
     protected void paintComponent(Graphics g) {
