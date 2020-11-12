@@ -18,8 +18,7 @@
 
 package com.ghjansen.cas.ui.desktop.swing;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -29,7 +28,7 @@ public class HelpFrame extends JFrame {
 	public HelpFrame(){
 		super();
 		setBounds(100, 100, 582, 590);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		JPanel helpPanel = new HelpPanel();
 		helpPanel.setBounds(0, 0, 582, 582);
