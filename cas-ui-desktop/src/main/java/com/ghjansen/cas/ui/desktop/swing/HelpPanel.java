@@ -33,9 +33,9 @@ import com.ghjansen.cas.ui.desktop.i18n.Translator;
 public class HelpPanel extends JPanel {
 
 	private transient BufferedImage image;
-	private final static String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
-	private final static  String fileNamePrefix = "welcome-";
-	private final static String fileExtension = ".png";
+	private static final String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
+	private static final  String fileNamePrefix = "welcome-";
+	private static final String fileExtension = ".png";
 	
 	@Override
     protected void paintComponent(Graphics g) {

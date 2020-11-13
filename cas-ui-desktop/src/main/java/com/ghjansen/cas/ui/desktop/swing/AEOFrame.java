@@ -41,7 +41,7 @@ import java.awt.event.ItemListener;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class AEOFrame extends JDialog {
-	private final static String FONT_NAME = "Lucida Grande";
+	private static final String FONT_NAME = "Lucida Grande";
 	private JTextField txtAEOCellScale;
 	private JTextField txtAEOGridLinesThickness;
 	private JTextField txtAEOCellLinesColour;
