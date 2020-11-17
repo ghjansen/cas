@@ -22,7 +22,6 @@ package com.ghjansen.cas.ui.desktop.swing;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 import java.lang.reflect.Type;
-import java.util.Arrays;
 
 import com.ghjansen.cas.control.exception.InvalidSimulationParameterException;
 import com.ghjansen.cas.unidimensional.control.UnidimensionalInitialConditionParameter;
@@ -79,9 +78,7 @@ public class SimulationParameterJsonAdapter<T>
         return member;
     }
 
-    public final T deserialize(final JsonElement elem, final Type interfaceType, final JsonDeserializationContext context) 
-            throws JsonParseException 
-    {
+    public final T deserialize(final JsonElement elem, final Type interfaceType, final JsonDeserializationContext context){
         final JsonObject member = (JsonObject) elem;
         final JsonObject ruleTypeParameterJson = member.getAsJsonObject("ruleTypeParameter");
         final JsonObject ruleConfigurationParameterJson = member.getAsJsonObject("ruleConfigurationParameter");
@@ -97,7 +94,7 @@ public class SimulationParameterJsonAdapter<T>
         }
         UnidimensionalRuleConfigurationParameter ruleConfigurationParameter = new UnidimensionalRuleConfigurationParameter(stateValues[7], stateValues[6], stateValues[5], stateValues[4], stateValues[3], stateValues[2], stateValues[1], stateValues[0]);
         UnidimensionalLimitsParameter limitsParameter = new UnidimensionalLimitsParameter(limitsParameterJson.get("cells").getAsInt(), limitsParameterJson.get("iterations").getAsInt());
-        UnidimensionalSequenceParameter sequences[] = new UnidimensionalSequenceParameter[sequencesJson.size()];
+        UnidimensionalSequenceParameter[] sequences = new UnidimensionalSequenceParameter[sequencesJson.size()];
         for(int i = 0; i < sequencesJson.size(); i++){
         	JsonObject s = sequencesJson.get(i).getAsJsonObject();
         	UnidimensionalSequenceParameter sequence = new UnidimensionalSequenceParameter(s.get("initialPosition").getAsInt(), s.get("finalPosition").getAsInt(), s.get("value").getAsInt());
@@ -107,7 +104,6 @@ public class SimulationParameterJsonAdapter<T>
         try {
 			return (T) new UnidimensionalSimulationParameter(ruleTypeParameter, ruleConfigurationParameter, limitsParameter, initialConditionParameter);
 		} catch (InvalidSimulationParameterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return null;

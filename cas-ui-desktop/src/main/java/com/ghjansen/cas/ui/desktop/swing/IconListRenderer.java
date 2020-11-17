@@ -31,7 +31,7 @@ import javax.swing.JList;
 
 public class IconListRenderer extends DefaultListCellRenderer {
 
-	private Map<Object, Icon> icons = null;
+	private transient Map<Object, Icon> icons = null;
 
 	public IconListRenderer(Map<Object, Icon> icons) {
 		this.icons = icons;
