@@ -33,9 +33,9 @@ import com.ghjansen.cas.ui.desktop.i18n.Translator;
 public class HelpPanel extends JPanel {
 
 	private transient BufferedImage image;
-	private static final String filePath = "/com/ghjansen/cas/ui/desktop/processing/";
-	private static final  String fileNamePrefix = "welcome-";
-	private static final String fileExtension = ".png";
+	private static final String FILE_PATH = "/com/ghjansen/cas/ui/desktop/processing/";
+	private static final  String FILE_NAME_PREFIX = "welcome-";
+	private static final String FILE_EXTENSION = ".png";
 	
 	@Override
     protected void paintComponent(Graphics g) {
@@ -47,7 +47,7 @@ public class HelpPanel extends JPanel {
 	private void loadImage(){
 		try {
 			String langTag = Translator.getInstance().getLanguage().getLangtag().toLowerCase();
-			image = ImageIO.read(getClass().getResourceAsStream(filePath + fileNamePrefix + langTag + fileExtension));
+			image = ImageIO.read(getClass().getResourceAsStream(FILE_PATH + FILE_NAME_PREFIX + langTag + FILE_EXTENSION));
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
