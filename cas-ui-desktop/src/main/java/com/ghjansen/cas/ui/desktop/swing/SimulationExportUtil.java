@@ -30,14 +30,18 @@ import com.ghjansen.cas.unidimensional.physics.UnidimensionalCell;
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
  */
 public class SimulationExportUtil {
+
+	private SimulationExportUtil() {
+		throw new IllegalStateException("Utility class");
+	}
 	
 	public static BufferedImage createBufferedImage(UnidimensionalSimulationController simulationController, 
 			int cellScale, boolean showGrid, int gridLineThickness, Color gridLineColour){
 		
 		//replace invalid values by default values, for cellScale and gridLineThickness
 		if(cellScale < 1) cellScale = 1;
-		boolean bellowLowerLimit = !(gridLineThickness >= 1);
-		boolean overHigherLimit = !(gridLineThickness <= (cellScale-1)/2);
+		boolean bellowLowerLimit = gridLineThickness < 1;
+		boolean overHigherLimit = gridLineThickness > (cellScale-1)/2;
 		if(bellowLowerLimit || overHigherLimit) gridLineThickness = 1;
 		
 		//calculate the size of the simulation and image
@@ -64,49 +68,44 @@ public class SimulationExportUtil {
 	private static void drawCells(Graphics2D g, UnidimensionalSimulationController simulationController, int cellScale, int bufferHeight){
 		// initial condition cells
 		for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getInitial().size(); i++){
-			UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
+			UnidimensionalCell c = simulationController.getSimulation().getUniverse().getSpace().getInitial().get(i);
 			Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
 			g.setColor(color);
 			g.fillRect(i * cellScale, 0, cellScale, cellScale);
-			//buffer.setRGB(i, 0, color.getRGB());
-			
 		}
 		// history cells
 		for(int j = 0; j < simulationController.getSimulation().getUniverse().getSpace().getHistory().size(); j++){
-			List<UnidimensionalCell> cells = (List<UnidimensionalCell>) simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
+			List<UnidimensionalCell> cells = simulationController.getSimulation().getUniverse().getSpace().getHistory().get(j);
 			int y = (j+1) * cellScale;
 			for(int i = 0; i < cells.size(); i++){
-				UnidimensionalCell c = (UnidimensionalCell) cells.get(i);
+				UnidimensionalCell c = cells.get(i);
 				Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
 				g.setColor(color);
 				g.fillRect(i * cellScale, y, cellScale, cellScale);
-				//buffer.setRGB(i, j+1, color.getRGB());
 			}
 		}
 		// current/last cells
 		for(int i = 0; i < simulationController.getSimulation().getUniverse().getSpace().getCurrent().size(); i++){
-			UnidimensionalCell c = (UnidimensionalCell) simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
+			UnidimensionalCell c = simulationController.getSimulation().getUniverse().getSpace().getCurrent().get(i);
 			Color color = c.getState().getValue() == 0 ? Color.white : Color.black;
 			g.setColor(color);
 			g.fillRect(i * cellScale, bufferHeight - cellScale, cellScale, cellScale);
-			//buffer.setRGB(i, bufferHeight-1, color.getRGB());
 		}
 	}
 	
 	private static void drawGrid(Graphics2D g, int cellScale, int bufferWidth, int bufferHeight, int gridLineThickness, Color colour){
-		int px = 0, py = cellScale;
+		int px = 0;
+		int py = cellScale;
 		g.setColor(colour);
 		//horizontal lines (bottom)
-		for(int i = 1; py <= bufferHeight;){
+		for(int i = 1; py <= bufferHeight; i++){
 			g.fillRect(0, py-gridLineThickness, bufferWidth, gridLineThickness);
-			i++;
-			py = cellScale * i;
+			py = cellScale * (i+1);
 		}
 		//vertical lines (left)
-		for(int i = 0; px < bufferWidth;){
+		for(int i = 0; px < bufferWidth; i++){
 			g.fillRect(px, 0, gridLineThickness, bufferHeight);
-			i++;
-			px = cellScale * i;
+			px = cellScale * (i+1);
 		}
 		//horizontal line (top)
 		g.fillRect(0, 0, bufferWidth, gridLineThickness);
