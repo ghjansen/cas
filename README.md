@@ -1,5 +1,5 @@
 # CAS - Cellular Automata Simulator
-[![Build Status](https://travis-ci.com/ghjansen/cas.svg?branch=master)](https://travis-ci.com/ghjansen/cas)
+![Build Status](https://github.com/ghjansen/cas/actions/workflows/build.yml/badge.svg)
 [![Latest](https://img.shields.io/badge/dynamic/json.svg?label=latest&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fghjansen%2Fcas%2Freleases%2Flatest&query=%24.tag_name&style=popout&colorB=brightgreen)](https://github.com/ghjansen/cas/releases/latest)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ghjansen_cas&metric=alert_status)](https://sonarcloud.io/dashboard?id=ghjansen_cas)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ghjansen_cas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ghjansen_cas)
