@@ -17,10 +17,6 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jgoodies</groupId>
-			<artifactId>forms</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.processing</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
